@@ -1,0 +1,826 @@
+/* ================================================================
+   PAGE: SECURITY
+   Styles specific to security.html.
+   ================================================================ */
+
+.page-security main,
+.page-security section {
+    background-color: var(--bg-primary);
+}
+
+.security-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.security-eyebrow-spinner {
+    display: inline-block;
+    width: 18px;
+    color: var(--accent-blue);
+    white-space: pre;
+}
+
+.security-hero-title,
+.security-section-title,
+.security-cta-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.security-section-title {
+    font-size: clamp(48px, 7vw, 76px);
+}
+
+.security-section-header {
+    align-items: end;
+    margin-bottom: var(--space-3xl);
+}
+
+.security-section-header-copy {
+    grid-column: span 6;
+}
+
+.security-section-deck {
+    grid-column: 8 / -1;
+    align-self: end;
+    max-width: 640px;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-xl);
+    line-height: 1.5;
+}
+
+
+/* ------------------------------------------------
+   Hero
+   ------------------------------------------------ */
+
+.section-security-hero {
+    padding: clamp(96px, 12vw, 160px) 0 var(--space-section);
+    overflow: hidden;
+}
+
+.security-hero-grid {
+    align-items: center;
+}
+
+.security-hero-copy {
+    grid-column: span 7;
+}
+
+.security-hero-title {
+    max-width: 900px;
+    font-size: clamp(52px, 8vw, 96px);
+    line-height: 0.95;
+}
+
+.security-hero-deck {
+    max-width: 720px;
+    margin: var(--space-xl) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+}
+
+.security-hero-proof {
+    max-width: 640px;
+    margin: var(--space-lg) 0 0;
+    color: var(--text-primary);
+    font-size: var(--text-body-lg);
+    line-height: 1.45;
+}
+
+.security-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+}
+
+.security-hero-placeholder {
+    grid-column: 8 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    min-height: 440px;
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: #1E1E1D; /* TODO: tokenize */
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* ------------------------------------------------
+   Section Spacing
+   ------------------------------------------------ */
+
+.section-security-proof,
+.section-security-responsibility,
+.section-security-guardrails,
+.section-security-knowledge,
+.section-security-compliance,
+.section-security-reliability,
+.section-security-industries,
+.section-security-faq,
+.section-security-cta {
+    padding: var(--space-section) 0;
+}
+
+.section-security-proof {
+    padding-top: 0;
+}
+
+
+/* ------------------------------------------------
+   Logo Trust Strip
+   ------------------------------------------------ */
+
+.section-logo-strip {
+    padding: var(--space-md) 0 var(--space-section);
+    overflow: hidden;
+}
+
+.logo-strip-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xl);
+}
+
+.logo-strip-label {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    max-width: 280px;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-xs);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.logo-strip-label i {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    font-size: var(--text-body-lg);
+}
+
+.logo-strip-marquee {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 80px, black calc(100% - 80px), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 80px, black calc(100% - 80px), transparent 100%);
+}
+
+.logo-strip-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 3.5rem;
+    animation: logo-strip-scroll 45s linear infinite;
+    will-change: transform;
+}
+
+.logo-strip-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 36px;
+}
+
+.logo-strip-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%) invert(1);
+    opacity: 0.4;
+}
+
+.logo-strip-item img[src$=".png"] {
+    filter: grayscale(100%) brightness(0) invert(1);
+    opacity: 0.4;
+}
+
+.logo-strip-item:has(img[src*="hca-healthcare"]) img {
+    filter: grayscale(100%);
+    opacity: 0.4;
+}
+
+.logo-strip-item:has(img[src*="DPZ_2025"]) { width: 140px; }
+.logo-strip-item:has(img[src*="hyundai"]) { width: 130px; }
+.logo-strip-item:has(img[src*="amazon"]) { width: 120px; }
+.logo-strip-item:has(img[src*="hca-healthcare"]) { width: 120px; }
+.logo-strip-item:has(img[src*="ups-logo"]) { width: 60px; }
+.logo-strip-item:has(img[src*="taco-bell"]) { width: 55px; }
+.logo-strip-item:has(img[src*="cfa"]) { width: 70px; }
+.logo-strip-item:has(img[src*="cfa"]) img { opacity: 0.6; }
+.logo-strip-item:has(img[src*="wells-fargo"]) img { opacity: 0.6; }
+.logo-strip-item:has(img[src*="prudential"]) img { opacity: 0.6; }
+.logo-strip-item:has(img[src*="DPZ_2025"]) img { opacity: 0.6; }
+
+@keyframes logo-strip-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+
+/* ------------------------------------------------
+   Proof Strip
+   ------------------------------------------------ */
+
+.security-proof-grid {
+    align-items: stretch;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.security-proof-card {
+    grid-column: auto;
+    min-height: 190px;
+    padding: var(--space-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.security-proof-card span {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.security-proof-card span i {
+    color: var(--text-primary);
+    font-size: var(--text-heading-sm);
+    line-height: 1;
+}
+
+.security-proof-card p {
+    margin: var(--space-xl) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-sm);
+    line-height: 1.5;
+}
+
+
+/* ------------------------------------------------
+   Responsibility
+   ------------------------------------------------ */
+
+.security-responsibility-grid {
+    align-items: stretch;
+}
+
+.security-responsibility-card {
+    grid-column: span 6;
+    padding: var(--space-3xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.security-responsibility-card--accent {
+    border-color: #E1DEDA; /* TODO: tokenize -- light panel border */
+    background-color: #FFFFFF; /* TODO: tokenize -- light panel */
+}
+
+.security-responsibility-card--accent .security-card-label,
+.security-responsibility-card--accent li {
+    color: #000000; /* TODO: tokenize -- light panel text */
+}
+
+.security-card-label {
+    display: block;
+    margin-bottom: var(--space-2xl);
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+    font-size: clamp(42px, 5vw, 64px);
+    font-weight: var(--display-weight);
+    line-height: 0.95;
+    letter-spacing: var(--display-letter-spacing);
+}
+
+.security-responsibility-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.security-responsibility-card li {
+    display: flex;
+    gap: var(--space-md);
+    color: var(--text-secondary);
+    font-size: var(--text-body-lg);
+    line-height: 1.45;
+}
+
+.security-responsibility-card.security-responsibility-card--accent li {
+    color: #000000; /* TODO: tokenize -- light panel text */
+}
+
+.security-responsibility-card li::before {
+    content: '';
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    margin-top: 0.55em;
+    border-radius: var(--radius-full);
+    background-color: var(--accent-blue);
+}
+
+/* ------------------------------------------------
+   Guardrails
+   ------------------------------------------------ */
+
+.security-guardrail-grid,
+.security-sensitive-grid,
+.security-industry-grid {
+    align-items: stretch;
+}
+
+.security-icon-card,
+.security-industry-card {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.security-icon-card i,
+.security-industry-card i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: auto;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    color: var(--accent-blue);
+    font-size: 22px;
+    line-height: 1;
+}
+
+.security-icon-card h3,
+.security-industry-card h3,
+.security-faq-item h3,
+.security-knowledge-stack h3 {
+    margin: var(--space-xl) 0 var(--space-sm);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-heading-sm);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+}
+
+.security-icon-card p,
+.security-industry-card p,
+.security-knowledge-stack p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-sm);
+    line-height: 1.55;
+}
+
+.security-sensitive-grid {
+    margin-top: var(--space-md);
+}
+
+.security-sensitive-grid article {
+    grid-column: span 4;
+    min-height: 180px;
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+}
+
+.security-sensitive-grid span {
+    display: block;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.security-sensitive-grid p {
+    margin: var(--space-lg) 0 0;
+    color: var(--text-secondary);
+}
+
+
+/* ------------------------------------------------
+   Knowledge
+   ------------------------------------------------ */
+
+.security-knowledge-card,
+.security-reliability-card {
+    align-items: stretch;
+    padding: var(--space-3xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.security-knowledge-copy,
+.security-reliability-copy {
+    grid-column: span 6;
+    align-self: center;
+}
+
+.security-knowledge-copy p,
+.security-reliability-copy p {
+    max-width: 680px;
+    margin: var(--space-xl) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+}
+
+.security-knowledge-stack {
+    grid-column: 8 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.security-knowledge-stack article {
+    display: flex;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+}
+
+.security-knowledge-stack article > span {
+    flex: 0 0 44px;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: var(--text-heading-sm);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.security-knowledge-stack h3 {
+    margin-top: 0;
+}
+
+
+/* ------------------------------------------------
+   Compliance
+   ------------------------------------------------ */
+
+.security-compliance-panel {
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.security-compliance-grid {
+    padding: var(--space-lg);
+}
+
+.security-compliance-grid article {
+    grid-column: span 3;
+    min-height: 210px;
+    padding: var(--space-xl);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+}
+
+.security-compliance-grid span {
+    display: block;
+    color: var(--text-primary);
+    font-size: var(--text-body-lg);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.security-compliance-grid p {
+    margin: var(--space-lg) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-sm);
+    line-height: 1.55;
+}
+
+
+/* ------------------------------------------------
+   Reliability + Handoff
+   ------------------------------------------------ */
+
+.security-handoff-panel {
+    grid-column: 8 / -1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--bg-primary);
+}
+
+.security-handoff-row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.security-handoff-row:last-child {
+    border-bottom: 0;
+}
+
+.security-handoff-row span {
+    color: var(--text-secondary);
+}
+
+.security-handoff-row strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+
+/* ------------------------------------------------
+   Industries
+   ------------------------------------------------ */
+
+.security-industry-card {
+    grid-column: span 4;
+    min-height: 320px;
+}
+
+
+/* ------------------------------------------------
+   FAQ + CTA
+   ------------------------------------------------ */
+
+.security-faq-layout {
+    align-items: start;
+}
+
+.security-faq-intro {
+    grid-column: span 5;
+    position: sticky;
+    top: 120px;
+}
+
+.security-faq-list {
+    grid-column: 7 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.security-faq-item {
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.security-faq-item h3 {
+    margin-top: 0;
+}
+
+.security-faq-item p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body);
+    line-height: 1.55;
+}
+
+.section-security-cta {
+    padding-bottom: calc(var(--space-section) + var(--space-2xl));
+}
+
+.security-cta-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 460px;
+    padding: var(--space-3xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+    text-align: center;
+}
+
+.security-cta-title {
+    max-width: 920px;
+    font-size: clamp(46px, 7vw, 82px);
+}
+
+.security-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+}
+
+
+/* ------------------------------------------------
+   Responsive
+   ------------------------------------------------ */
+
+@media (max-width: 1024px) {
+    .security-hero-copy,
+    .security-hero-placeholder,
+    .security-section-header-copy,
+    .security-section-deck,
+    .security-responsibility-card,
+    .security-icon-card,
+    .security-sensitive-grid article,
+    .security-knowledge-copy,
+    .security-knowledge-stack,
+    .security-reliability-copy,
+    .security-handoff-panel,
+    .security-faq-intro,
+    .security-faq-list {
+        grid-column: 1 / -1;
+    }
+
+    .security-section-header {
+        gap: var(--space-xl);
+    }
+
+    .security-compliance-grid article,
+    .security-industry-card {
+        grid-column: span 3;
+    }
+
+    .security-proof-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .security-proof-card {
+        grid-column: auto;
+    }
+
+    .security-hero-placeholder {
+        min-height: 460px;
+        margin-top: var(--space-2xl);
+    }
+
+    .security-knowledge-card,
+    .security-reliability-card {
+        gap: var(--space-2xl);
+        padding: var(--space-2xl);
+    }
+
+    .security-faq-intro {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-security-hero {
+        padding: 112px 0 var(--space-3xl);
+    }
+
+    .section-logo-strip {
+        padding: var(--space-md) 0 var(--space-3xl);
+    }
+
+    .logo-strip-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-lg);
+    }
+
+    .logo-strip-label {
+        max-width: 100%;
+    }
+
+    .logo-strip-marquee {
+        width: 100%;
+    }
+
+    .section-security-proof,
+    .section-security-responsibility,
+    .section-security-guardrails,
+    .section-security-knowledge,
+    .section-security-compliance,
+    .section-security-reliability,
+    .section-security-industries,
+    .section-security-faq,
+    .section-security-cta {
+        padding: var(--space-3xl) 0;
+    }
+
+    .security-section-header {
+        margin-bottom: var(--space-2xl);
+    }
+
+    .security-hero-title,
+    .security-section-title,
+    .security-cta-title {
+        font-size: clamp(42px, 13vw, 58px);
+    }
+
+    .security-hero-deck,
+    .security-section-deck,
+    .security-knowledge-copy p,
+    .security-reliability-copy p {
+        font-size: var(--text-body-lg);
+    }
+
+    .security-hero-placeholder {
+        min-height: 360px;
+    }
+
+    .security-proof-card,
+    .security-compliance-grid article,
+    .security-industry-card {
+        grid-column: 1 / -1;
+    }
+
+    .security-proof-card,
+    .security-responsibility-card,
+    .security-icon-card,
+    .security-sensitive-grid article,
+    .security-knowledge-card,
+    .security-reliability-card,
+    .security-compliance-grid article,
+    .security-industry-card,
+    .security-faq-item,
+    .security-cta-content {
+        padding: var(--space-lg);
+    }
+
+    .security-compliance-grid {
+        padding: var(--space-lg);
+    }
+
+    .security-responsibility-card li,
+    .security-knowledge-stack article {
+        gap: var(--space-md);
+    }
+
+    .security-knowledge-stack article {
+        flex-direction: column;
+    }
+
+    .security-cta-content {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 480px) {
+    .security-hero-actions,
+    .security-cta-actions {
+        flex-direction: column;
+    }
+
+    .security-hero-actions .btn,
+    .security-cta-actions .btn {
+        width: 100%;
+    }
+
+    .security-handoff-row {
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+}

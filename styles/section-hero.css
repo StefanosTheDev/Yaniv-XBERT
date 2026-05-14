@@ -1,0 +1,978 @@
+/* ================================================================
+   SECTION: Hero (.section-hero)
+   The first viewport on the homepage. Three explicit rows on
+   the 8-col grid, with a faded NeueBit terminal-text background.
+
+   Row 1 (status):    status-left 1/5    |  status-right 5/9
+   Row 2 (headline):  title 1/7          |  toast 7/9
+   Row 3 (footer):    description 1/4    |  cta 4/6   |  badges 6/9
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Section wrapper
+   ------------------------------------------------ */
+
+.section-hero {
+    position: relative;
+    padding-top: 100px;
+    padding-bottom: var(--space-section);
+    overflow: hidden;
+    background-color: var(--bg-primary);
+}
+
+
+/* ------------------------------------------------
+   Background — faded terminal/code readouts (NeueBit)
+   Two <pre> blocks float in the gutters; a radial mask
+   fades them out behind the headline.
+   ------------------------------------------------ */
+
+.hero-bg-terminal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    opacity: 0.4;
+    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 60%, transparent 100%);
+            mask-image: linear-gradient(to right, #000 0%, #000 60%, transparent 100%);
+}
+
+/* Floating background snippet. JS positions a single .bg-snippet element
+   somewhere around the hero, cascades its lines in, holds for ~2s, fades it
+   out, then repositions and swaps in a new snippet. Reads as "ambient code
+   activity" without anchoring a persistent block to the page. */
+.bg-snippet {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--terminal-text);
+    white-space: pre;
+    margin: 0;
+    user-select: none;
+    transition: opacity 0.5s ease;
+}
+
+.bg-snippet.is-leaving {
+    opacity: 0;
+}
+
+.bg-snippet-line {
+    min-height: 1.4em;
+}
+
+.bg-snippet-line.is-comment {
+    opacity: 0.7;
+}
+
+/* Inline block cursor that follows the typing position. Sized relative to
+   the snippet's font so it stays proportional. */
+.bg-snippet-cursor {
+    display: none;
+}
+
+.bg-snippet-cursor.is-typing {
+    display: inline-block;
+    width: 0.55em;
+    height: 0.95em;
+    margin-left: 1px;
+    vertical-align: -0.12em;
+    background-color: var(--terminal-text);
+    opacity: 1;
+}
+
+@keyframes bg-snippet-cursor-blink {
+    0%, 50%      { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+}
+
+
+/* ------------------------------------------------
+   Hero grid wrapper — three explicit rows
+   ------------------------------------------------ */
+
+.hero-grid {
+    position: relative;
+    z-index: 1;
+    grid-template-rows: auto auto auto;
+    row-gap: 0;
+    align-items: start;
+}
+
+.hero-grid::after {
+    content: '';
+    grid-column: 8 / 13;
+    grid-row: 2;
+    align-self: end;
+    justify-self: center;
+    width: min(100%, 540px);
+    height: 340px;
+    margin-bottom: calc(var(--space-2xl) - 28px);
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(
+            ellipse 86% 82% at 50% 28%,
+            rgba(0, 0, 0, 0.88) 0%,
+            rgba(0, 0, 0, 0.72) 48%,
+            rgba(0, 0, 0, 0.34) 78%,
+            rgba(0, 0, 0, 0) 100%
+        );
+}
+
+.hero-status--left,
+.hero-status--right {
+    margin-bottom: var(--space-3xl);
+}
+
+
+/* ------------------------------------------------
+   Row 1 — Status bar
+   ------------------------------------------------ */
+
+.hero-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-caption);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.hero-status--left {
+    grid-column: 1 / 7;
+    grid-row: 1;
+}
+
+.hero-status--right {
+    grid-column: 7 / 13;
+    grid-row: 1;
+    justify-self: end;
+}
+
+/* Terminal CLI spinner — cycles through Unicode braille dots.
+   Frames are swapped via JS (initHeroStatusSpinner in script.js).
+   Reads like an npm/yarn loading indicator. */
+.hero-status-spinner {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1;
+    color: var(--text-secondary);
+    width: 1ch;
+    text-align: center;
+    flex-shrink: 0;
+    margin-right: 4px;
+    /* Braille glyphs sit in the upper ~60% of their em box, so flex centering
+       leaves them looking high. Nudge down to optical center. */
+    transform: translateY(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-status-spinner {
+        animation: none;
+    }
+}
+
+.hero-status-divider {
+    color: var(--border-light);
+    margin: 0 var(--space-xs);
+}
+
+.hero-status-icon {
+    font-size: 14px;
+    line-height: 1;
+    color: var(--text-tertiary);
+}
+
+
+/* Star rating + score badge inside the status bar
+   "★★★★⯨ [4.6]" sits between the divider and the review-count text. */
+.hero-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.hero-rating-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    color: var(--text-primary);
+    font-size: 13px;
+    line-height: 1;
+}
+
+.hero-rating-stars i {
+    line-height: 1;
+}
+
+.hero-rating-score {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 4px;
+    border-radius: var(--radius-sm);
+    background-color: #1F1F1F; /* TODO: tokenize — rating badge bg */
+    border: 1px solid #2A2A2A; /* TODO: tokenize — rating badge border */
+    color: var(--text-primary);
+    font-size: var(--text-micro);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    line-height: 1;
+}
+
+
+/* ------------------------------------------------
+   Row 2 — Headline (cols 1-6) + Toast (cols 7-8)
+   ------------------------------------------------ */
+
+.hero-title {
+    grid-column: 1 / 8;
+    grid-row: 2;
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: clamp(54px, 8vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    max-width: none;
+}
+
+.hero-title-accent {
+    display: inline;
+    color: var(--accent-blue);
+}
+
+.hero-title-cursor {
+    display: inline-block;
+    width: 0.48em;
+    height: 0.7em;
+    margin-left: 0.08em;
+    vertical-align: baseline;
+    background-color: var(--text-primary);
+    animation: hero-title-cursor-blink 1s step-end infinite;
+}
+
+.hero-title-cursor.is-typing {
+    animation: none;
+    opacity: 1;
+}
+
+@keyframes hero-title-cursor-blink {
+    0%, 50%   { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-title-cursor {
+        animation: none;
+    }
+}
+
+/* Conveyor-belt feed of toasts. Cards stack vertically inside a fixed-height
+   window; each cycle, the front card slides UP off the top and the next card
+   rises into focus from below. A mask gradient on the bottom edge fades the
+   lower cards into the page background so they feel like they're emerging
+   from darkness. Cards transition from a dark grey "queued" state to the
+   brand blue when they reach the front slot. */
+.hero-toast-stack {
+    grid-column: 8 / 13;
+    grid-row: 2;
+    align-self: end;
+    transform: translateY(-50px);
+    z-index: 1;
+
+    /* Tunable feed geometry. --toast-h is the *expected* active card
+       height used purely for slot positioning — cards now fit content,
+       so this just controls how far each queued card sits below the
+       active one in the conveyor. */
+    --toast-h: 240px;
+    --toast-gap: 14px;
+    --toast-slot: calc(var(--toast-h) + var(--toast-gap));
+
+    position: relative;
+    isolation: isolate;
+    height: calc(var(--toast-h) + 80px); /* active card + ~80px peek window below */
+    overflow: hidden;
+
+    /* Solid through the active-card region, then fades into the page background. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 100%);
+}
+
+.hero-toast-stack::before {
+    content: '';
+    position: absolute;
+    inset: -32px -40px -24px;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse 82% 78% at 50% 24%,
+            rgba(0, 0, 0, 0.72) 0%,
+            rgba(0, 0, 0, 0.58) 46%,
+            rgba(0, 0, 0, 0.24) 76%,
+            rgba(0, 0, 0, 0) 100%
+        );
+}
+
+.hero-toast {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    max-width: 420px;
+    height: var(--toast-h);
+    background-color: #1F1F1F; /* TODO: tokenize — queued/dim toast bg */
+    color: var(--text-primary);
+    /* Reserve border space on every slot so the active border can fade in
+       without nudging the layout. Only the active slot colors it in. */
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    font-size: var(--text-body-sm);
+    line-height: 1.4;
+    transition: transform 0.55s cubic-bezier(0.4, 0.0, 0.2, 1),
+                background-color 0.55s ease,
+                border-color 0.55s ease,
+                opacity 0.45s ease;
+    will-change: transform, background-color, opacity;
+}
+
+/* Feed slot styles — slot 0 is the active card at the top (brand-blue gradient,
+   fully visible). Lower slots sit further down the column, get progressively
+   darker, and fade out via opacity (compounded by the container's mask). */
+.hero-toast.feed-pos-0 {
+    transform: translateY(0);
+    /* Subtle gradient on the active card so it doesn't read as a flat fill.
+       Lighter blue at the top-left, darker brand blue at the bottom-right. */
+    background-image: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0) 55%
+    );
+    background-color: var(--accent-blue);
+    border-color: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+    z-index: 5;
+}
+
+/* One-shot "comet" border trace — fires whenever a card becomes the
+   active (feed-pos-0) slot. A bright white head sweeps once around the
+   perimeter and then the whole ring fades out, leaving the static
+   translucent border underneath. Re-triggers each cycle because the
+   feed-pos-0 class is removed and re-added on rotation. */
+@property --hero-toast-trace-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.hero-toast.feed-pos-0::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+        from var(--hero-toast-trace-angle),
+        rgba(255, 255, 255, 0) 0deg,
+        rgba(255, 255, 255, 0) 285deg,
+        rgba(255, 255, 255, 0.35) 325deg,
+        rgba(255, 255, 255, 1) 358deg,
+        rgba(255, 255, 255, 0) 360deg
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+    pointer-events: none;
+    z-index: 6;
+    animation: hero-toast-border-trace 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes hero-toast-border-trace {
+    0%   { --hero-toast-trace-angle: 0deg;   opacity: 1; }
+    75%  { --hero-toast-trace-angle: 360deg; opacity: 1; }
+    100% { --hero-toast-trace-angle: 360deg; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-toast.feed-pos-0::before {
+        animation: none;
+        opacity: 0;
+    }
+}
+
+.hero-toast.feed-pos-1 {
+    transform: translateY(var(--toast-slot));
+    background-color: #1F1F1F;        /* TODO: tokenize — queued slot 1 */
+    opacity: 0.85;
+    z-index: 4;
+}
+
+.hero-toast.feed-pos-2 {
+    transform: translateY(calc(var(--toast-slot) * 2));
+    background-color: #141414;        /* TODO: tokenize — queued slot 2 */
+    opacity: 0.4;
+    z-index: 3;
+}
+
+.hero-toast.feed-pos-3 {
+    transform: translateY(calc(var(--toast-slot) * 3));
+    background-color: #0A0A0A;        /* TODO: tokenize — queued slot 3 */
+    opacity: 0.15;
+    z-index: 2;
+}
+
+.hero-toast.feed-pos-4 {
+    transform: translateY(calc(var(--toast-slot) * 4));
+    background-color: #000;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Transient state: the active card lifts up and off the top of the feed.
+   After the leave animation completes, the rotation reassigns it to the
+   bottom slot (feed-pos-4) where it sits invisibly until the next cycle
+   starts walking it back up the conveyor. */
+.hero-toast.is-leaving {
+    transform: translateY(calc(var(--toast-h) * -1 - 20px));
+    opacity: 0;
+    z-index: 5;
+}
+
+/* ------------------------------------------------
+   Toast header / identity row
+   Layout: [stacked avatars] [name + channel pill / meta line] [time]
+   ------------------------------------------------ */
+.hero-toast-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.hero-toast-avatars {
+    display: flex;
+    flex-shrink: 0;
+}
+
+/* Stacked avatars overlap by ~16px so they read as a paired identity
+   (XBert + the person/group it handled work for). */
+.toast-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    /* inline-flex centers initials/counts inside spans; on <img> avatars
+       the explicit width/height + object-fit handle layout regardless. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    /* Border matches the card background so the overlap reads as a clean
+       cutout. Updated per slot below for active vs queued cards. */
+    border: 2px solid #1F1F1F; /* TODO: tokenize — matches queued toast bg */
+    color: var(--text-primary);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.toast-avatar + .toast-avatar {
+    margin-left: -16px;
+}
+
+/* XBert mark: black circle with the inline xbert icon centered in white.
+   Holds against both the brand-blue active card and the dark queued cards. */
+.toast-avatar-xbert {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Sized by height since the xbert glyph is taller than it is wide
+   (~0.69 ratio). Width auto-derives from viewBox so it never squishes.
+   Nudged up 1px because the sparkle on top + asymmetric body make it
+   look bottom-heavy when mathematically centered. */
+.toast-avatar-icon {
+    height: 28px;
+    width: auto;
+    display: block;
+    fill: currentColor;
+    transform: translateY(-1px);
+}
+
+/* Photo avatars — real portraits cropped to circle. object-fit cover so
+   any aspect ratio fills cleanly without distortion. */
+.toast-avatar-photo {
+    object-fit: cover;
+    object-position: center top;
+    background-color: #2A2A2A; /* TODO: tokenize — placeholder while img loads */
+}
+
+/* On the active card the avatar border shifts to match the blue background
+   so the cutout effect stays clean. */
+.hero-toast.feed-pos-0 .toast-avatar {
+    border-color: var(--accent-blue);
+}
+
+.hero-toast-identity {
+    flex: 1;
+    min-width: 0; /* allow text truncation inside flex */
+}
+
+.hero-toast-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.hero-toast-name {
+    color: var(--text-primary);
+}
+
+/* Channel pill — sits inline next to the XBert AI name. Muted, low-emphasis;
+   uses a tinted border + faint fill rather than a solid color so it doesn't
+   compete with the brand blue card. */
+.hero-toast-channel {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: var(--text-primary);
+}
+
+.hero-toast-time {
+    flex-shrink: 0;
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-toast-message {
+    margin: 0 0 var(--space-md);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.hero-toast-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+/* Action chips — icon + label. Solid light fill with dark text reads as
+   a confident "completed action" tag and lifts cleanly off both the
+   brand-blue active card and the dark queued cards. */
+.hero-toast-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+.hero-toast-tag i {
+    font-size: 15px;
+    line-height: 1;
+    opacity: 1;
+}
+
+
+
+/* ------------------------------------------------
+   Row 3 — Description + CTA + Badges
+   ------------------------------------------------ */
+
+.hero-description {
+    grid-column: 1 / 5;
+    grid-row: 3;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    color: var(--text-secondary);
+    position: relative;
+    padding-right: var(--space-lg);
+}
+
+/* Vertical divider line between the description column and the CTA group.
+   Anchored to the <p> (not the whole description) so its height matches just
+   the body copy — excluding the lottie icon and the gap above it.
+   Sits in the middle of the grid-gap so it visually separates columns. */
+.hero-description p::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc((var(--grid-gap) * -0.5) - var(--space-lg));
+    width: 1px;
+    background-color: #252525; /* TODO: tokenize — column divider */
+}
+
+.hero-icon {
+    width: 36px;
+    height: 36px;
+    display: block;
+    padding: 0;
+    margin: 0 0 0 -10px;
+    overflow: visible;
+}
+
+/* Reset lottie-player's internal wrappers — they sometimes
+   inject padding/centering that visually inset the artwork. */
+.hero-icon > * {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+.hero-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scale(1.15);
+    transform-origin: center center;
+}
+
+.hero-description p {
+    position: relative;
+    margin: 0;
+    font-size: var(--text-body-lg);
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+.hero-description strong {
+    color: var(--text-primary);
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--space-xs);
+}
+
+.hero-cta-group {
+    grid-column: 5 / 13;
+    grid-row: 3;
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    align-self: end;
+    position: relative;
+    padding-inline: var(--space-lg);
+}
+
+/* Hero CTA gets extra padding; color comes from the global .btn-primary
+   which uses the brand blue (--accent-blue). */
+.section-hero .btn {
+    padding: 14px 28px;
+    font-size: var(--text-body);
+    border-radius: 0;
+}
+
+.hero-cta-caption {
+    font-size: var(--text-caption);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+}
+
+.hero-cta-caption strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.hero-placard {
+    grid-column: 5 / 13;
+    grid-row: 3;
+    justify-self: end;
+    align-self: end;
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    max-width: 380px;
+}
+
+.hero-placard-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    background-color: transparent;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-placard-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+        repeating-conic-gradient(
+            var(--text-tertiary) 0deg 4deg,
+            transparent 4deg 15deg
+        );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    padding: 1px;
+    animation: placard-border-spin 20s linear infinite;
+}
+
+@keyframes placard-border-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-placard-icon::after {
+        animation: none;
+    }
+}
+
+.hero-placard-icon lottie-player {
+    width: 36px;
+    height: 36px;
+}
+
+.hero-placard-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.hero-placard-label {
+    font-family: var(--font-body);
+    font-size: var(--text-body-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+
+.hero-placard-desc strong {
+    color: var(--text-primary);
+}
+
+.hero-placard-desc {
+    font-family: var(--font-mono);
+    font-size: var(--text-body);
+    color: var(--text-secondary);
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+}
+
+.hero-placard-link {
+    font-family: var(--font-mono);
+    font-size: inherit;
+    font-weight: inherit;
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.hero-placard-link:hover {
+    color: var(--accent-blue);
+}
+
+
+/* ------------------------------------------------
+   Tablet (768px - 1023px) — 4-col grid
+   ------------------------------------------------ */
+
+@media (max-width: 1023px) {
+    .section-hero {
+        padding-top: var(--space-2xl);
+    }
+
+    .hero-grid {
+        min-height: 0;
+        grid-template-rows: auto auto auto auto;
+    }
+
+    .hero-grid::after {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        align-self: start;
+        width: min(100%, 540px);
+        margin-top: -28px;
+        margin-bottom: 0;
+    }
+
+    .hero-status--left  { grid-column: 1 / 4; grid-row: 1; }
+    .hero-status--right { grid-column: 4 / 7; grid-row: 1; }
+
+    .hero-title {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+    .hero-toast-stack {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        align-self: start;
+    }
+
+    .hero-description { grid-column: 1 / 4; grid-row: 4; }
+    .hero-cta-group   { grid-column: 4 / 7; grid-row: 4; justify-self: end; align-self: center; }
+    .hero-placard     { grid-column: 1 / -1; grid-row: 5; justify-self: start; max-width: 340px; }
+}
+
+
+/* ------------------------------------------------
+   Mobile (<768px) — single column, everything stacks
+   ------------------------------------------------ */
+
+@media (max-width: 767px) {
+    .section-hero {
+        padding-top: var(--space-xl);
+        padding-bottom: var(--space-4xl);
+    }
+
+    .hero-bg-terminal {
+        display: none;
+    }
+
+    .hero-grid {
+        row-gap: var(--space-xl);
+        grid-template-rows: none;
+    }
+
+    .hero-grid::after {
+        display: none;
+    }
+
+    .hero-status--left,
+    .hero-status--right,
+    .hero-title,
+    .hero-toast-stack,
+    .hero-description,
+    .hero-cta-group,
+    .hero-placard {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        justify-self: stretch;
+    }
+
+    .hero-status--left {
+        order: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs) var(--space-sm);
+        align-items: center;
+        margin-bottom: 0;
+    }
+
+    .hero-status--left .hero-status-spinner {
+        display: none;
+    }
+
+    .hero-status--left .hero-status-divider {
+        display: none;
+    }
+
+    .hero-status--left > span:nth-child(2) {
+        flex-basis: 100%;
+    }
+
+    .hero-status--left .hero-rating {
+        gap: var(--space-xs);
+    }
+
+    .hero-status--left > span:last-child {
+        color: var(--text-secondary);
+    }
+
+    .hero-status--right { order: 2; justify-content: flex-start; }
+    .hero-title       { order: 3; }
+    .hero-toast-stack {
+        order: 4;
+        transform: none;
+    }
+    .hero-description { order: 5; }
+    .hero-cta-group {
+        order: 6;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-md);
+        padding-inline: 0;
+        width: 100%;
+    }
+    .hero-placard     { order: 7; max-width: 100%; }
+
+    .hero-cta-group .btn { width: 100%; }
+
+    .hero-toast-tags {
+        gap: 6px;
+    }
+
+    .hero-toast-tag {
+        padding: 5px 9px;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 48%;
+    }
+}
+
+
+/* ------------------------------------------------
+   Small mobile (<=480px)
+   ------------------------------------------------ */
+
+@media (max-width: 480px) {
+    .section-hero {
+        padding-top: var(--space-lg);
+    }
+
+    .bg-snippet {
+        font-size: 13px;
+    }
+
+}

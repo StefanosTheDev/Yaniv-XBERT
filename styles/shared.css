@@ -1,0 +1,50 @@
+/* ================================================================
+   SHARED SECTION PATTERNS
+   Add reusable section patterns here as you build them.
+   Each pattern should document: layout, responsive behavior, variants.
+   Page-specific styles go in page-[name].css instead.
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Grid Primitive — .grid-12
+   The single column-grid for organizing section content.
+   Lives INSIDE .container (which caps width at 1600px).
+   Children declare their own grid-column spans.
+
+   12 columns gives clean halves (6/6), thirds (4/4/4),
+   quarters (3/3/3/3), and sixths. Use 5/12 (~42%) for
+   "middle 40" splits in shared rows with justify-self.
+
+   Breakpoints:
+     >=1024px  → 12 columns
+     768-1023  → 6 columns
+     <768px    → 1 column (everything stacks)
+   ------------------------------------------------ */
+
+.grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--grid-gap);
+}
+
+@media (max-width: 1023px) {
+    .grid-12 {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .grid-12 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Utility: at the 6-col tablet breakpoint, force an element to span full width.
+   Useful for elements that live in a narrow desktop side column and need to
+   wrap below the main content on tablet rather than squeezing. */
+@media (max-width: 1023px) {
+    .span-tablet-full {
+        grid-column: 1 / -1;
+    }
+}

@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#141311">
+    <meta name="robots" content="noindex, nofollow">
+    <title>XBert — AI Employee by Nextiva</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Lottie player (web component) -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/shared.css">
+    <link rel="stylesheet" href="styles/section-hero.css">
+    <link rel="stylesheet" href="styles/page-index.css">
+    <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body class="page-index">
+
+    <!-- Inline SVG sprite — defines reusable icons referenced via <use href="#id">.
+         The xbert-icon symbol uses currentColor for its fill so consumers can
+         recolor it with the standard CSS `color` property. -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <symbol id="xbert-icon" viewBox="0 0 18.89 27.41" fill="currentColor">
+            <path d="M10.03,21.82c-1.66,1.72-5.85,5.6-8.29,5.6-1.41,0-1.85-1.23-1.7-2.44.34-2.73,4.07-7.67,5.85-9.88,1.39-1.73,2.58-1.98.3-3.77-.45-.36-2.15-1.58-2.65-1.41-.42.43.12,1.44.33,1.95.27.64,1.04,1.72.96,2.38-.1.89-1.18,1.17-1.83.59-.41-.37-1.77-2.87-2.06-3.49-.52-1.1-1.39-3.05-.66-4.15,1.38-2.07,5.07.69,6.43,1.73.95.72,1.82,1.54,2.7,2.34,1.73-1.48,3.57-3.3,5.66-4.28,1.74-.81,4.03-1,3.8,1.6-.31,3.49-6.33,10.64-8.83,13.23ZM3.38,23.68c.2.59,1.7-.47,2.01-.69,2.97-2.02,8.58-8.49,9.87-11.83.41-1.07.49-1.58-.81-1.02-3.09,1.35-9.7,9.15-10.83,12.34-.11.32-.36.87-.25,1.19Z"/>
+            <path d="M10.52,23.46c-.09-.45.34-1.25.79-1.36.85-.22,1.43.6,2.09,1,4.43,2.72.62-2.25.66-3.28.04-.93,1.29-1.35,1.98-.62.53.56,1.68,2.75,2.02,3.53.48,1.08,1.27,2.92.46,3.95-1.37,1.74-4.67-.5-6-1.45-.39-.28-1.93-1.41-2-1.78Z"/>
+            <polygon points="9.44 0 10.56 3.03 13.59 4.15 10.56 5.27 9.44 8.3 8.32 5.27 5.29 4.15 8.32 3.03 9.44 0"/>
+        </symbol>
+        <symbol id="xbert-logo-full" viewBox="0 0 76.49 27.41" fill="currentColor">
+            <path d="M10.03,21.82c-1.66,1.72-5.85,5.6-8.29,5.6-1.41,0-1.85-1.23-1.7-2.44.34-2.73,4.07-7.67,5.85-9.88,1.39-1.73,2.58-1.98.3-3.77-.45-.36-2.15-1.58-2.65-1.41-.42.43.12,1.44.33,1.95.27.64,1.04,1.72.96,2.38-.1.89-1.18,1.17-1.83.59-.41-.37-1.77-2.87-2.06-3.49-.52-1.1-1.39-3.05-.66-4.15,1.38-2.07,5.07.69,6.43,1.73.95.72,1.82,1.54,2.7,2.34,1.73-1.48,3.57-3.3,5.66-4.28,1.74-.81,4.03-1,3.8,1.6-.31,3.49-6.33,10.64-8.83,13.23ZM3.38,23.68c.2.59,1.7-.47,2.01-.69,2.97-2.02,8.58-8.49,9.87-11.83.41-1.07.49-1.58-.81-1.02-3.09,1.35-9.7,9.15-10.83,12.34-.11.32-.36.87-.25,1.19Z"/>
+            <path d="M10.52,23.46c-.09-.45.34-1.25.79-1.36.85-.22,1.43.6,2.09,1,4.43,2.72.62-2.25.66-3.28.04-.93,1.29-1.35,1.98-.62.53.56,1.68,2.75,2.02,3.53.48,1.08,1.27,2.92.46,3.95-1.37,1.74-4.67-.5-6-1.45-.39-.28-1.93-1.41-2-1.78Z"/>
+            <polygon points="9.44 0 10.56 3.03 13.59 4.15 10.56 5.27 9.44 8.3 8.32 5.27 5.29 4.15 8.32 3.03 9.44 0"/>
+            <path d="M23.49,11.5h3.23l1.95,2.88,1.97-2.88h3.19l-3.56,5.24,3.83,5.63h-3.23l-2.21-3.22-2.21,3.22h-3.19l3.81-5.6-3.56-5.26Z"/>
+            <path d="M40.22,11.5c2.35,0,4.27,1.17,4.27,2.6v.96c0,.78-.69,1.36-1.59,1.74.91.38,1.66,1,1.66,1.78v1.21c0,1.44-1.99,2.58-4.34,2.58h-4.98v-10.87h4.98ZM41.46,15.04v-.95c0-.51-.55-.93-1.24-.93h-1.95v2.81h1.95c.69,0,1.24-.42,1.24-.93ZM41.53,19.77v-1.2c0-.51-.62-.93-1.33-.93h-1.93v3.06h1.93c.71,0,1.33-.42,1.33-.93Z"/>
+            <path d="M55.14,11.5v1.67h-5.69v2.87h5.2v1.67h-5.2v3.01h5.69v1.67h-8.72v-10.87h8.72Z"/>
+            <path d="M60.16,18.19v4.18h-3.03v-10.87h4.71c2.37,0,4.29,1.16,4.29,2.58v1.51c0,.93-.88,1.79-2.15,2.24l2.94,4.53h-3.25l-2.66-4.18h-.86ZM61.85,13.16h-1.68v3.36h1.68c.71,0,1.26-.42,1.26-.93v-1.51c0-.51-.55-.92-1.26-.92Z"/>
+            <path d="M76.49,11.5v1.67h-3.5v9.2h-3.03v-9.2h-3.5v-1.67h10.02Z"/>
+        </symbol>
+    </svg>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-wrapper">
+            <div class="nav-left">
+                <a href="index.html" class="nav-logo" aria-label="XBert home">
+                    <svg class="nav-logo-svg" viewBox="0 0 76.49 27.41" aria-hidden="true" focusable="false"><use href="#xbert-logo-full"/></svg>
+                </a>
+                <ul class="nav-menu">
+                    <li class="nav-dropdown nav-dropdown-mega">
+                        <a href="#">Product <span class="nav-carat"></span></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-inner">
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">About XBert</span>
+                                    <a href="how-xbert-works.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">How XBert works</span>
+                                        <span class="mega-menu-desc">AI that does actual work, not just conversation.</span>
+                                    </a>
+                                    <a href="integrations.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">Integrations</span>
+                                        <span class="mega-menu-desc">Connect your calendars, CRMs, and tools.</span>
+                                    </a>
+                                    <a href="security.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">Security &amp; Trust</span>
+                                        <span class="mega-menu-desc">AI safety, guardrails, and compliance foundation.</span>
+                                    </a>
+                                </div>
+
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Featured Capabilities</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">AI Employee</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Agent Assist</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">AI Receptionist</span>
+                                    </a>
+                                </div>
+
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Industries</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Healthcare</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Insurance</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Real Estate</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Retail &amp; E-commerce</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Professional Services</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-dropdown nav-dropdown-mega">
+                        <a href="#">Resources <span class="nav-carat"></span></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-inner">
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Learn</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Customer Stories</span>
+                                        <span class="mega-menu-desc">How businesses use XBert.</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">About Nextiva</span>
+                                        <span class="mega-menu-desc">The company behind XBert.</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Leadership</span>
+                                        <span class="mega-menu-desc">Meet our executive team.</span>
+                                    </a>
+                                </div>
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Support</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Help Center</span>
+                                        <span class="mega-menu-desc">Guides, docs, and support.</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <a href="tel:18007990600" class="btn btn-primary nav-cta nav-phone">
+                    <i class="ri-headphone-line"></i>
+                    <span class="nav-phone-label">Sales</span>
+                    <span class="nav-phone-number">800-799-0600</span>
+                </a>
+                <a href="#" class="btn btn-primary nav-cta">Log In</a>
+                <a href="#" class="btn btn-primary nav-cta nav-cta-demo">Get A Demo</a>
+                <a href="#" class="btn btn-primary nav-cta-primary">Start Free Trial</a>
+                <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay"></div>
+    <div class="mobile-nav-panel">
+        <div class="mobile-nav-links">
+            <div class="mobile-nav-dropdown">
+                <a href="#">Product <span class="mobile-carat"></span></a>
+                <div class="mobile-dropdown-items">
+                    <a href="#">AI Employee</a>
+                    <a href="#">Agent Assist</a>
+                    <a href="#">AI Receptionist</a>
+                    <a href="how-xbert-works.html">How XBert works</a>
+                    <a href="integrations.html">Integrations</a>
+                    <a href="security.html">Security &amp; Trust</a>
+                </div>
+            </div>
+            <div class="mobile-nav-dropdown">
+                <a href="#">Resources <span class="mobile-carat"></span></a>
+                <div class="mobile-dropdown-items">
+                    <a href="#">Customer Stories</a>
+                    <a href="#">Help Center</a>
+                </div>
+            </div>
+            <a href="#">Pricing</a>
+            <a href="tel:18007990600">Sales: 800-799-0600</a>
+        </div>
+        <div class="mobile-nav-actions">
+            <a href="#" class="btn btn-primary">Start Free Trial</a>
+            <a href="#" class="btn btn-secondary">Get A Demo</a>
+            <a href="#" class="nav-signin">Log In</a>
+        </div>
+    </div>
+
+    <!-- Page Sections — add here as they are designed -->
+
+    <!-- Hero -->
+    <section class="section-hero reveal">
+        <div class="hero-bg-terminal" aria-hidden="true" data-bg-snippet-stage></div>
+        <div class="container">
+            <div class="grid-12 hero-grid">
+
+                <div class="hero-status hero-status--left">
+                    <span class="hero-status-spinner" aria-hidden="true" data-spinner="braille">⠋</span>
+                    <span>Backed by Nextiva</span>
+                    <span class="hero-status-divider">|</span>
+                    <span class="hero-rating" aria-label="Rated 4.6 out of 5 stars">
+                        <span class="hero-rating-stars" aria-hidden="true">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-half-fill"></i>
+                        </span>
+                        <span class="hero-rating-score" aria-hidden="true">4.6</span>
+                    </span>
+                    <span>27,128+ business reviews</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="sr-only">AI that does the busywork.</span>
+                    <span aria-hidden="true">
+                        AI that does the<br>
+                        <span class="hero-title-accent" data-typewriter='["appointments.","voice calls.","text messages.","follow-up.","live chats."]'>appointments.</span><span class="hero-title-cursor"></span>
+                    </span>
+                </h1>
+
+                <div class="hero-toast-stack" data-toast-stack>
+                    <!--
+                        Each toast represents one piece of work XBert handled.
+                        Structure: stacked avatars (XBert mark + caller initials),
+                        identity row with channel pill, meta line (channel · duration),
+                        body, and icon-led action chips.
+                        Channel options used here: voice, sms, chat, inbox.
+                    -->
+                    <div class="hero-toast channel-inbox" data-toast-key="text messages.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="assets/images/people/person-01.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">Inbox</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">Just now</span>
+                        </div>
+                        <p class="hero-toast-message">Replied to 12 customer texts while you were out. Confirmations sent, questions answered, and two callbacks queued.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-check-line" aria-hidden="true"></i>12 resolved</span>
+                            <span class="hero-toast-tag"><i class="ri-time-line" aria-hidden="true"></i>~28 min saved</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-toast channel-voice" data-toast-key="appointments.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="assets/images/people/person-06.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">Voice</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">2m ago</span>
+                        </div>
+                        <p class="hero-toast-message">Called in for her annual checkup. Booked her for Thursday at 2pm and sent the reminder.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-calendar-check-line" aria-hidden="true"></i>Appt booked</span>
+                            <span class="hero-toast-tag"><i class="ri-mail-send-line" aria-hidden="true"></i>SMS reminder</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-toast channel-sms" data-toast-key="follow-up.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="assets/images/people/person-04.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">SMS</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">Just now</span>
+                        </div>
+                        <p class="hero-toast-message">Five estimates from last week hadn&rsquo;t heard back. Followed up with each &mdash; two homeowners are ready to schedule.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-message-2-line" aria-hidden="true"></i>5 Texts sent</span>
+                            <span class="hero-toast-tag"><i class="ri-thumb-up-line" aria-hidden="true"></i>2 Ready to book</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-toast channel-voice" data-toast-key="voice calls.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="assets/images/people/person-05.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">Voice</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">1m ago</span>
+                        </div>
+                        <p class="hero-toast-message">Three calls came in during your lunch. Answered all of them, booked two consults, and transferred one urgent caller straight to you.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-calendar-check-line" aria-hidden="true"></i>2 consults</span>
+                            <span class="hero-toast-tag"><i class="ri-phone-fill" aria-hidden="true"></i>Transferred</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-toast channel-chat" data-toast-key="live chats.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="assets/images/people/person-03.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">Chat</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">Just now</span>
+                        </div>
+                        <p class="hero-toast-message">Answered a live website chat in under 10 seconds. Qualified the lead and booked their consult for Friday at 10am.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-user-star-line" aria-hidden="true"></i>Lead qualified</span>
+                            <span class="hero-toast-tag"><i class="ri-calendar-event-line" aria-hidden="true"></i>Consult booked</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-description">
+                    <lottie-player
+                        class="hero-icon"
+                        src="assets/lottie/xbert-voice-blue.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop
+                        aria-hidden="true">
+                    </lottie-player>
+                    <p>
+                        <strong>XBert is an AI employee.</strong>
+                        It learns your business, handles your customer conversations, and takes the busywork off your team's plate. Just talk to it, XBert does the work.
+                    </p>
+                </div>
+
+                <div class="hero-cta-group">
+                    <a href="#" class="btn btn-primary">Start Free Trial</a>
+                    <a href="#" class="btn btn-secondary">Get a Demo</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Cards -->
+    <section class="section-proof reveal">
+        <div class="container">
+            <div class="grid-12 proof-grid">
+
+                <div class="proof-card proof-card--stat">
+                    <div class="proof-card-top">
+                        <span class="proof-stat">~70%</span>
+                        <p class="proof-headline">Of customer conversations resolved with <u>no human involved.</u></p>
+                    </div>
+                    <hr class="proof-divider">
+                    <span class="proof-detail-spinner" data-spinner="eq" aria-hidden="true">⣆⣧⣼⣰</span>
+                    <p class="proof-detail">Calls, Texting, and Live Chat. XBert resolves conversations around the clock. Your team only steps in when it matters.</p>
+                </div>
+
+                <div class="proof-card proof-card--copy">
+                    <div class="proof-card-top">
+                        <p class="proof-headline proof-headline--display">XBert AI performs like your best employee.</p>
+                    </div>
+                    <hr class="proof-divider">
+                    <span class="proof-detail-spinner" data-spinner="fade" aria-hidden="true">⣷⣶⣶⣶</span>
+                    <p class="proof-detail">XBert closes the loop on every interaction. Appointments scheduled, questions answered, records updated, follow-ups handled.</p>
+                </div>
+
+                <div class="proof-card proof-card--image">
+                    <img src="assets/images/people/person-01.png" alt="" class="proof-image">
+                    <div class="proof-code-stage" data-proof-snippet-stage aria-hidden="true"></div>
+                    <div class="proof-overlay">
+                        <div class="proof-bubble proof-bubble--human">
+                            <div class="proof-bubble-header">
+                                <i class="ri-user-line"></i>
+                                <span class="proof-bubble-label">Customer</span>
+                                <span class="proof-bubble-time">just now</span>
+                            </div>
+                            <p class="proof-bubble-body">Do you guys do same-day appointments?</p>
+                        </div>
+                        <div class="proof-bubble proof-bubble--xbert">
+                            <div class="proof-bubble-header">
+                                <svg class="proof-bubble-xicon" viewBox="0 0 18.89 27.41" aria-hidden="true"><use href="#xbert-icon"/></svg>
+                                <span class="proof-bubble-label">XBert</span>
+                                <span class="proof-bubble-time">0.6s</span>
+                            </div>
+                            <p class="proof-bubble-body">Yes, I have a 2:15pm open today. Want me to book it?</p>
+                            <div class="proof-bubble-activity">
+                                <i class="ri-loader-4-line proof-bubble-activity-spinner" aria-hidden="true"></i>
+                                <span>Checked today's calendar availability</span>
+                            </div>
+                        </div>
+                        <div class="proof-bubble proof-bubble--human">
+                            <div class="proof-bubble-header">
+                                <i class="ri-user-line"></i>
+                                <span class="proof-bubble-label">Customer</span>
+                                <span class="proof-bubble-time">just now</span>
+                            </div>
+                            <p class="proof-bubble-body">I need to update my insurance info before my visit</p>
+                        </div>
+                        <div class="proof-bubble proof-bubble--xbert">
+                            <div class="proof-bubble-header">
+                                <svg class="proof-bubble-xicon" viewBox="0 0 18.89 27.41" aria-hidden="true"><use href="#xbert-icon"/></svg>
+                                <span class="proof-bubble-label">XBert</span>
+                                <span class="proof-bubble-time">0.4s</span>
+                            </div>
+                            <p class="proof-bubble-body">Got it. I've updated your file with the new policy number.</p>
+                            <div class="proof-bubble-activity">
+                                <i class="ri-loader-4-line proof-bubble-activity-spinner" aria-hidden="true"></i>
+                                <span>Updated patient record in system</span>
+                            </div>
+                        </div>
+                        <div class="proof-bubble proof-bubble--human">
+                            <div class="proof-bubble-header">
+                                <i class="ri-user-line"></i>
+                                <span class="proof-bubble-label">Customer</span>
+                                <span class="proof-bubble-time">just now</span>
+                            </div>
+                            <p class="proof-bubble-body">What's my balance? I thought I already paid</p>
+                        </div>
+                        <div class="proof-bubble proof-bubble--xbert">
+                            <div class="proof-bubble-header">
+                                <svg class="proof-bubble-xicon" viewBox="0 0 18.89 27.41" aria-hidden="true"><use href="#xbert-icon"/></svg>
+                                <span class="proof-bubble-label">XBert</span>
+                                <span class="proof-bubble-time">0.5s</span>
+                            </div>
+                            <p class="proof-bubble-body">Your $85 co-pay posted yesterday. Balance is $0. You're all set.</p>
+                            <div class="proof-bubble-activity">
+                                <i class="ri-loader-4-line proof-bubble-activity-spinner" aria-hidden="true"></i>
+                                <span>Pulled billing history for account</span>
+                            </div>
+                        </div>
+                        <div class="proof-bubble proof-bubble--human">
+                            <div class="proof-bubble-header">
+                                <i class="ri-user-line"></i>
+                                <span class="proof-bubble-label">Employee</span>
+                                <span class="proof-bubble-time">just now</span>
+                            </div>
+                            <p class="proof-bubble-body">Which customers are at risk of churning this month?</p>
+                        </div>
+                        <div class="proof-bubble proof-bubble--xbert">
+                            <div class="proof-bubble-header">
+                                <svg class="proof-bubble-xicon" viewBox="0 0 18.89 27.41" aria-hidden="true"><use href="#xbert-icon"/></svg>
+                                <span class="proof-bubble-label">XBert</span>
+                                <span class="proof-bubble-time">1.2s</span>
+                            </div>
+                            <p class="proof-bubble-body">3 accounts flagged. Sent you a summary with contact history.</p>
+                            <div class="proof-bubble-activity">
+                                <i class="ri-loader-4-line proof-bubble-activity-spinner" aria-hidden="true"></i>
+                                <span>Scanned churn risk across accounts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Logo Trust Strip -->
+    <section class="section-logo-strip">
+        <div class="container">
+            <div class="logo-strip-inner">
+                <p class="logo-strip-label"><i class="ri-shield-check-fill" aria-hidden="true"></i> Built on a foundation trusted by 100,000+ businesses.</p>
+                <div class="logo-strip-marquee">
+                    <div class="logo-strip-track">
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/texas-roadhouse.svg" alt="Texas Roadhouse" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/toyota.png" alt="Toyota" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/wells-fargo.png" alt="Wells Fargo" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/hca-healthcare.svg" alt="HCA Healthcare" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/cfa.png" alt="Chick-fil-A" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/logo-amazon.svg" alt="Amazon" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/ups-logo-1.svg" alt="UPS" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/DPZ_2025_Logo_CombinationMark_Horizontal_Blue_RGB.svg" alt="Dominos" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/prudential.png" alt="Prudential" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/remax.png" alt="RE/MAX" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/ymca.png" alt="YMCA" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/san-antonio-spurs-1.svg" alt="San Antonio Spurs" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/taco-bell-6.svg" alt="Taco Bell" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/kentucky-fried-chicken-1.svg" alt="KFC" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/hyundai.svg" alt="Hyundai" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/ikea.svg" alt="IKEA" loading="lazy"></div>
+                        <!-- Duplicate for seamless loop -->
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/texas-roadhouse.svg" alt="Texas Roadhouse" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/toyota.png" alt="Toyota" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/wells-fargo.png" alt="Wells Fargo" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/hca-healthcare.svg" alt="HCA Healthcare" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/cfa.png" alt="Chick-fil-A" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/logo-amazon.svg" alt="Amazon" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/ups-logo-1.svg" alt="UPS" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/DPZ_2025_Logo_CombinationMark_Horizontal_Blue_RGB.svg" alt="Dominos" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/prudential.png" alt="Prudential" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/remax.png" alt="RE/MAX" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/ymca.png" alt="YMCA" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/san-antonio-spurs-1.svg" alt="San Antonio Spurs" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/taco-bell-6.svg" alt="Taco Bell" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/kentucky-fried-chicken-1.svg" alt="KFC" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/hyundai.svg" alt="Hyundai" loading="lazy"></div>
+                        <div class="logo-strip-item"><img src="assets/logos/trust-strip/ikea.svg" alt="IKEA" loading="lazy"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Knowledge Fabric -- one full-width stage with a faint grid + vignette
+         backdrop. Three stacked dotted-square layers (Knowledge, Customer
+         Journal, Governed Retrieval) sit on the left tilted in 3D, with
+         the layer descriptions stacked on the right inside the same box.
+         Only the dots animate (twinkle); layout stays still. -->
+    <section class="section-fabric reveal">
+        <div class="container">
+            <div class="grid-12 fabric-header">
+                <div class="fabric-header-copy">
+                    <span class="fabric-eyebrow"><span class="fabric-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Business Has Changed</span>
+                    <h2 class="fabric-title">XBert knows your business better than a human ever could.</h2>
+                    <p class="fabric-deck"><strong>Most AI forgets your customer the moment the conversation ends.</strong> XBert reasons over every interaction your business has ever had with a customer. Who they are, what they&rsquo;ve asked, what happened last time. That depth comes from a proprietary intelligence layer we call NEXT.IQ, which has learned how businesses truly operate, how customers really talk, and how to do the real work.</p>
+                </div>
+                <div class="fabric-header-cta">
+                    <a href="#" class="btn btn-secondary">Start Free Trial</a>
+                </div>
+            </div>
+
+            <div class="fabric-stage">
+                <div class="fabric-toolbar" aria-hidden="true">
+                    <span class="fabric-toolbar-left">NEXT.IQ POWERS XBERT</span>
+                    <span class="fabric-toolbar-right" data-fabric-status>LYR.STACK // RESOLVING</span>
+                </div>
+                <span class="fabric-diagram-label" aria-hidden="true"><svg class="fabric-label-k" viewBox="0 0 7 7" aria-hidden="true"><g class="k-row k-row-0"><rect x="0.5" y="0.5" width="1" height="1"/><rect x="4.5" y="0.5" width="1" height="1"/></g><g class="k-row k-row-1"><rect x="0.5" y="1.5" width="1" height="1"/><rect x="3.5" y="1.5" width="1" height="1"/></g><g class="k-row k-row-2"><rect x="0.5" y="2.5" width="1" height="1"/><rect x="1.5" y="2.5" width="1" height="1"/></g><g class="k-row k-row-3"><rect x="0.5" y="3.5" width="1" height="1"/><rect x="3.5" y="3.5" width="1" height="1"/></g><g class="k-row k-row-4"><rect x="0.5" y="4.5" width="1" height="1"/><rect x="4.5" y="4.5" width="1" height="1"/></g></svg>Knowledge Fabric</span>
+                <div class="fabric-bg-terminal" aria-hidden="true" data-fabric-snippet-stage></div>
+                <div class="fabric-stage-inner">
+                    <div class="fabric-layer">
+                        <span class="fabric-layer-badge">01</span>
+                        <svg class="fabric-layer-svg" data-fabric-layer="0" aria-hidden="true"></svg>
+                    </div>
+                    <div class="fabric-layer">
+                        <span class="fabric-layer-badge">02</span>
+                        <svg class="fabric-layer-svg" data-fabric-layer="1" aria-hidden="true"></svg>
+                    </div>
+                    <div class="fabric-layer">
+                        <span class="fabric-layer-badge">03</span>
+                        <svg class="fabric-layer-svg" data-fabric-layer="2" aria-hidden="true"></svg>
+                    </div>
+                </div>
+
+                <div class="fabric-meta-stack">
+                    <div class="fabric-layer-meta">
+                        <span class="fabric-layer-index">01 <i class="ri-brain-line" aria-hidden="true"></i></span>
+                        <span class="fabric-layer-name">Knowledge Layer</span>
+                        <p class="fabric-layer-desc">Every answer is citation-backed. Every source is traceable. Your AI doesn&rsquo;t guess. It knows. You see it all.</p>
+                        <div class="fabric-layer-chips">
+                            <span class="fabric-chip">True Intelligence</span>
+                            <span class="fabric-chip">No Guessing</span>
+                        </div>
+                    </div>
+
+                    <div class="fabric-layer-meta">
+                        <span class="fabric-layer-index">02 <i class="ri-git-merge-line" aria-hidden="true"></i></span>
+                        <span class="fabric-layer-name">Customer Journal Layer</span>
+                        <p class="fabric-layer-desc">Every interaction with a customer is threaded into one continuous story. The 50th call is informed by the first 49 while they&rsquo;re still on the line.</p>
+                        <div class="fabric-layer-chips">
+                            <span class="fabric-chip">Every Channel</span>
+                            <span class="fabric-chip">Every Interaction</span>
+                        </div>
+                    </div>
+
+                    <div class="fabric-layer-meta">
+                        <span class="fabric-layer-index">03 <i class="ri-eye-off-line" aria-hidden="true"></i></span>
+                        <span class="fabric-layer-name">Guardian Layer</span>
+                        <p class="fabric-layer-desc">Guardrails keep it on-script. Permissions keep data separate. Every action is logged. Built for industries where trust is everything.</p>
+                        <div class="fabric-layer-chips">
+                            <span class="fabric-chip">HIPAA Compliant</span>
+                            <span class="fabric-chip">SOC 2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fabric-variation-stack">
+                <article class="grid-12 fabric-variation-feature">
+                    <div class="fabric-variation-visual fabric-variation-visual--assist" aria-hidden="true">
+                        <span class="fabric-block-accent fabric-block-accent--assist" aria-hidden="true"></span>
+                        <div class="ed-card-toast-wrapper">
+                            <div class="ed-card-toast-shadow"></div>
+                            <div class="ed-card-toast-shadow"></div>
+                            <div class="ed-card-toast">
+                                <div class="ed-card-toast-header">
+                                    <svg class="ed-card-toast-xicon" viewBox="0 0 18.89 27.41" aria-hidden="true"><use href="#xbert-icon"/></svg>
+                                    <span class="ed-card-toast-name">AGENT ASSIST AI</span>
+                                </div>
+                                <span class="ed-card-toast-body-label">Suggested response</span>
+                                <p class="ed-card-toast-body">&ldquo;Hi Maya, you're all set. Your appointment has been rescheduled to Thursday at 2pm. We'll send a confirmation shortly, and you can reply here if you need anything else.&rdquo;</p>
+                                <div class="ed-card-toast-chips">
+                                    <span class="ed-card-toast-ref"><i class="ri-check-line" aria-hidden="true"></i>Checked reschedule policy</span>
+                                    <span class="ed-card-toast-ref"><i class="ri-check-line" aria-hidden="true"></i>Checked customer history</span>
+                                    <span class="ed-card-toast-ref"><i class="ri-check-line" aria-hidden="true"></i>Found Thursday availability</span>
+                                    <span class="ed-card-toast-ref"><i class="ri-check-line" aria-hidden="true"></i>Matched text update preference</span>
+                                </div>
+                                <div class="ed-card-toast-actions">
+                                    <span class="ed-card-toast-btn"><i class="ri-chat-forward-line" aria-hidden="true"></i>Use this response</span>
+                                    <span class="ed-card-toast-btn"><i class="ri-edit-line" aria-hidden="true"></i>Edit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fabric-variation-copy">
+                        <h3 class="fabric-ed-card-heading">Customers will never repeat themselves again.</h3>
+                        <p class="fabric-ed-card-detail">XBert handles conversations on its own. But when your team does step in, it shifts to coaching mode. Full context, suggested responses, and next steps so every agent performs like your best and your new hires onboard with an AI coach.</p>
+                    </div>
+                </article>
+
+                <article class="grid-12 fabric-variation-feature fabric-variation-feature--reverse">
+                    <div class="fabric-variation-visual fabric-variation-visual--actions" aria-hidden="true">
+                        <span class="fabric-block-accent fabric-block-accent--actions" aria-hidden="true">
+                            <span class="fabric-tetris-board">
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-o"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-i"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-j"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-t"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-s"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-z"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-l"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-o-two"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-t-two"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--stack-i-two"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--falling-i"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--falling-o"></span>
+                                <span class="fabric-tetris-piece fabric-tetris-piece--falling-l"></span>
+                            </span>
+                        </span>
+                        <div class="ed-card-action-stack">
+                            <span class="ed-card-action-card"><span class="ed-card-action-main"><i class="ri-check-line" aria-hidden="true"></i>Verified caller identity</span><span class="ed-card-toast-step-action">Transcript <i class="ri-arrow-right-up-line" aria-hidden="true"></i></span></span>
+                            <span class="ed-card-action-card"><span class="ed-card-action-main"><i class="ri-check-line" aria-hidden="true"></i>Answered question about office hours</span><span class="ed-card-toast-step-action">Source <i class="ri-arrow-right-up-line" aria-hidden="true"></i></span></span>
+                            <span class="ed-card-action-card"><span class="ed-card-action-main"><i class="ri-check-line" aria-hidden="true"></i>Updated insurance info on file</span><span class="ed-card-toast-step-action">CRM <i class="ri-arrow-right-up-line" aria-hidden="true"></i></span></span>
+                            <span class="ed-card-action-card"><span class="ed-card-action-main"><i class="ri-check-line" aria-hidden="true"></i>Booked follow-up for Thursday 2pm</span><span class="ed-card-toast-step-action">Calendar <i class="ri-arrow-right-up-line" aria-hidden="true"></i></span></span>
+                            <span class="ed-card-action-card"><span class="ed-card-action-main"><i class="ri-check-line" aria-hidden="true"></i>Sent confirmation via SMS</span><span class="ed-card-toast-step-action">SMS log <i class="ri-arrow-right-up-line" aria-hidden="true"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="fabric-variation-copy">
+                        <h3 class="fabric-ed-card-heading">Every customer issue will be handled in a single conversation.</h3>
+                        <p class="fabric-ed-card-detail">Booking, billing, support, scheduling. XBert handles all of it in a single conversation. XBert is assisted by our NEXT.IQ Flow which elevates its performance beyond generic AI.</p>
+                    </div>
+                </article>
+
+                <div class="fabric-journal-thread">
+                    <div class="fabric-journal-toolbar" aria-hidden="true">
+                        <span>Customer Journal Thread</span>
+                        <span>CTX.SEQ // ENRICHING</span>
+                    </div>
+                    <div class="fabric-journal-inner">
+                        <div class="fabric-journal-copy">
+                            <span class="fabric-journal-kicker"><span class="fabric-journal-kicker-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Continuous customer journal</span>
+                            <h3 class="fabric-journal-title">Every interaction becomes part of the customer journal for life.</h3>
+                            <p class="fabric-journal-desc">XBert threads calls, messages, purchases, and follow-ups into one customer journal. It remembers what happened, what each customer prefers, and what needs to happen next.</p>
+                        </div>
+                        <div class="fabric-journal-visual" aria-hidden="true">
+                            <svg class="fabric-journal-svg" viewBox="0 0 980 360" role="img">
+                                <defs>
+                                    <linearGradient id="journalLineTop" gradientUnits="userSpaceOnUse" x1="0" y1="96" x2="0" y2="180">
+                                        <stop offset="0%" stop-color="#7A756F" stop-opacity="0.78"/>
+                                        <stop offset="100%" stop-color="#000000" stop-opacity="0.08"/>
+                                    </linearGradient>
+                                    <linearGradient id="journalLineBottom" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="0" y2="252">
+                                        <stop offset="0%" stop-color="#000000" stop-opacity="0.08"/>
+                                        <stop offset="100%" stop-color="#7A756F" stop-opacity="0.78"/>
+                                    </linearGradient>
+                                </defs>
+                                <path class="journal-wave" d="M-80 180 H1060"/>
+                                <g class="journal-node journal-node--major journal-node--one" transform="translate(80 180)">
+                                    <line x1="0" y1="0" x2="0" y2="-82"/>
+                                    <circle cx="0" cy="0" r="5"/>
+                                    <text class="journal-node-index" x="-10" y="-88" text-anchor="end">01</text>
+                                    <text x="0" y="-88">First contact</text>
+                                    <text x="0" y="-86" class="journal-node-sub">Need captured</text>
+                                </g>
+                                <g class="journal-node journal-node--major journal-node--two" transform="translate(280 180)">
+                                    <line x1="0" y1="0" x2="0" y2="70"/>
+                                    <circle cx="0" cy="0" r="5"/>
+                                    <text class="journal-node-index" x="-10" y="80" text-anchor="end">02</text>
+                                    <text x="0" y="80">Calendar checked</text>
+                                    <text x="0" y="114" class="journal-node-sub">Open slot found</text>
+                                </g>
+                                <g class="journal-node journal-node--major journal-node--three" transform="translate(480 180)">
+                                    <line x1="0" y1="0" x2="0" y2="-82"/>
+                                    <circle cx="0" cy="0" r="5"/>
+                                    <text class="journal-node-index" x="-10" y="-88" text-anchor="end">03</text>
+                                    <text x="0" y="-88">Appointment booked</text>
+                                    <text x="0" y="-86" class="journal-node-sub">Confirmed by SMS</text>
+                                </g>
+                                <g class="journal-node journal-node--major journal-node--four" transform="translate(680 180)">
+                                    <line x1="0" y1="0" x2="0" y2="70"/>
+                                    <circle cx="0" cy="0" r="5"/>
+                                    <text class="journal-node-index" x="-10" y="80" text-anchor="end">04</text>
+                                    <text x="0" y="80">Service completed</text>
+                                    <text x="0" y="114" class="journal-node-sub">Outcome logged</text>
+                                </g>
+                                <g class="journal-node journal-node--major journal-node--five" transform="translate(880 180)">
+                                    <line x1="0" y1="0" x2="0" y2="-82"/>
+                                    <circle cx="0" cy="0" r="5"/>
+                                    <text class="journal-node-index" x="-10" y="-88" text-anchor="end">05</text>
+                                    <text x="0" y="-88">Next contact</text>
+                                    <text x="0" y="-86" class="journal-node-sub">XBert already knows</text>
+                                </g>
+                                <g class="journal-node journal-node--micro journal-node--micro-top" transform="translate(148 180)">
+                                    <circle cx="0" cy="0" r="3"/>
+                                </g>
+                                <g class="journal-node journal-node--micro journal-node--micro-bottom" transform="translate(212 180)">
+                                    <circle cx="0" cy="0" r="3"/>
+                                </g>
+                                <g class="journal-node journal-node--micro journal-node--micro-top" transform="translate(348 180)">
+                                    <circle cx="0" cy="0" r="3"/>
+                                </g>
+                                <g class="journal-node journal-node--micro journal-node--micro-bottom" transform="translate(412 180)">
+                                    <circle cx="0" cy="0" r="3"/>
+                                </g>
+                                <g class="journal-node journal-node--micro journal-node--micro-top" transform="translate(548 180)">
+                                    <circle cx="0" cy="0" r="3"/>
+                                </g>
+                                <g class="journal-node journal-node--micro journal-node--micro-bottom" transform="translate(612 180)">
+                                    <circle cx="0" cy="0" r="3"/>
+                                </g>
+                                <g class="journal-node journal-node--micro journal-node--micro-top" transform="translate(748 180)">
+                                    <circle cx="0" cy="0" r="3"/>
+                                </g>
+                                <g class="journal-node journal-node--micro journal-node--micro-bottom" transform="translate(812 180)">
+                                    <circle cx="0" cy="0" r="3"/>
+                                </g>
+                            </svg>
+                            <div class="journal-micro-overlay" aria-hidden="true">
+                                <div class="journal-micro-pill journal-micro-pill--top journal-micro-pill--blue" style="--journal-x: 15.1%; --journal-y: 38.6%;" data-tooltip="XBert identifies why the customer reached out and stores the intent as structured context.">Intent captured<span class="journal-micro-tooltip" aria-hidden="true"><i class="ri-focus-3-line"></i><span>XBert identifies why the customer reached out and stores the intent as structured context.</span></span></div>
+                                <div class="journal-micro-pill journal-micro-pill--bottom journal-micro-pill--sage" style="--journal-x: 21.6%; --journal-y: 56.4%;" data-tooltip="The customer's preferred channel, timing, and tone become part of the journal.">Preference logged<span class="journal-micro-tooltip" aria-hidden="true"><i class="ri-equalizer-line"></i><span>The customer's preferred channel, timing, and tone become part of the journal.</span></span></div>
+                                <div class="journal-micro-pill journal-micro-pill--top journal-micro-pill--sage" style="--journal-x: 35.5%; --journal-y: 38.6%;" data-tooltip="XBert sends the right reminder using the customer's saved communication preference.">Reminder sent<span class="journal-micro-tooltip" aria-hidden="true"><i class="ri-notification-3-line"></i><span>XBert sends the right reminder using the customer's saved communication preference.</span></span></div>
+                                <div class="journal-micro-pill journal-micro-pill--bottom journal-micro-pill--tan" style="--journal-x: 42%; --journal-y: 56.4%;" data-tooltip="The customer gets confirmation and the business has a traceable record of the message.">Confirm sent<span class="journal-micro-tooltip" aria-hidden="true"><i class="ri-send-plane-line"></i><span>The customer gets confirmation and the business has a traceable record of the message.</span></span></div>
+                                <div class="journal-micro-pill journal-micro-pill--top journal-micro-pill--tan" style="--journal-x: 55.9%; --journal-y: 38.6%;" data-tooltip="The result is written back into the customer record so the next interaction starts informed.">Record updated<span class="journal-micro-tooltip" aria-hidden="true"><i class="ri-file-edit-line"></i><span>The result is written back into the customer record so the next interaction starts informed.</span></span></div>
+                                <div class="journal-micro-pill journal-micro-pill--bottom journal-micro-pill--light" style="--journal-x: 62.4%; --journal-y: 56.4%;" data-tooltip="Loose ends are resolved and marked complete, reducing follow-up work for the team.">Open issue closed<span class="journal-micro-tooltip" aria-hidden="true"><i class="ri-checkbox-circle-line"></i><span>Loose ends are resolved and marked complete, reducing follow-up work for the team.</span></span></div>
+                                <div class="journal-micro-pill journal-micro-pill--top journal-micro-pill--light" style="--journal-x: 76.3%; --journal-y: 38.6%;" data-tooltip="XBert turns the interaction history into a concise handoff your team can understand quickly.">Summary drafted<span class="journal-micro-tooltip" aria-hidden="true"><i class="ri-draft-line"></i><span>XBert turns the interaction history into a concise handoff your team can understand quickly.</span></span></div>
+                                <div class="journal-micro-pill journal-micro-pill--bottom journal-micro-pill--blue" style="--journal-x: 82.9%; --journal-y: 56.4%;" data-tooltip="Each resolved detail improves the customer journal XBert uses next time.">Context refined<span class="journal-micro-tooltip" aria-hidden="true"><i class="ri-sparkling-line"></i><span>Each resolved detail improves the customer journal XBert uses next time.</span></span></div>
+                            </div>
+                            <div class="journal-mobile-flow">
+                                <div class="journal-mobile-step journal-mobile-step--blue">
+                                    <span class="journal-mobile-step-index">01</span>
+                                    <div class="journal-mobile-step-copy">
+                                        <span class="journal-mobile-step-label">Intent captured</span>
+                                        <p>XBert stores why the customer reached out as structured context.</p>
+                                    </div>
+                                </div>
+                                <div class="journal-mobile-step journal-mobile-step--sage">
+                                    <span class="journal-mobile-step-index">02</span>
+                                    <div class="journal-mobile-step-copy">
+                                        <span class="journal-mobile-step-label">Preference logged</span>
+                                        <p>Channel, timing, and tone become part of the customer journal.</p>
+                                    </div>
+                                </div>
+                                <div class="journal-mobile-step journal-mobile-step--tan">
+                                    <span class="journal-mobile-step-index">03</span>
+                                    <div class="journal-mobile-step-copy">
+                                        <span class="journal-mobile-step-label">Appointment booked</span>
+                                        <p>The reminder and confirmation use what XBert already knows.</p>
+                                    </div>
+                                </div>
+                                <div class="journal-mobile-step journal-mobile-step--light">
+                                    <span class="journal-mobile-step-index">04</span>
+                                    <div class="journal-mobile-step-copy">
+                                        <span class="journal-mobile-step-label">Summary drafted</span>
+                                        <p>Your team gets a clean handoff after the interaction wraps.</p>
+                                    </div>
+                                </div>
+                                <div class="journal-mobile-step journal-mobile-step--blue">
+                                    <span class="journal-mobile-step-index">05</span>
+                                    <div class="journal-mobile-step-copy">
+                                        <span class="journal-mobile-step-label">Context refined</span>
+                                        <p>Each resolved detail improves the next customer conversation.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="fabric-journal-chips" aria-label="XBert customer journal benefits">
+                            <li><i class="ri-file-list-3-line" aria-hidden="true"></i>Learns Your Business</li>
+                            <li><i class="ri-clipboard-line" aria-hidden="true"></i>Adapts to Your Workflows</li>
+                            <li><i class="ri-shield-check-line" aria-hidden="true"></i>You Stay in Control</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid-12 fabric-variation-cards">
+                    <article class="fabric-ed-card">
+                        <div class="fabric-ed-card-grid" aria-hidden="true">
+                            <span class="fabric-block-accent fabric-block-accent--context" aria-hidden="true"></span>
+                            <div class="ed-card-toast-wrapper">
+                                <div class="ed-card-toast-shadow"></div>
+                                <div class="ed-card-toast-shadow"></div>
+                                <div class="ed-card-toast">
+                                    <div class="ed-card-toast-header">
+                                        <svg class="ed-card-toast-xicon" viewBox="0 0 18.89 27.41" aria-hidden="true"><use href="#xbert-icon"/></svg>
+                                        <span class="ed-card-toast-name">Explore Customer Context</span>
+                                    </div>
+                                    <div class="ed-card-customer-profile">
+                                        <img src="assets/images/people/person-06.png" alt="" class="ed-card-customer-avatar">
+                                        <div class="ed-card-customer-id">
+                                            <span class="ed-card-customer-name">Maya Chen</span>
+                                            <span class="ed-card-customer-company">Vertex Industries</span>
+                                            <span class="ed-card-customer-tags">
+                                                <span>Returning customer</span>
+                                                <span>Text first</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="ed-card-customer-metrics">
+                                        <span><strong>49</strong> interactions</span>
+                                        <span><strong>Open</strong> follow-up</span>
+                                        <span><strong>Thu 2pm</strong> next slot</span>
+                                    </div>
+                                    <span class="ed-card-toast-body-label">Recent activity</span>
+                                    <div class="ed-card-customer-activity">
+                                        <span class="ed-card-customer-activity-row"><span><i class="ri-phone-line" aria-hidden="true"></i>Call completed</span><span class="ed-card-toast-step-action">Transcript <i class="ri-arrow-right-up-line" aria-hidden="true"></i></span></span>
+                                        <span class="ed-card-customer-activity-row"><span><i class="ri-database-2-line" aria-hidden="true"></i>CRM updated</span><span class="ed-card-toast-step-action">CRM <i class="ri-arrow-right-up-line" aria-hidden="true"></i></span></span>
+                                        <span class="ed-card-customer-activity-row"><span><i class="ri-calendar-check-line" aria-hidden="true"></i>Follow-up ready</span><span class="ed-card-toast-step-action">Calendar <i class="ri-arrow-right-up-line" aria-hidden="true"></i></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fabric-ed-card-body">
+                            <h3 class="fabric-ed-card-heading">XBert will help you master the customer conversation.</h3>
+                            <p class="fabric-ed-card-detail">It&rsquo;s humanly impossible to know every single one of your customers. XBert remembers every interaction, every preference, every open issue and uses all of it to make every conversation feel personal.</p>
+                        </div>
+                    </article>
+
+                    <article class="fabric-ed-card">
+                        <div class="fabric-ed-card-grid" aria-hidden="true">
+                            <span class="fabric-block-accent fabric-block-accent--learning" aria-hidden="true"></span>
+                            <div class="ed-card-toast-wrapper ed-card-toast-wrapper--learning">
+                                <div class="ed-card-toast-shadow"></div>
+                                <div class="ed-card-toast-shadow"></div>
+                                <div class="ed-card-toast ed-card-toast--learning">
+                                    <div class="ed-card-toast-header">
+                                        <svg class="ed-card-toast-xicon" viewBox="0 0 18.89 27.41" aria-hidden="true"><use href="#xbert-icon"/></svg>
+                                        <span class="ed-card-toast-name">XBert Learning Loop</span>
+                                    </div>
+                                    <span class="ed-card-toast-body-label">Customer journal reasoning</span>
+                                    <p class="ed-card-toast-body"><strong>Pattern found:</strong> customers who miss reminders usually reschedule by text. Updating the follow-up guidance for the next conversation.</p>
+                                    <span class="ed-card-learning-divider" aria-hidden="true"></span>
+                                    <div class="ed-card-learning-checks">
+                                        <span class="ed-card-learning-check"><span class="ed-card-learning-check-main"><i class="ri-check-line" aria-hidden="true"></i>Checked customer history</span></span>
+                                        <span class="ed-card-learning-check"><span class="ed-card-learning-check-main"><i class="ri-check-line" aria-hidden="true"></i>Compared 49 interactions</span></span>
+                                        <span class="ed-card-learning-check"><span class="ed-card-learning-check-main"><i class="ri-check-line" aria-hidden="true"></i>Workflow guidance refined</span><span class="ed-card-learning-check-badge">NextIQ</span></span>
+                                    </div>
+                                    <div class="ed-card-learning-signal">
+                                        <span>Learned signal</span>
+                                        <strong>Text first after missed reminder</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fabric-ed-card-body">
+                            <h3 class="fabric-ed-card-heading">Your XBert gets smarter after every interaction.</h3>
+                            <p class="fabric-ed-card-detail">XBert reasons over the customer journal, notices how work gets resolved, and turns those patterns into better guidance. The more it handles, the smarter it gets.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup / How It Works -- Linear-style header row (title left, desc right)
+         with two overlapping static mockup panels below: the interview conversation
+         on the left and the auto-generated instructions on the right. -->
+    <section class="section-setup reveal">
+        <div class="container">
+            <div class="grid-12 setup-header">
+                <div class="setup-header-copy">
+                    <span class="setup-eyebrow"><span class="setup-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>How It Works</span>
+                    <h2 class="setup-title">Setup is easy.<br>Just talk to it.</h2>
+                </div>
+                <div class="setup-header-desc">
+                    <span class="setup-eyebrow" aria-hidden="true" style="visibility: hidden;">&nbsp;</span>
+                    <p class="setup-deck">Most AI tools hand you a configuration panel and wish you luck. XBert interviews you about your business, writes its own instructions, and makes it easy to test and go live &mdash; no technical skills required.</p>
+                    <a href="#" class="btn btn-secondary">Start Free Trial</a>
+                </div>
+            </div>
+
+            <div class="setup-mockups">
+                <svg class="setup-connector" aria-hidden="true" preserveAspectRatio="none">
+                    <path class="setup-connector-path" d="M 0,0 L 0,0" fill="none" stroke-dasharray="6,4"/>
+                </svg>
+                <div class="setup-mockup setup-mockup--interview">
+                    <div class="setup-mockup-toolbar" aria-hidden="true">
+                        <span class="setup-mockup-toolbar-left">SETUP INTERVIEW</span>
+                    </div>
+                    <div class="setup-mockup-body">
+                        <div class="setup-chat-msg setup-chat-msg--xbert">
+                            <span class="setup-chat-name">XBert</span>
+                            <p>What's your website address?</p>
+                        </div>
+                        <div class="setup-chat-msg setup-chat-msg--user">
+                            <p>brightsmiledental.com</p>
+                        </div>
+                        <div class="setup-chat-status" data-done-text="Website scanned">
+                            <lottie-player class="setup-chat-status-icon" src="assets/lottie/xbert-chat.json" background="transparent" speed="1" aria-hidden="true"></lottie-player>
+                            <span>Scanning website...</span>
+                        </div>
+                        <div class="setup-chat-msg setup-chat-msg--xbert">
+                            <span class="setup-chat-name">XBert</span>
+                            <p>Got it -- a dental practice with three locations. What should happen when someone reaches out after hours?</p>
+                        </div>
+                        <div class="setup-chat-msg setup-chat-msg--user">
+                            <p>Take a message and text me the summary.</p>
+                        </div>
+                        <div class="setup-chat-status" data-done-text="After-hours rules saved">
+                            <lottie-player class="setup-chat-status-icon" src="assets/lottie/xbert-chat.json" background="transparent" speed="1" aria-hidden="true"></lottie-player>
+                            <span>Writing after-hours rules...</span>
+                        </div>
+                        <div class="setup-chat-msg setup-chat-msg--xbert">
+                            <span class="setup-chat-name">XBert</span>
+                            <p>Got it. Should I book appointments directly into your calendar?</p>
+                        </div>
+                        <div class="setup-chat-msg setup-chat-msg--user">
+                            <p>Yes, we use Calendly.</p>
+                        </div>
+                        <div class="setup-chat-status" data-done-text="Calendly connected">
+                            <lottie-player class="setup-chat-status-icon" src="assets/lottie/xbert-chat.json" background="transparent" speed="1" aria-hidden="true"></lottie-player>
+                            <span>Connecting Calendly integration...</span>
+                        </div>
+                    </div>
+                    <div class="setup-chat-input" aria-hidden="true">
+                        <span class="setup-chat-input-text">Tell XBert about your business...</span>
+                        <button class="setup-chat-send" tabindex="-1">
+                            <i class="ri-arrow-right-line"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="setup-mockup setup-mockup--rules">
+                    <div class="setup-mockup-toolbar" aria-hidden="true">
+                        <span class="setup-mockup-toolbar-left">AI EMPLOYEE SKILLS AND SETUP</span>
+                        <div class="setup-toolbar-actions">
+                            <span class="setup-toolbar-btn">Test</span>
+                            <span class="setup-toolbar-btn">Go Live</span>
+                        </div>
+                    </div>
+                    <div class="setup-rules-layout">
+                        <nav class="setup-sidebar" aria-label="Setup checklist">
+                            <ul class="setup-checklist">
+                                <li class="setup-checklist-item is-done">
+                                    <i class="ri-checkbox-circle-fill" aria-hidden="true"></i>
+                                    <span>Business Profile</span>
+                                </li>
+                                <li class="setup-checklist-item is-done is-active">
+                                    <i class="ri-checkbox-circle-fill" aria-hidden="true"></i>
+                                    <span>Skills</span>
+                                </li>
+                                <li class="setup-checklist-item is-done">
+                                    <i class="ri-checkbox-circle-fill" aria-hidden="true"></i>
+                                    <span>Integrations</span>
+                                </li>
+                                <li class="setup-checklist-item">
+                                    <i class="ri-checkbox-blank-circle-line" aria-hidden="true"></i>
+                                    <span>Knowledge Base</span>
+                                </li>
+                                <li class="setup-checklist-item">
+                                    <i class="ri-checkbox-blank-circle-line" aria-hidden="true"></i>
+                                    <span>Test and Review</span>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="setup-rules-content">
+                            <h4 class="setup-proc-heading">Greeting and routing</h4>
+
+                            <div class="setup-step">
+                                <span class="setup-step-num">1.</span>
+                                <p>Greet the caller with <span class="setup-chip">Bright Smile Dental<i class="ri-arrow-down-s-line" aria-hidden="true"></i></span></p>
+                            </div>
+
+                            <div class="setup-step">
+                                <span class="setup-step-num">2.</span>
+                                <p>Identify caller intent:</p>
+                            </div>
+
+                            <div class="setup-substeps">
+                                <div class="setup-substep">
+                                    <span class="setup-substep-label">A.</span>
+                                    <p>Appointment request → <span class="setup-chip setup-chip--action"><i class="ri-links-line" aria-hidden="true"></i>Check Calendly</span> → <span class="setup-chip setup-chip--action"><i class="ri-calendar-check-line" aria-hidden="true"></i>Book directly</span></p>
+                                </div>
+                                <div class="setup-substep">
+                                    <span class="setup-substep-label">B.</span>
+                                    <p>After hours → <span class="setup-chip setup-chip--action"><i class="ri-message-2-line" aria-hidden="true"></i>Take message</span> → <span class="setup-chip setup-chip--action"><i class="ri-send-plane-line" aria-hidden="true"></i>SMS summary to owner</span></p>
+                                </div>
+                                <div class="setup-substep">
+                                    <span class="setup-substep-label">C.</span>
+                                    <p>Emergency → <span class="setup-chip setup-chip--action"><i class="ri-phone-transfer-line" aria-hidden="true"></i>Transfer to on-call</span></p>
+                                </div>
+                                <div class="setup-substep">
+                                    <span class="setup-substep-label">D.</span>
+                                    <p>Insurance question → <span class="setup-chip setup-chip--action"><i class="ri-book-read-line" aria-hidden="true"></i>Reference policy guide</span></p>
+                                </div>
+                            </div>
+
+                            <h4 class="setup-proc-heading">Appointment booking</h4>
+
+                            <div class="setup-step">
+                                <span class="setup-step-num">3.</span>
+                                <p>Book via <span class="setup-chip">Calendly<i class="ri-arrow-down-s-line" aria-hidden="true"></i></span> across <span class="setup-chip">3 locations<i class="ri-arrow-down-s-line" aria-hidden="true"></i></span></p>
+                            </div>
+
+                            <div class="setup-substeps">
+                                <div class="setup-substep">
+                                    <span class="setup-substep-label">A.</span>
+                                    <p>Booking window: <span class="setup-chip">next 14 days<i class="ri-arrow-down-s-line" aria-hidden="true"></i></span></p>
+                                </div>
+                                <div class="setup-substep">
+                                    <span class="setup-substep-label">B.</span>
+                                    <p>Confirm via <span class="setup-chip setup-chip--action"><i class="ri-send-plane-line" aria-hidden="true"></i>SMS</span> after booking</p>
+                                </div>
+                                <div class="setup-substep">
+                                    <span class="setup-substep-label">C.</span>
+                                    <p>Reschedule: allowed up to <span class="setup-chip">2 hours before<i class="ri-arrow-down-s-line" aria-hidden="true"></i></span></p>
+                                </div>
+                            </div>
+
+                            <div class="setup-rule-status">
+                                <lottie-player class="setup-rule-status-icon" src="assets/lottie/xbert-chat.json" background="transparent" speed="1" loop autoplay aria-hidden="true"></lottie-player> Ready to test
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Video -- 60-second message from Tomas, big hero video below an editorial header row -->
+    <section class="section-founder-video reveal">
+        <div class="container">
+            <div class="founder-video-header">
+                <div class="founder-video-title-block">
+                    <span class="founder-video-eyebrow">TOMAS GORNY &mdash; FOUNDER &amp; CEO &middot; XBERT + NEXTIVA</span>
+                    <h2 class="founder-video-title">Become impossible to compete with.</h2>
+                </div>
+            </div>
+            <div class="grid-12 founder-video-body">
+                <div class="founder-video-frame">
+                    <wistia-player media-id="oos2e720j0" aspect="1.7777777777777777" silent-autoplay="true" player-color="000000"></wistia-player>
+                </div>
+                <div class="founder-video-factoids">
+                    <article class="founder-factoid">
+                        <div class="founder-factoid-top">
+                            <span class="founder-factoid-spinner" data-spinner="sineWave" aria-hidden="true">⣴⣿⣷⣄⠀⢀</span>
+                        </div>
+                        <div class="founder-factoid-copy">
+                            <h3 class="founder-factoid-heading">Built by people who know what customer work really takes.</h3>
+                            <p class="founder-factoid-detail">Nextiva has watched real teams handle calls, rushes, handoffs, and missed opportunities.</p>
+                        </div>
+                    </article>
+
+                    <article class="founder-factoid">
+                        <div class="founder-factoid-top">
+                            <span class="founder-factoid-spinner" data-spinner="eq" aria-hidden="true">⣆⣧⣼⣰</span>
+                        </div>
+                        <div class="founder-factoid-copy">
+                            <h3 class="founder-factoid-heading">Built for the frontline.</h3>
+                            <p class="founder-factoid-detail">Owners, managers, and frontline teams are usually the busiest people in the business. XBert was built for them.</p>
+                        </div>
+                    </article>
+
+                    <article class="founder-factoid">
+                        <div class="founder-factoid-top">
+                            <span class="founder-factoid-spinner" data-spinner="fade" aria-hidden="true">⣷⣶⣶⣶</span>
+                        </div>
+                        <div class="founder-factoid-copy">
+                            <h3 class="founder-factoid-heading">A new employee, not another tool.</h3>
+                            <p class="founder-factoid-detail">Today it handles calls, texts, and chats. Over time, it becomes a larger part of how customer work gets done.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <ul class="founder-video-trust-badges" aria-label="Nextiva trust stats">
+                <li><i class="ri-time-line" aria-hidden="true"></i>Nearly 20 years serving customers</li>
+                <li><i class="ri-building-2-line" aria-hidden="true"></i>Trusted by 100,000+ businesses</li>
+                <li><i class="ri-signal-tower-line" aria-hidden="true"></i>99.999% uptime</li>
+                <li><i class="ri-exchange-line" aria-hidden="true"></i>1 billion+ interactions annually</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Integrations + Security -- connected systems with governed AI controls -->
+    <section id="integrations-security" class="section-integrations-security reveal">
+        <div class="container">
+            <div class="grid-12 integrations-security-header">
+                <div class="integrations-security-copy">
+                    <span class="integrations-security-eyebrow"><span class="integrations-security-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Integrations + Security</span>
+                    <h2 class="integrations-security-title">Connect your tools.<br>Governed by your rules.</h2>
+                </div>
+            </div>
+
+            <div class="grid-12 integrations-security-layout">
+                <div class="integrations-panel">
+                    <div class="integrations-panel-toolbar" aria-hidden="true">
+                        <span>CONNECTED WORKSPACE</span>
+                        <span>SYNC.OK</span>
+                    </div>
+                    <div class="grid-12 integrations-grid">
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/salesforce.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Salesforce</span>
+                            <small>Lookup, create, update</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/hubspot.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>HubSpot</span>
+                            <small>Contacts and tickets</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/housecallpro.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Housecall Pro</span>
+                            <small>Reservations</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/epic.webp" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Epic</span>
+                            <small>Patient scheduling</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/google-calendar.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Google Calendar</span>
+                            <small>Availability checks</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/outlook.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Outlook Calendar</span>
+                            <small>Scheduling and availability</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/calendly.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Calendly</span>
+                            <small>Booking flows</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/quickbooks.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>QuickBooks</span>
+                            <small>Invoicing and accounts</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/zoho.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Zoho</span>
+                            <small>CRM records</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/clover.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Clover</span>
+                            <small>Orders and reservations</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/slack.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Slack</span>
+                            <small>Team notifications</small>
+                        </article>
+                        <article class="integration-tile">
+                            <i class="ri-code-box-line" aria-hidden="true"></i>
+                            <span>Custom APIs</span>
+                            <small>On request</small>
+                        </article>
+                        <article class="integration-tile" data-integration-extra>
+                            <img src="assets/logos/integrations/zendesk.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Zendesk</span>
+                            <small>Support tickets</small>
+                        </article>
+                        <article class="integration-tile" data-integration-extra>
+                            <img src="assets/logos/integrations/microsoft-teams.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Microsoft Teams</span>
+                            <small>Collaboration</small>
+                        </article>
+                        <article class="integration-tile" data-integration-extra>
+                            <img src="assets/logos/integrations/servicenow.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>ServiceNow</span>
+                            <small>IT workflows</small>
+                        </article>
+                        <article class="integration-tile" data-integration-extra>
+                            <img src="assets/logos/integrations/shopify.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Shopify</span>
+                            <small>Ecommerce</small>
+                        </article>
+                    </div>
+                    <p class="integrations-more-note">Plus many more</p>
+                    <button class="btn btn-secondary integrations-show-more" type="button" aria-expanded="false" data-integrations-toggle>
+                        Show more integrations
+                    </button>
+                </div>
+
+                <div class="security-panel">
+                    <article class="security-feature">
+                        <span class="security-feature-index">01</span>
+                        <div>
+                            <h3>Customer data stays isolated.</h3>
+                            <p>Account-specific knowledge stays tied to the account. Customer data is not used to train shared models.</p>
+                        </div>
+                    </article>
+                    <article class="security-feature">
+                        <span class="security-feature-index">02</span>
+                        <div>
+                            <h3>Built for regulated conversations.</h3>
+                            <p>HIPAA and GDPR compliant, SOC 2 audited, encryption in transit and at rest, and BAAs with AI providers.</p>
+                        </div>
+                    </article>
+                    <article class="security-feature">
+                        <span class="security-feature-index">03</span>
+                        <div>
+                            <h3>You define the boundaries.</h3>
+                            <p>Set what your AI can and cannot do&mdash;topics, actions, tone, and escalation triggers. When it reaches a limit, your team gets the full transcript and context.</p>
+                        </div>
+                    </article>
+                    <div class="security-cert-row" aria-label="Security certifications and controls">
+                        <h4 class="security-cert-heading">Compliance and security built-in.</h4>
+                        <span><i class="ri-heart-pulse-line" aria-hidden="true"></i>HIPAA Compliant</span>
+                        <span><i class="ri-lock-2-line" aria-hidden="true"></i>SOC 2</span>
+                        <span><i class="ri-global-line" aria-hidden="true"></i>GDPR</span>
+                        <span><i class="ri-file-text-line" aria-hidden="true"></i>BAA Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Team -- leadership + team depth -->
+    <section id="ai-team" class="section-ai-team reveal">
+        <div class="ai-team-bg-terminal" aria-hidden="true" data-bg-snippet-stage-team></div>
+        <div class="container">
+            <div class="grid-12 ai-team-layout">
+                <div class="ai-team-copy">
+                    <span class="ai-team-eyebrow"><span class="ai-team-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Not Built by a Startup</span>
+                    <h2 class="ai-team-title">Two decades of intelligence, one AI.</h2>
+                </div>
+
+                <div class="ai-team-people">
+                    <div class="ai-team-leaders">
+                        <div class="ai-team-leader">
+                            <div class="ai-team-leader-photo"><i class="ri-user-fill"></i></div>
+                            <span class="ai-team-leader-name">Leonardo da Vinci</span>
+                            <span class="ai-team-leader-role">Chief Technology Officer</span>
+                        </div>
+                        <div class="ai-team-leader">
+                            <div class="ai-team-leader-photo"><i class="ri-user-fill"></i></div>
+                            <span class="ai-team-leader-name">Michelangelo Buonarroti</span>
+                            <span class="ai-team-leader-role">Chief Product Officer</span>
+                        </div>
+                        <div class="ai-team-leader">
+                            <div class="ai-team-leader-photo"><i class="ri-user-fill"></i></div>
+                            <span class="ai-team-leader-name">Rembrandt van Rijn</span>
+                            <span class="ai-team-leader-role">Chief AI Advisor</span>
+                        </div>
+                    </div>
+                    <p class="ai-team-deck">A team of engineers, ML researchers, and designers work on XBert every day. We&rsquo;ve baked nearly 20 years of business knowledge in. Ready for you to use.</p>
+                    <div class="ai-team-swarm-dots" aria-label="XBert team members">
+                        <span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span>
+                        <span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span>
+                        <span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span>
+                        <span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span>
+                        <span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span><span class="ai-team-dot"><i class="ri-user-fill"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -- usage-based XBert offer styled for the dark editorial homepage -->
+    <section id="pricing" class="section-pricing reveal">
+        <div class="container">
+            <div class="grid-12 pricing-header">
+                <div class="pricing-header-copy">
+                    <span class="pricing-eyebrow"><span class="pricing-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Pricing</span>
+                    <h2 class="pricing-title">Get the best AI employee.</h2>
+                </div>
+            </div>
+
+            <div class="grid-12 pricing-layout">
+                <article class="pricing-main-card">
+                    <div class="pricing-main-card-top">
+                        <span class="pricing-plan-badge"><strong>XBert</strong><span>AI Employee</span></span>
+                        <div class="pricing-price-row">
+                            <span class="pricing-currency">$</span>
+                            <span class="pricing-amount">0.99</span>
+                            <span class="pricing-period">per session <span class="pricing-info-tooltip" tabindex="0" role="button" aria-label="What counts as a session?" data-tooltip="A session is one phone call longer than 30 seconds, or one SMS/chat conversation with 3+ AI interactions."><i class="ri-information-line" aria-hidden="true"></i></span></span>
+                        </div>
+                        <p class="pricing-note">Starting at $99/month, including 100 sessions.</p>
+                        <p class="pricing-scale-note">Scale as you grow. Connect your calendars, CRMs, and everyday tools. XBert integrates easily.</p>
+                    </div>
+                    <ul class="grid-12 pricing-feature-list">
+                        <li><i class="ri-phone-line" aria-hidden="true"></i><span>AI call answering</span></li>
+                        <li><i class="ri-chat-3-line" aria-hidden="true"></i><span>AI SMS and live chat</span></li>
+                        <li><i class="ri-calendar-check-line" aria-hidden="true"></i><span>AI appointment booking</span></li>
+                        <li><i class="ri-database-2-line" aria-hidden="true"></i><span>AI calendar and CRM sync</span></li>
+                        <li><i class="ri-file-list-3-line" aria-hidden="true"></i><span>AI transcripts and analytics</span></li>
+                        <li><i class="ri-user-voice-line" aria-hidden="true"></i><span>AI team handoff</span></li>
+                    </ul>
+                    <div class="pricing-card-actions">
+                        <a href="#" class="btn btn-primary">Free 14-Day Trial</a>
+                        <a href="#" class="btn btn-secondary">Get a Demo</a>
+                    </div>
+                    <div class="pricing-guarantees" aria-label="Pricing guarantees">
+                        <span><i class="ri-check-line" aria-hidden="true"></i>No contracts</span>
+                        <span><i class="ri-check-line" aria-hidden="true"></i>30-day money-back guarantee</span>
+                    </div>
+                </article>
+
+                <div class="pricing-side-stack">
+                    <article class="pricing-side-card pricing-side-card--setup">
+                        <span class="pricing-side-kicker">Setup support</span>
+                        <h3>Guided setup available.</h3>
+                        <p>XBert is easy to set up on your own. If you need a hand, our team is here.</p>
+                        <ul>
+                            <li><i class="ri-check-line" aria-hidden="true"></i>Custom AI training for your business</li>
+                            <li><i class="ri-check-line" aria-hidden="true"></i>Calendar and CRM setup</li>
+                            <li><i class="ri-check-line" aria-hidden="true"></i>Greeting and voice configuration</li>
+                            <li><i class="ri-check-line" aria-hidden="true"></i>Live testing before launch</li>
+                        </ul>
+                        <p class="pricing-legal">Complex custom integrations may require support scoping.</p>
+                    </article>
+
+                    <ul class="grid-12 pricing-proof-list" aria-label="Nextiva trust signals">
+                        <li>
+                            <i class="ri-shield-check-line" aria-hidden="true"></i>
+                            <span>HIPAA compliant</span>
+                        </li>
+                        <li>
+                            <i class="ri-building-2-line" aria-hidden="true"></i>
+                            <span>Trusted by 100K+ businesses</span>
+                        </li>
+                        <li>
+                            <i class="ri-global-line" aria-hidden="true"></i>
+                            <span>23+ languages supported</span>
+                        </li>
+                        <li>
+                            <i class="ri-flashlight-line" aria-hidden="true"></i>
+                            <span>Powered by Nextiva</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom CTA -- flower scanline variant -->
+    <section class="section-bottom-cta" data-cta-variant="original">
+        <div class="container">
+            <div class="bottom-cta-content">
+                <span class="bottom-cta-eyebrow">XBERT // READY WHEN YOU ARE</span>
+                <h2 class="bottom-cta-title">Turn every customer into a loyal fan.</h2>
+                <div class="bottom-cta-actions">
+                    <a href="#" class="btn btn-primary">Start Free Trial</a>
+                    <a href="#" class="btn btn-secondary">Get a Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision teaser -- card linking to the full vision page -->
+    <section class="section-vision-teaser reveal">
+        <div class="container">
+            <div class="vision-teaser-card">
+                <div class="grid-12 vision-teaser-inner">
+                    <div class="vision-teaser-copy" style="grid-column: span 7;">
+                        <lottie-player
+                            class="vision-teaser-icon"
+                            src="assets/lottie/xbert-voice-blue.json"
+                            background="transparent"
+                            speed="1"
+                            autoplay
+                            loop
+                            aria-hidden="true">
+                        </lottie-player>
+                        <h2 class="vision-teaser-title">Today it handles the busywork.<br>Tomorrow it does even more.</h2>
+                    </div>
+                    <div class="vision-teaser-detail" style="grid-column: span 5;">
+                        <p>We&rsquo;re building toward a fully autonomous customer experience. One that thinks ahead, acts on its own, and never lets a customer fall through the cracks. Always on, always safe, and totally in your control.</p>
+                        <a href="#" class="btn btn-secondary">See the Future</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="grid-12 footer-main">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo" aria-label="XBert home">
+                        <svg class="footer-logo-svg" viewBox="0 0 76.49 27.41" aria-hidden="true" focusable="false"><use href="#xbert-logo-full"/></svg>
+                    </a>
+                    <p>XBert is the AI employee for customer conversations. Built on Nextiva infrastructure for businesses that need every call, text, and chat handled well.</p>
+                    <a href="tel:18007990600" class="footer-phone"><i class="ri-phone-line" aria-hidden="true"></i>1-800-799-0600</a>
+                    <div class="footer-badges" aria-label="Trust signals">
+                        <span>SOC 2 Certified</span>
+                        <span>HIPAA Compliant</span>
+                        <span>99.999% Uptime</span>
+                    </div>
+                </div>
+
+                <div class="grid-12 footer-nav-grid">
+                    <div class="footer-nav-col">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="how-xbert-works.html">How XBert works</a></li>
+                            <li><a href="integrations.html">Integrations</a></li>
+                            <li><a href="security.html">Security &amp; Trust</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-col">
+                        <h4>Industries</h4>
+                        <ul>
+                            <li><a href="#">Healthcare</a></li>
+                            <li><a href="#">Insurance</a></li>
+                            <li><a href="#">Real Estate</a></li>
+                            <li><a href="#">Retail &amp; E-commerce</a></li>
+                            <li><a href="#">Professional Services</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-col">
+                        <h4>Nextiva</h4>
+                        <ul>
+                            <li><a href="#">About Nextiva</a></li>
+                            <li><a href="#">Leadership</a></li>
+                            <li><a href="#">NEXT Platform</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span class="footer-bottom-left">A Product from <a href="https://www.nextiva.com" target="_blank" rel="noopener">Nextiva.com</a></span>
+                <span class="footer-bottom-center">&copy; <span data-year></span></span>
+                <div class="footer-bottom-right">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="security.html">Security</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <!-- Wistia Aurora player runtime + media for founder video (id: oos2e720j0).
+         All player options live on the <wistia-player> element above as HTML
+         attributes (Aurora's preferred API):
+           silent-autoplay="true"    -- play muted with "Click For Sound" overlay
+           player-color="000000"     -- big play button + scrub bar accent color
+         Note: native `autoplay` is intentionally omitted. Playback is started
+         by the IntersectionObserver in script.js when the video scrolls into
+         view, and paused when it scrolls back out. -->
+    <script src="https://fast.wistia.com/player.js" async></script>
+    <script src="https://fast.wistia.com/embed/oos2e720j0.js" async type="module"></script>
+</body>
+</html>

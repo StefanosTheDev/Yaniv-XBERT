@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#141311">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Security &amp; Trust | XBert by Nextiva</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Lottie player (web component) -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/shared.css">
+    <link rel="stylesheet" href="styles/section-hero.css">
+    <link rel="stylesheet" href="styles/page-security.css">
+    <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body class="page-security">
+
+    <!-- Inline SVG sprite: defines reusable icons referenced via <use href="#id">. -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <symbol id="xbert-icon" viewBox="0 0 18.89 27.41" fill="currentColor">
+            <path d="M10.03,21.82c-1.66,1.72-5.85,5.6-8.29,5.6-1.41,0-1.85-1.23-1.7-2.44.34-2.73,4.07-7.67,5.85-9.88,1.39-1.73,2.58-1.98.3-3.77-.45-.36-2.15-1.58-2.65-1.41-.42.43.12,1.44.33,1.95.27.64,1.04,1.72.96,2.38-.1.89-1.18,1.17-1.83.59-.41-.37-1.77-2.87-2.06-3.49-.52-1.1-1.39-3.05-.66-4.15,1.38-2.07,5.07.69,6.43,1.73.95.72,1.82,1.54,2.7,2.34,1.73-1.48,3.57-3.3,5.66-4.28,1.74-.81,4.03-1,3.8,1.6-.31,3.49-6.33,10.64-8.83,13.23ZM3.38,23.68c.2.59,1.7-.47,2.01-.69,2.97-2.02,8.58-8.49,9.87-11.83.41-1.07.49-1.58-.81-1.02-3.09,1.35-9.7,9.15-10.83,12.34-.11.32-.36.87-.25,1.19Z"/>
+            <path d="M10.52,23.46c-.09-.45.34-1.25.79-1.36.85-.22,1.43.6,2.09,1,4.43,2.72.62-2.25.66-3.28.04-.93,1.29-1.35,1.98-.62.53.56,1.68,2.75,2.02,3.53.48,1.08,1.27,2.92.46,3.95-1.37,1.74-4.67-.5-6-1.45-.39-.28-1.93-1.41-2-1.78Z"/>
+            <polygon points="9.44 0 10.56 3.03 13.59 4.15 10.56 5.27 9.44 8.3 8.32 5.27 5.29 4.15 8.32 3.03 9.44 0"/>
+        </symbol>
+        <symbol id="xbert-logo-full" viewBox="0 0 76.49 27.41" fill="currentColor">
+            <path d="M10.03,21.82c-1.66,1.72-5.85,5.6-8.29,5.6-1.41,0-1.85-1.23-1.7-2.44.34-2.73,4.07-7.67,5.85-9.88,1.39-1.73,2.58-1.98.3-3.77-.45-.36-2.15-1.58-2.65-1.41-.42.43.12,1.44.33,1.95.27.64,1.04,1.72.96,2.38-.1.89-1.18,1.17-1.83.59-.41-.37-1.77-2.87-2.06-3.49-.52-1.1-1.39-3.05-.66-4.15,1.38-2.07,5.07.69,6.43,1.73.95.72,1.82,1.54,2.7,2.34,1.73-1.48,3.57-3.3,5.66-4.28,1.74-.81,4.03-1,3.8,1.6-.31,3.49-6.33,10.64-8.83,13.23ZM3.38,23.68c.2.59,1.7-.47,2.01-.69,2.97-2.02,8.58-8.49,9.87-11.83.41-1.07.49-1.58-.81-1.02-3.09,1.35-9.7,9.15-10.83,12.34-.11.32-.36.87-.25,1.19Z"/>
+            <path d="M10.52,23.46c-.09-.45.34-1.25.79-1.36.85-.22,1.43.6,2.09,1,4.43,2.72.62-2.25.66-3.28.04-.93,1.29-1.35,1.98-.62.53.56,1.68,2.75,2.02,3.53.48,1.08,1.27,2.92.46,3.95-1.37,1.74-4.67-.5-6-1.45-.39-.28-1.93-1.41-2-1.78Z"/>
+            <polygon points="9.44 0 10.56 3.03 13.59 4.15 10.56 5.27 9.44 8.3 8.32 5.27 5.29 4.15 8.32 3.03 9.44 0"/>
+            <path d="M23.49,11.5h3.23l1.95,2.88,1.97-2.88h3.19l-3.56,5.24,3.83,5.63h-3.23l-2.21-3.22-2.21,3.22h-3.19l3.81-5.6-3.56-5.26Z"/>
+            <path d="M40.22,11.5c2.35,0,4.27,1.17,4.27,2.6v.96c0,.78-.69,1.36-1.59,1.74.91.38,1.66,1,1.66,1.78v1.21c0,1.44-1.99,2.58-4.34,2.58h-4.98v-10.87h4.98ZM41.46,15.04v-.95c0-.51-.55-.93-1.24-.93h-1.95v2.81h1.95c.69,0,1.24-.42,1.24-.93ZM41.53,19.77v-1.2c0-.51-.62-.93-1.33-.93h-1.93v3.06h1.93c.71,0,1.33-.42,1.33-.93Z"/>
+            <path d="M55.14,11.5v1.67h-5.69v2.87h5.2v1.67h-5.2v3.01h5.69v1.67h-8.72v-10.87h8.72Z"/>
+            <path d="M60.16,18.19v4.18h-3.03v-10.87h4.71c2.37,0,4.29,1.16,4.29,2.58v1.51c0,.93-.88,1.79-2.15,2.24l2.94,4.53h-3.25l-2.66-4.18h-.86ZM61.85,13.16h-1.68v3.36h1.68c.71,0,1.26-.42,1.26-.93v-1.51c0-.51-.55-.92-1.26-.92Z"/>
+            <path d="M76.49,11.5v1.67h-3.5v9.2h-3.03v-9.2h-3.5v-1.67h10.02Z"/>
+        </symbol>
+    </svg>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-wrapper">
+            <div class="nav-left">
+                <a href="index.html" class="nav-logo" aria-label="XBert home">
+                    <svg class="nav-logo-svg" viewBox="0 0 76.49 27.41" aria-hidden="true" focusable="false"><use href="#xbert-logo-full"/></svg>
+                </a>
+                <ul class="nav-menu">
+                    <li class="nav-dropdown nav-dropdown-mega">
+                        <a href="#">Product <span class="nav-carat"></span></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-inner">
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">About XBert</span>
+                                    <a href="how-xbert-works.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">How XBert works</span>
+                                        <span class="mega-menu-desc">AI that does actual work, not just conversation.</span>
+                                    </a>
+                                    <a href="integrations.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">Integrations</span>
+                                        <span class="mega-menu-desc">Connect your calendars, CRMs, and tools.</span>
+                                    </a>
+                                    <a href="security.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">Security &amp; Trust</span>
+                                        <span class="mega-menu-desc">AI safety, guardrails, and compliance foundation.</span>
+                                    </a>
+                                </div>
+
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Featured Capabilities</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">AI Employee</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Agent Assist</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">AI Receptionist</span>
+                                    </a>
+                                </div>
+
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Industries</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Healthcare</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Insurance</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Real Estate</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Retail &amp; E-commerce</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Professional Services</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-dropdown nav-dropdown-mega">
+                        <a href="#">Resources <span class="nav-carat"></span></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-inner">
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Learn</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Customer Stories</span>
+                                        <span class="mega-menu-desc">How businesses use XBert.</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">About Nextiva</span>
+                                        <span class="mega-menu-desc">The company behind XBert.</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Leadership</span>
+                                        <span class="mega-menu-desc">Meet our executive team.</span>
+                                    </a>
+                                </div>
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Support</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Help Center</span>
+                                        <span class="mega-menu-desc">Guides, docs, and support.</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <a href="tel:18007990600" class="btn btn-primary nav-cta nav-phone">
+                    <i class="ri-headphone-line" aria-hidden="true"></i>
+                    <span class="nav-phone-label">Sales</span>
+                    <span class="nav-phone-number">800-799-0600</span>
+                </a>
+                <a href="#" class="btn btn-primary nav-cta">Log In</a>
+                <a href="#" class="btn btn-primary nav-cta nav-cta-demo">Get A Demo</a>
+                <a href="#" class="btn btn-primary nav-cta-primary">Start Free Trial</a>
+                <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay"></div>
+    <div class="mobile-nav-panel">
+        <div class="mobile-nav-links">
+            <div class="mobile-nav-dropdown">
+                <a href="#">Product <span class="mobile-carat"></span></a>
+                <div class="mobile-dropdown-items">
+                    <a href="#">AI Employee</a>
+                    <a href="#">Agent Assist</a>
+                    <a href="#">AI Receptionist</a>
+                    <a href="how-xbert-works.html">How XBert works</a>
+                    <a href="integrations.html">Integrations</a>
+                    <a href="security.html">Security &amp; Trust</a>
+                </div>
+            </div>
+            <div class="mobile-nav-dropdown">
+                <a href="#">Resources <span class="mobile-carat"></span></a>
+                <div class="mobile-dropdown-items">
+                    <a href="#">Customer Stories</a>
+                    <a href="#">Help Center</a>
+                </div>
+            </div>
+            <a href="index.html#pricing">Pricing</a>
+            <a href="tel:18007990600">Sales: 800-799-0600</a>
+        </div>
+        <div class="mobile-nav-actions">
+            <a href="#" class="btn btn-primary">Start Free Trial</a>
+            <a href="#" class="btn btn-secondary">Get A Demo</a>
+            <a href="#" class="nav-signin">Log In</a>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero -->
+        <section class="section-security-hero reveal">
+            <div class="container">
+                <div class="grid-12 security-hero-grid">
+                    <div class="security-hero-copy">
+                        <h1 class="security-hero-title">AI you can trust with your front door.</h1>
+                        <p class="security-hero-deck">XBert answers calls, texts, and chats using the knowledge you approve, the boundaries you set, and the infrastructure businesses rely on.</p>
+                        <div class="security-hero-actions">
+                            <a href="#" class="btn btn-primary">Get A Demo</a>
+                            <a href="#security-safeguards" class="btn btn-secondary">See The Safeguards</a>
+                        </div>
+                    </div>
+
+                    <div class="security-hero-placeholder" aria-label="Product illustration placeholder">
+                        <span>Illustration / product moment</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Logo Trust Strip -->
+        <section class="section-logo-strip">
+            <div class="container">
+                <div class="logo-strip-inner">
+                    <p class="logo-strip-label"><i class="ri-shield-check-fill" aria-hidden="true"></i> Trusted by businesses that cannot afford missed conversations.</p>
+                    <div class="logo-strip-marquee">
+                        <div class="logo-strip-track">
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/texas-roadhouse.svg" alt="Texas Roadhouse" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/toyota.png" alt="Toyota" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/wells-fargo.png" alt="Wells Fargo" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/hca-healthcare.svg" alt="HCA Healthcare" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/cfa.png" alt="Chick-fil-A" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/logo-amazon.svg" alt="Amazon" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/ups-logo-1.svg" alt="UPS" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/DPZ_2025_Logo_CombinationMark_Horizontal_Blue_RGB.svg" alt="Dominos" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/prudential.png" alt="Prudential" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/remax.png" alt="RE/MAX" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/ymca.png" alt="YMCA" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/san-antonio-spurs-1.svg" alt="San Antonio Spurs" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/taco-bell-6.svg" alt="Taco Bell" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/kentucky-fried-chicken-1.svg" alt="KFC" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/hyundai.svg" alt="Hyundai" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/ikea.svg" alt="IKEA" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/texas-roadhouse.svg" alt="Texas Roadhouse" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/toyota.png" alt="Toyota" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/wells-fargo.png" alt="Wells Fargo" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/hca-healthcare.svg" alt="HCA Healthcare" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/cfa.png" alt="Chick-fil-A" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/logo-amazon.svg" alt="Amazon" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/ups-logo-1.svg" alt="UPS" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/DPZ_2025_Logo_CombinationMark_Horizontal_Blue_RGB.svg" alt="Dominos" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/prudential.png" alt="Prudential" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/remax.png" alt="RE/MAX" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/ymca.png" alt="YMCA" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/san-antonio-spurs-1.svg" alt="San Antonio Spurs" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/taco-bell-6.svg" alt="Taco Bell" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/kentucky-fried-chicken-1.svg" alt="KFC" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/hyundai.svg" alt="Hyundai" loading="lazy"></div>
+                            <div class="logo-strip-item"><img src="assets/logos/trust-strip/ikea.svg" alt="IKEA" loading="lazy"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proof Strip -->
+        <section class="section-security-proof reveal">
+            <div class="container">
+                <div class="grid-12 security-proof-grid" aria-label="XBert trust signals">
+                    <article class="security-proof-card">
+                        <span><i class="ri-shield-check-line" aria-hidden="true"></i>SOC 2</span>
+                        <p>Audited controls for a trusted platform foundation.</p>
+                    </article>
+                    <article class="security-proof-card">
+                        <span><i class="ri-lock-line" aria-hidden="true"></i>ISO-27001</span>
+                        <p>Certified information security management.</p>
+                    </article>
+                    <article class="security-proof-card">
+                        <span><i class="ri-file-shield-2-line" aria-hidden="true"></i>HIPAA/GDPR</span>
+                        <p>Alignment for businesses with regulated customer data.</p>
+                    </article>
+                    <article class="security-proof-card">
+                        <span><i class="ri-database-2-line" aria-hidden="true"></i>No shared training</span>
+                        <p>Customer data is not used to train shared models.</p>
+                    </article>
+                    <article class="security-proof-card">
+                        <span><i class="ri-pulse-line" aria-hidden="true"></i>99.999%</span>
+                        <p>Uptime signal for operational trust.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shared Responsibility -->
+        <section id="security-safeguards" class="section-security-responsibility reveal">
+            <div class="container">
+                <div class="grid-12 security-section-header">
+                    <div class="security-section-header-copy">
+                        <h2 class="security-section-title">You define the boundaries.</h2>
+                    </div>
+                    <p class="security-section-deck">Safe AI deployment is not just a certification badge. It is a working agreement between your business rules and the AI employee representing you.</p>
+                </div>
+
+                <div class="grid-12 security-responsibility-grid">
+                    <article class="security-responsibility-card">
+                        <span class="security-card-label">You define</span>
+                        <ul>
+                            <li>Hours, services, and customer promises</li>
+                            <li>Escalation rules and sensitive moments</li>
+                            <li>Approved knowledge and source material</li>
+                            <li>Channels, calendars, CRMs, and workflows</li>
+                            <li>The actions XBert can take for customers</li>
+                        </ul>
+                    </article>
+                    <article class="security-responsibility-card security-responsibility-card--accent">
+                        <span class="security-card-label">XBert enforces</span>
+                        <ul>
+                            <li>Bounded answers from approved context</li>
+                            <li>Contact verification before sensitive actions</li>
+                            <li>Strict rules for what it must not say or do</li>
+                            <li>Graceful fallback when rules or confidence fail</li>
+                            <li>Handoff with transcript, facts, and next step</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guardrails -->
+        <section class="section-security-guardrails reveal">
+            <div class="container">
+                <div class="grid-12 security-section-header">
+                    <div class="security-section-header-copy">
+                        <span class="security-eyebrow"><span class="security-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>AI Safety</span>
+                        <h2 class="security-section-title">Guardrails come before answers.</h2>
+                    </div>
+                    <p class="security-section-deck">XBert is designed for real customer work where the safest answer is sometimes an action, sometimes a handoff, and sometimes knowing what not to say.</p>
+                </div>
+
+                <div class="grid-12 security-guardrail-grid">
+                    <article class="security-icon-card">
+                        <i class="ri-shield-check-line" aria-hidden="true"></i>
+                        <h3>Strict rule enforcement</h3>
+                        <p>Define what XBert can do, what it must never do, and the moments that require a person.</p>
+                    </article>
+                    <article class="security-icon-card">
+                        <i class="ri-user-search-line" aria-hidden="true"></i>
+                        <h3>Verification before action</h3>
+                        <p>XBert can verify the customer before updating records, confirming details, or moving sensitive work forward.</p>
+                    </article>
+                    <article class="security-icon-card">
+                        <i class="ri-route-line" aria-hidden="true"></i>
+                        <h3>Escalation triggers</h3>
+                        <p>When a request crosses a boundary, XBert collects the facts and routes the customer to the right human next step.</p>
+                    </article>
+                    <article class="security-icon-card">
+                        <i class="ri-loop-left-line" aria-hidden="true"></i>
+                        <h3>Graceful degradation</h3>
+                        <p>If XBert cannot safely complete the task, it does not keep guessing. It falls back cleanly and preserves context.</p>
+                    </article>
+                </div>
+
+                <div class="grid-12 security-sensitive-grid" aria-label="Regulated conversation examples">
+                    <article>
+                        <span>Healthcare</span>
+                        <p>Avoid treatment advice, stay inside approved practice information, and escalate clinical questions.</p>
+                    </article>
+                    <article>
+                        <span>Legal</span>
+                        <p>Answer intake and scheduling questions without crossing into legal advice.</p>
+                    </article>
+                    <article>
+                        <span>Financial + tax</span>
+                        <p>Verify the customer, collect structured details, and route sensitive account questions appropriately.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Knowledge Control -->
+        <section class="section-security-knowledge reveal">
+            <div class="container">
+                <div class="grid-12 security-knowledge-card">
+                    <div class="security-knowledge-copy">
+                        <span class="security-eyebrow"><span class="security-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Knowledge You Control</span>
+                        <h2 class="security-section-title">XBert answers from your approved sources, not generic memory.</h2>
+                        <p>Instructions and knowledge stay separate, so you can change what XBert knows without rewriting how it behaves. Approved websites, files, policies, and FAQs become the evidence base behind customer answers.</p>
+                    </div>
+
+                    <div class="security-knowledge-stack" aria-label="Controlled knowledge stack">
+                        <article>
+                            <span>01</span>
+                            <div>
+                                <h3>Approved knowledge</h3>
+                                <p>Upload URLs, PDF, DOC, CSV/XLS, PPT, JSONL, and TXT files, with selective URL inclusion and exclusion.</p>
+                            </div>
+                        </article>
+                        <article>
+                            <span>02</span>
+                            <div>
+                                <h3>Business rules</h3>
+                                <p>Set tone, boundaries, escalation preferences, and the actions XBert can take for each workflow.</p>
+                            </div>
+                        </article>
+                        <article>
+                            <span>03</span>
+                            <div>
+                                <h3>Safe answer</h3>
+                                <p>XBert uses account-specific knowledge and your approved rules before responding.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compliance Foundation -->
+        <section class="section-security-compliance reveal">
+            <div class="container">
+                <div class="grid-12 security-section-header">
+                    <div class="security-section-header-copy">
+                        <span class="security-eyebrow"><span class="security-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Compliance Foundation</span>
+                        <h2 class="security-section-title">The security basics are not bolted on later.</h2>
+                    </div>
+                    <p class="security-section-deck">XBert pairs a trusted platform foundation with AI-specific controls for customer conversations, knowledge, and handoff.</p>
+                </div>
+
+                <div class="security-compliance-panel">
+                    <div class="grid-12 security-compliance-grid">
+                        <article>
+                            <span>HIPAA + GDPR</span>
+                            <p>Compliance alignment for businesses handling sensitive customer information.</p>
+                        </article>
+                        <article>
+                            <span>SOC 2</span>
+                            <p>Audited platform controls, with scope to confirm before external launch.</p>
+                        </article>
+                        <article>
+                            <span>ISO-27001</span>
+                            <p>Certified information security management foundation.</p>
+                        </article>
+                        <article>
+                            <span>Encryption</span>
+                            <p>Data protected at rest and in transit across the platform.</p>
+                        </article>
+                        <article>
+                            <span>BAAs</span>
+                            <p>Business associate agreements maintained with AI providers where required.</p>
+                        </article>
+                        <article>
+                            <span>Residency</span>
+                            <p>Data residency maintained in-region for supported deployments.</p>
+                        </article>
+                        <article>
+                            <span>Ownership</span>
+                            <p>Customer owns their data, and account-specific knowledge is isolated to the account.</p>
+                        </article>
+                        <article>
+                            <span>PCI boundary</span>
+                            <p>XBert should not process credit card data directly; PCI-compliant IVR paths can be used where needed.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reliability + Handoff -->
+        <section class="section-security-reliability reveal">
+            <div class="container">
+                <div class="grid-12 security-reliability-card">
+                    <div class="security-reliability-copy">
+                        <span class="security-eyebrow"><span class="security-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Reliability + Handoff</span>
+                        <h2 class="security-section-title">XBert resolves when safe. It hands off when human judgment matters.</h2>
+                        <p>Operational trust is more than uptime. It is knowing customers will be answered, records will stay clean, and your team will get the full story when a person needs to step in.</p>
+                    </div>
+                    <div class="security-handoff-panel" aria-label="Human handoff readiness">
+                        <div class="security-handoff-row">
+                            <span>Transcript</span>
+                            <strong>Attached</strong>
+                        </div>
+                        <div class="security-handoff-row">
+                            <span>Key facts</span>
+                            <strong>Summarized</strong>
+                        </div>
+                        <div class="security-handoff-row">
+                            <span>Attempted action</span>
+                            <strong>Logged</strong>
+                        </div>
+                        <div class="security-handoff-row">
+                            <span>Next step</span>
+                            <strong>Prepared</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regulated Industries -->
+        <section class="section-security-industries reveal">
+            <div class="container">
+                <div class="grid-12 security-section-header">
+                    <div class="security-section-header-copy">
+                        <span class="security-eyebrow"><span class="security-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Regulated Work</span>
+                        <h2 class="security-section-title">Built for industries where trust is a prerequisite.</h2>
+                    </div>
+                    <p class="security-section-deck">Healthcare practices, legal firms, and financial services teams need AI that can be useful without crossing the lines their business depends on.</p>
+                </div>
+
+                <div class="grid-12 security-industry-grid">
+                    <article class="security-industry-card">
+                        <i class="ri-heart-pulse-line" aria-hidden="true"></i>
+                        <h3>Healthcare</h3>
+                        <p>Handle appointments, insurance questions, refills, and patient routing while keeping sensitive topics bounded.</p>
+                    </article>
+                    <article class="security-industry-card">
+                        <i class="ri-scales-3-line" aria-hidden="true"></i>
+                        <h3>Legal</h3>
+                        <p>Capture intake, book consultations, and answer practice-area questions without giving legal advice.</p>
+                    </article>
+                    <article class="security-industry-card">
+                        <i class="ri-bank-line" aria-hidden="true"></i>
+                        <h3>Financial + tax</h3>
+                        <p>Qualify urgent inbound requests, verify before action, and route sensitive account work to the right person.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section-security-faq reveal">
+            <div class="container">
+                <div class="grid-12 security-faq-layout">
+                    <div class="security-faq-intro">
+                        <span class="security-eyebrow"><span class="security-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Q+A</span>
+                        <h2 class="security-section-title">The questions teams ask before trusting AI with customers.</h2>
+                    </div>
+                    <div class="security-faq-list">
+                        <article class="security-faq-item">
+                            <h3>Does XBert use my customer data to train shared models?</h3>
+                            <p>No. The approved site claim is that customer data is not used to train shared models.</p>
+                        </article>
+                        <article class="security-faq-item">
+                            <h3>What compliance standards does XBert support?</h3>
+                            <p>XBert is positioned with HIPAA and GDPR alignment, SOC 2, ISO-27001, encryption at rest and in transit, and data residency support.</p>
+                        </article>
+                        <article class="security-faq-item">
+                            <h3>How does XBert avoid unsafe answers?</h3>
+                            <p>XBert uses strict rules, approved knowledge, disallowed topics, contact verification, and escalation triggers so it can avoid guessing outside the boundaries you set.</p>
+                        </article>
+                        <article class="security-faq-item">
+                            <h3>What happens when XBert is not confident?</h3>
+                            <p>It falls back or escalates. Your team receives the transcript, key facts, and recommended next step instead of a blank handoff.</p>
+                        </article>
+                        <article class="security-faq-item">
+                            <h3>Can XBert access only approved knowledge?</h3>
+                            <p>Yes. XBert is built around business-approved knowledge and instructions, including selective URL inclusion and exclusion for source control.</p>
+                        </article>
+                        <article class="security-faq-item">
+                            <h3>Can XBert handle payments or credit card data?</h3>
+                            <p>XBert should not process credit card data directly. For payment workflows, use approved links or PCI-compliant IVR paths where needed.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom CTA -->
+        <section class="section-security-cta reveal">
+            <div class="container">
+                <div class="security-cta-content">
+                    <span class="security-eyebrow"><span class="security-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Ready</span>
+                    <h2 class="security-cta-title">Put a safer AI employee at your front door.</h2>
+                    <div class="security-cta-actions">
+                        <a href="#" class="btn btn-primary">Get A Demo</a>
+                        <a href="how-xbert-works.html" class="btn btn-secondary">See How XBert Works</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="grid-12 footer-main">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo" aria-label="XBert home">
+                        <svg class="footer-logo-svg" viewBox="0 0 76.49 27.41" aria-hidden="true" focusable="false"><use href="#xbert-logo-full"/></svg>
+                    </a>
+                    <p>XBert is the AI employee for customer conversations, made for businesses that need every call, text, and chat handled well.</p>
+                    <a href="tel:18007990600" class="footer-phone"><i class="ri-phone-line" aria-hidden="true"></i>1-800-799-0600</a>
+                    <div class="footer-badges" aria-label="Trust signals">
+                        <span>SOC 2 Certified</span>
+                        <span>HIPAA Compliant</span>
+                        <span>99.999% Uptime</span>
+                    </div>
+                </div>
+
+                <div class="grid-12 footer-nav-grid">
+                    <div class="footer-nav-col">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="how-xbert-works.html">How XBert works</a></li>
+                            <li><a href="integrations.html">Integrations</a></li>
+                            <li><a href="security.html">Security &amp; Trust</a></li>
+                            <li><a href="index.html#pricing">Pricing</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-col">
+                        <h4>Industries</h4>
+                        <ul>
+                            <li><a href="#">Healthcare</a></li>
+                            <li><a href="#">Insurance</a></li>
+                            <li><a href="#">Real Estate</a></li>
+                            <li><a href="#">Retail &amp; E-commerce</a></li>
+                            <li><a href="#">Professional Services</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-col">
+                        <h4>Nextiva</h4>
+                        <ul>
+                            <li><a href="#">About Nextiva</a></li>
+                            <li><a href="#">Leadership</a></li>
+                            <li><a href="#">NEXT Platform</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span class="footer-bottom-left">A Product from <a href="https://www.nextiva.com" target="_blank" rel="noopener">Nextiva.com</a></span>
+                <span class="footer-bottom-center">&copy; <span data-year></span></span>
+                <div class="footer-bottom-right">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="security.html">Security</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

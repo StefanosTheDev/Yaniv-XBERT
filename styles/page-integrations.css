@@ -1,0 +1,607 @@
+/* ================================================================
+   PAGE: INTEGRATIONS
+   Styles specific to integrations.html.
+   ================================================================ */
+
+.page-integrations main,
+.page-integrations section {
+    background-color: var(--bg-primary);
+}
+
+.integrations-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.integrations-eyebrow-spinner {
+    display: inline-block;
+    width: 18px;
+    color: var(--accent-blue);
+    white-space: pre;
+}
+
+.integrations-hero-title,
+.integrations-section-title,
+.integrations-cta-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.integrations-section-title {
+    font-size: clamp(48px, 7vw, 76px);
+}
+
+.integrations-section-header {
+    align-items: end;
+    margin-bottom: var(--space-3xl);
+}
+
+.integrations-section-header-copy {
+    grid-column: span 6;
+}
+
+.integrations-section-deck {
+    grid-column: 8 / -1;
+    align-self: end;
+    max-width: 620px;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-xl);
+    line-height: 1.5;
+}
+
+
+/* ------------------------------------------------
+   Hero
+   ------------------------------------------------ */
+
+.section-integrations-hero {
+    padding: clamp(96px, 12vw, 160px) 0 var(--space-section);
+    overflow: hidden;
+}
+
+.integrations-hero-grid {
+    align-items: center;
+}
+
+.integrations-hero-copy {
+    grid-column: span 7;
+}
+
+.integrations-hero-title {
+    max-width: 900px;
+    font-size: clamp(48px, 7vw, 86px);
+    line-height: 0.95;
+}
+
+.integrations-hero-deck {
+    max-width: 720px;
+    margin: var(--space-xl) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+}
+
+.integrations-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+}
+
+.integrations-hero-placeholder {
+    grid-column: 8 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    min-height: 440px;
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: #1E1E1D; /* TODO: tokenize */
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+/* ------------------------------------------------
+   Core Integrations
+   ------------------------------------------------ */
+
+.section-integrations-core,
+.section-integrations-workflows,
+.section-integrations-governance,
+.section-integrations-setup,
+.section-integrations-faq,
+.section-integrations-cta {
+    padding: var(--space-section) 0;
+}
+
+.integrations-panel {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.integrations-panel--full {
+    width: 100%;
+}
+
+.integrations-panel-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    min-height: 32px;
+    padding: 0 var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    background-color: #0C0C0C; /* TODO: tokenize -- shared toolbar charcoal */
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.integrations-grid {
+    padding: var(--space-lg);
+}
+
+.integration-tile {
+    grid-column: span 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-xs);
+    min-height: 170px;
+    padding: var(--space-lg);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    overflow: hidden;
+}
+
+.integration-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.integration-tile i,
+.integration-tile-logo {
+    position: relative;
+    z-index: 1;
+    margin-bottom: auto;
+}
+
+.integration-tile i {
+    color: var(--accent-blue);
+    font-size: 26px;
+}
+
+.integration-tile-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.integration-tile span,
+.integration-tile small {
+    position: relative;
+    z-index: 1;
+}
+
+.integration-tile span {
+    color: var(--text-primary);
+    font-size: var(--text-body);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+
+.integration-tile small {
+    color: var(--text-tertiary);
+    font-size: var(--text-caption);
+    font-weight: 600;
+}
+
+/* ------------------------------------------------
+   Workflow Examples
+   ------------------------------------------------ */
+
+.integration-workflow-grid {
+    align-items: stretch;
+}
+
+.integration-workflow-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+    padding: var(--space-2xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.integration-workflow-number {
+    display: block;
+    margin-bottom: auto;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.integration-workflow-card h3 {
+    margin: var(--space-2xl) 0 var(--space-md);
+    color: var(--text-primary);
+    font-size: var(--text-heading-sm);
+    line-height: 1.15;
+}
+
+.integration-workflow-card p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.integration-workflow-card small {
+    display: inline-flex;
+    width: fit-content;
+    margin-top: var(--space-xl);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background-color: transparent;
+}
+
+
+/* ------------------------------------------------
+   Governed Actions
+   ------------------------------------------------ */
+
+.integrations-governance-card {
+    align-items: stretch;
+    padding: var(--space-3xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.integrations-governance-copy {
+    grid-column: span 5;
+    align-self: center;
+}
+
+.integrations-governance-copy p {
+    max-width: 580px;
+    margin: var(--space-xl) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-xl);
+}
+
+.integrations-rule-stack {
+    grid-column: 7 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.integrations-rule-stack article {
+    display: flex;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+}
+
+.integrations-rule-stack article > span {
+    flex: 0 0 44px;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: var(--text-heading-sm);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.integrations-rule-stack h3 {
+    margin: 0 0 var(--space-sm);
+    color: var(--text-primary);
+    font-size: var(--text-heading-sm);
+}
+
+.integrations-rule-stack p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+
+/* ------------------------------------------------
+   Setup
+   ------------------------------------------------ */
+
+.integrations-setup-layout {
+    align-items: start;
+}
+
+.integrations-setup-copy {
+    grid-column: span 5;
+}
+
+.integrations-setup-copy p {
+    max-width: 580px;
+    margin: var(--space-xl) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-xl);
+}
+
+/* ------------------------------------------------
+   Trust + Proof
+   ------------------------------------------------ */
+
+.integrations-proof-grid {
+    grid-column: 7 / -1;
+    align-items: stretch;
+}
+
+.integrations-proof-grid article {
+    grid-column: span 4;
+    min-height: 150px;
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.integrations-proof-grid span {
+    display: block;
+    color: var(--accent-blue);
+    font-family: var(--font-serif);
+    font-size: clamp(34px, 4vw, 50px);
+    font-weight: var(--display-weight);
+    line-height: 0.95;
+    letter-spacing: var(--display-letter-spacing);
+}
+
+.integrations-proof-grid p {
+    margin: var(--space-lg) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-sm);
+}
+
+
+/* ------------------------------------------------
+   FAQ
+   ------------------------------------------------ */
+
+.integrations-faq-layout {
+    align-items: start;
+}
+
+.integrations-faq-intro {
+    grid-column: span 5;
+    position: sticky;
+    top: 120px;
+}
+
+.integrations-faq-list {
+    grid-column: 7 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.integrations-faq-item {
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+}
+
+.integrations-faq-item h3 {
+    margin: 0 0 var(--space-md);
+    color: var(--text-primary);
+    font-size: var(--text-heading-sm);
+}
+
+.integrations-faq-item p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+
+/* ------------------------------------------------
+   Bottom CTA
+   ------------------------------------------------ */
+
+.section-integrations-cta {
+    padding-bottom: calc(var(--space-section) + var(--space-2xl));
+}
+
+.integrations-cta-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 460px;
+    padding: var(--space-3xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+    text-align: center;
+}
+
+.integrations-cta-title {
+    max-width: 900px;
+    font-size: clamp(46px, 7vw, 82px);
+}
+
+.integrations-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+}
+
+
+/* ------------------------------------------------
+   Responsive
+   ------------------------------------------------ */
+
+@media (max-width: 1023px) {
+    .integrations-hero-copy,
+    .integrations-hero-placeholder,
+    .integrations-section-header-copy,
+    .integrations-section-deck,
+    .integration-workflow-card,
+    .integrations-governance-copy,
+    .integrations-rule-stack,
+    .integrations-setup-copy,
+    .integrations-proof-grid,
+    .integrations-faq-intro,
+    .integrations-faq-list {
+        grid-column: 1 / -1;
+    }
+
+    .integrations-section-header {
+        gap: var(--space-xl);
+    }
+
+    .integration-tile {
+        grid-column: span 3;
+    }
+
+    .integrations-hero-placeholder {
+        min-height: 460px;
+        margin-top: var(--space-2xl);
+    }
+
+    .integrations-governance-card {
+        gap: var(--space-2xl);
+        padding: var(--space-2xl);
+    }
+
+    .integrations-faq-intro {
+        position: static;
+    }
+
+    .integrations-proof-grid article {
+        grid-column: span 3;
+    }
+}
+
+@media (max-width: 767px) {
+    .section-integrations-hero {
+        padding: 112px 0 var(--space-3xl);
+    }
+
+    .section-integrations-core,
+    .section-integrations-workflows,
+    .section-integrations-governance,
+    .section-integrations-setup,
+    .section-integrations-faq,
+    .section-integrations-cta {
+        padding: var(--space-3xl) 0;
+    }
+
+    .integrations-section-header {
+        margin-bottom: var(--space-2xl);
+    }
+
+    .integrations-hero-title,
+    .integrations-section-title,
+    .integrations-cta-title {
+        font-size: clamp(42px, 13vw, 58px);
+    }
+
+    .integrations-hero-deck,
+    .integrations-section-deck,
+    .integrations-governance-copy p,
+    .integrations-setup-copy p {
+        font-size: var(--text-body-lg);
+    }
+
+    .integrations-hero-placeholder {
+        min-height: 360px;
+    }
+
+    .integration-tile {
+        grid-column: 1 / -1;
+        min-height: 150px;
+    }
+
+    .integration-workflow-card,
+    .integrations-governance-card,
+    .integrations-proof-grid article,
+    .integrations-faq-item,
+    .integrations-cta-content {
+        padding: var(--space-lg);
+    }
+
+    .integrations-rule-stack article {
+        flex-direction: column;
+        gap: var(--space-md);
+        padding: var(--space-lg);
+    }
+
+    .integrations-proof-grid article {
+        grid-column: 1 / -1;
+        min-height: 150px;
+    }
+
+    .integrations-cta-content {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 480px) {
+    .integrations-hero-actions,
+    .integrations-cta-actions {
+        flex-direction: column;
+    }
+
+    .integrations-hero-actions .btn,
+    .integrations-cta-actions .btn {
+        width: 100%;
+    }
+
+}

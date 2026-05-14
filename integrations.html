@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#141311">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Integrations | XBert by Nextiva</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Lottie player (web component) -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/shared.css">
+    <link rel="stylesheet" href="styles/section-hero.css">
+    <link rel="stylesheet" href="styles/page-integrations.css">
+    <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body class="page-integrations">
+
+    <!-- Inline SVG sprite: defines reusable icons referenced via <use href="#id">. -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <symbol id="xbert-icon" viewBox="0 0 18.89 27.41" fill="currentColor">
+            <path d="M10.03,21.82c-1.66,1.72-5.85,5.6-8.29,5.6-1.41,0-1.85-1.23-1.7-2.44.34-2.73,4.07-7.67,5.85-9.88,1.39-1.73,2.58-1.98.3-3.77-.45-.36-2.15-1.58-2.65-1.41-.42.43.12,1.44.33,1.95.27.64,1.04,1.72.96,2.38-.1.89-1.18,1.17-1.83.59-.41-.37-1.77-2.87-2.06-3.49-.52-1.1-1.39-3.05-.66-4.15,1.38-2.07,5.07.69,6.43,1.73.95.72,1.82,1.54,2.7,2.34,1.73-1.48,3.57-3.3,5.66-4.28,1.74-.81,4.03-1,3.8,1.6-.31,3.49-6.33,10.64-8.83,13.23ZM3.38,23.68c.2.59,1.7-.47,2.01-.69,2.97-2.02,8.58-8.49,9.87-11.83.41-1.07.49-1.58-.81-1.02-3.09,1.35-9.7,9.15-10.83,12.34-.11.32-.36.87-.25,1.19Z"/>
+            <path d="M10.52,23.46c-.09-.45.34-1.25.79-1.36.85-.22,1.43.6,2.09,1,4.43,2.72.62-2.25.66-3.28.04-.93,1.29-1.35,1.98-.62.53.56,1.68,2.75,2.02,3.53.48,1.08,1.27,2.92.46,3.95-1.37,1.74-4.67-.5-6-1.45-.39-.28-1.93-1.41-2-1.78Z"/>
+            <polygon points="9.44 0 10.56 3.03 13.59 4.15 10.56 5.27 9.44 8.3 8.32 5.27 5.29 4.15 8.32 3.03 9.44 0"/>
+        </symbol>
+        <symbol id="xbert-logo-full" viewBox="0 0 76.49 27.41" fill="currentColor">
+            <path d="M10.03,21.82c-1.66,1.72-5.85,5.6-8.29,5.6-1.41,0-1.85-1.23-1.7-2.44.34-2.73,4.07-7.67,5.85-9.88,1.39-1.73,2.58-1.98.3-3.77-.45-.36-2.15-1.58-2.65-1.41-.42.43.12,1.44.33,1.95.27.64,1.04,1.72.96,2.38-.1.89-1.18,1.17-1.83.59-.41-.37-1.77-2.87-2.06-3.49-.52-1.1-1.39-3.05-.66-4.15,1.38-2.07,5.07.69,6.43,1.73.95.72,1.82,1.54,2.7,2.34,1.73-1.48,3.57-3.3,5.66-4.28,1.74-.81,4.03-1,3.8,1.6-.31,3.49-6.33,10.64-8.83,13.23ZM3.38,23.68c.2.59,1.7-.47,2.01-.69,2.97-2.02,8.58-8.49,9.87-11.83.41-1.07.49-1.58-.81-1.02-3.09,1.35-9.7,9.15-10.83,12.34-.11.32-.36.87-.25,1.19Z"/>
+            <path d="M10.52,23.46c-.09-.45.34-1.25.79-1.36.85-.22,1.43.6,2.09,1,4.43,2.72.62-2.25.66-3.28.04-.93,1.29-1.35,1.98-.62.53.56,1.68,2.75,2.02,3.53.48,1.08,1.27,2.92.46,3.95-1.37,1.74-4.67-.5-6-1.45-.39-.28-1.93-1.41-2-1.78Z"/>
+            <polygon points="9.44 0 10.56 3.03 13.59 4.15 10.56 5.27 9.44 8.3 8.32 5.27 5.29 4.15 8.32 3.03 9.44 0"/>
+            <path d="M23.49,11.5h3.23l1.95,2.88,1.97-2.88h3.19l-3.56,5.24,3.83,5.63h-3.23l-2.21-3.22-2.21,3.22h-3.19l3.81-5.6-3.56-5.26Z"/>
+            <path d="M40.22,11.5c2.35,0,4.27,1.17,4.27,2.6v.96c0,.78-.69,1.36-1.59,1.74.91.38,1.66,1,1.66,1.78v1.21c0,1.44-1.99,2.58-4.34,2.58h-4.98v-10.87h4.98ZM41.46,15.04v-.95c0-.51-.55-.93-1.24-.93h-1.95v2.81h1.95c.69,0,1.24-.42,1.24-.93ZM41.53,19.77v-1.2c0-.51-.62-.93-1.33-.93h-1.93v3.06h1.93c.71,0,1.33-.42,1.33-.93Z"/>
+            <path d="M55.14,11.5v1.67h-5.69v2.87h5.2v1.67h-5.2v3.01h5.69v1.67h-8.72v-10.87h8.72Z"/>
+            <path d="M60.16,18.19v4.18h-3.03v-10.87h4.71c2.37,0,4.29,1.16,4.29,2.58v1.51c0,.93-.88,1.79-2.15,2.24l2.94,4.53h-3.25l-2.66-4.18h-.86ZM61.85,13.16h-1.68v3.36h1.68c.71,0,1.26-.42,1.26-.93v-1.51c0-.51-.55-.92-1.26-.92Z"/>
+            <path d="M76.49,11.5v1.67h-3.5v9.2h-3.03v-9.2h-3.5v-1.67h10.02Z"/>
+        </symbol>
+    </svg>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-wrapper">
+            <div class="nav-left">
+                <a href="index.html" class="nav-logo" aria-label="XBert home">
+                    <svg class="nav-logo-svg" viewBox="0 0 76.49 27.41" aria-hidden="true" focusable="false"><use href="#xbert-logo-full"/></svg>
+                </a>
+                <ul class="nav-menu">
+                    <li class="nav-dropdown nav-dropdown-mega">
+                        <a href="#">Product <span class="nav-carat"></span></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-inner">
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">About XBert</span>
+                                    <a href="how-xbert-works.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">How XBert works</span>
+                                        <span class="mega-menu-desc">AI that does actual work, not just conversation.</span>
+                                    </a>
+                                    <a href="integrations.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">Integrations</span>
+                                        <span class="mega-menu-desc">Connect your calendars, CRMs, and tools.</span>
+                                    </a>
+                                    <a href="security.html" class="mega-menu-item">
+                                        <span class="mega-menu-title">Security &amp; Trust</span>
+                                        <span class="mega-menu-desc">AI safety, guardrails, and compliance foundation.</span>
+                                    </a>
+                                </div>
+
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Featured Capabilities</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">AI Employee</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Agent Assist</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">AI Receptionist</span>
+                                    </a>
+                                </div>
+
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Industries</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Healthcare</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Insurance</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Real Estate</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Retail &amp; E-commerce</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Professional Services</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-dropdown nav-dropdown-mega">
+                        <a href="#">Resources <span class="nav-carat"></span></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-inner">
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Learn</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Customer Stories</span>
+                                        <span class="mega-menu-desc">How businesses use XBert.</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">About Nextiva</span>
+                                        <span class="mega-menu-desc">The company behind XBert.</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Leadership</span>
+                                        <span class="mega-menu-desc">Meet our executive team.</span>
+                                    </a>
+                                </div>
+                                <div class="mega-menu-section">
+                                    <span class="mega-menu-label">Support</span>
+                                    <a href="#" class="mega-menu-item">
+                                        <span class="mega-menu-title">Help Center</span>
+                                        <span class="mega-menu-desc">Guides, docs, and support.</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <a href="tel:18007990600" class="btn btn-primary nav-cta nav-phone">
+                    <i class="ri-headphone-line" aria-hidden="true"></i>
+                    <span class="nav-phone-label">Sales</span>
+                    <span class="nav-phone-number">800-799-0600</span>
+                </a>
+                <a href="#" class="btn btn-primary nav-cta">Log In</a>
+                <a href="#" class="btn btn-primary nav-cta nav-cta-demo">Get A Demo</a>
+                <a href="#" class="btn btn-primary nav-cta-primary">Start Free Trial</a>
+                <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay"></div>
+    <div class="mobile-nav-panel">
+        <div class="mobile-nav-links">
+            <div class="mobile-nav-dropdown">
+                <a href="#">Product <span class="mobile-carat"></span></a>
+                <div class="mobile-dropdown-items">
+                    <a href="#">AI Employee</a>
+                    <a href="#">Agent Assist</a>
+                    <a href="#">AI Receptionist</a>
+                    <a href="how-xbert-works.html">How XBert works</a>
+                    <a href="integrations.html">Integrations</a>
+                    <a href="security.html">Security &amp; Trust</a>
+                </div>
+            </div>
+            <div class="mobile-nav-dropdown">
+                <a href="#">Resources <span class="mobile-carat"></span></a>
+                <div class="mobile-dropdown-items">
+                    <a href="#">Customer Stories</a>
+                    <a href="#">Help Center</a>
+                </div>
+            </div>
+            <a href="index.html#pricing">Pricing</a>
+            <a href="tel:18007990600">Sales: 800-799-0600</a>
+        </div>
+        <div class="mobile-nav-actions">
+            <a href="#" class="btn btn-primary">Start Free Trial</a>
+            <a href="#" class="btn btn-secondary">Get A Demo</a>
+            <a href="#" class="nav-signin">Log In</a>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero -->
+        <section class="section-integrations-hero reveal">
+            <div class="container">
+                <div class="grid-12 integrations-hero-grid">
+                    <div class="integrations-hero-copy">
+                        <h1 class="integrations-hero-title">XBert connects to the tools that run your business.</h1>
+                        <p class="integrations-hero-deck">XBert works with the systems your team already depends on, from CRMs and calendars to scheduling tools and custom APIs. It uses that context to answer, book, update, route, and hand off without making you rebuild the way your business works.</p>
+                        <div class="integrations-hero-actions">
+                            <a href="#" class="btn btn-primary">Get A Demo</a>
+                            <a href="#core-integrations" class="btn btn-secondary">See Integrations</a>
+                        </div>
+                    </div>
+
+                    <div class="integrations-hero-placeholder" aria-label="Product illustration placeholder">
+                        <span>Illustration / product moment</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Integrations -->
+        <section id="core-integrations" class="section-integrations-core reveal">
+            <div class="container">
+                <div class="grid-12 integrations-section-header">
+                    <div class="integrations-section-header-copy">
+                        <span class="integrations-eyebrow"><span class="integrations-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>01 Live Systems</span>
+                        <h2 class="integrations-section-title">Give XBert the current record before it answers.</h2>
+                    </div>
+                    <p class="integrations-section-deck">The best answer often lives outside a knowledge base. XBert can check the right system first, then respond with the details, options, or next step that match the customer in front of it.</p>
+                </div>
+
+                <div class="integrations-panel integrations-panel--full">
+                    <div class="integrations-panel-toolbar" aria-hidden="true">
+                        <span>CONNECTED WORKSPACE</span>
+                        <span>SYNC.OK</span>
+                    </div>
+                    <div class="grid-12 integrations-grid">
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/salesforce.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Salesforce</span>
+                            <small>Lookup, create, update</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/hubspot.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>HubSpot</span>
+                            <small>Contacts and tickets</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/housecallpro.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Housecall Pro</span>
+                            <small>Reservations</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/epic.webp" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Epic</span>
+                            <small>Patient scheduling</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/google-calendar.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Google Calendar</span>
+                            <small>Availability checks</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/outlook.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Outlook Calendar</span>
+                            <small>Scheduling and availability</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/calendly.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Calendly</span>
+                            <small>Booking flows</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/quickbooks.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>QuickBooks</span>
+                            <small>Invoicing and accounts</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/zoho.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Zoho</span>
+                            <small>CRM records</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/clover.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Clover</span>
+                            <small>Orders and reservations</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/slack.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Slack</span>
+                            <small>Team notifications</small>
+                        </article>
+                        <article class="integration-tile">
+                            <i class="ri-code-box-line" aria-hidden="true"></i>
+                            <span>Custom APIs</span>
+                            <small>On request</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/zendesk.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Zendesk</span>
+                            <small>Support tickets</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/microsoft-teams.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Microsoft Teams</span>
+                            <small>Collaboration</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/servicenow.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>ServiceNow</span>
+                            <small>IT workflows</small>
+                        </article>
+                        <article class="integration-tile">
+                            <img src="assets/logos/integrations/shopify.png" alt="" class="integration-tile-logo" aria-hidden="true">
+                            <span>Shopify</span>
+                            <small>Ecommerce</small>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflow Examples -->
+        <section class="section-integrations-workflows reveal">
+            <div class="container">
+                <div class="grid-12 integrations-section-header">
+                    <div class="integrations-section-header-copy">
+                        <span class="integrations-eyebrow"><span class="integrations-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>02 Customer Requests</span>
+                        <h2 class="integrations-section-title">Turn connected data into a finished next step.</h2>
+                    </div>
+                    <p class="integrations-section-deck">This is where integrations become useful. A customer asks a normal question, and XBert uses the connected system to move the request forward instead of sending them to another queue.</p>
+                </div>
+
+                <div class="grid-12 integration-workflow-grid">
+                    <article class="integration-workflow-card">
+                        <span class="integration-workflow-number">01</span>
+                        <h3>"Can I book Tuesday afternoon?"</h3>
+                        <p>XBert checks availability, reserves the time, captures the reason for the visit, and sends a confirmation.</p>
+                        <small>Calendar + scheduling action</small>
+                    </article>
+                    <article class="integration-workflow-card">
+                        <span class="integration-workflow-number">02</span>
+                        <h3>"Can you update my contact information?"</h3>
+                        <p>XBert verifies the customer, looks up the record, updates the approved fields, and keeps a clean trail.</p>
+                        <small>CRM lookup + update</small>
+                    </article>
+                    <article class="integration-workflow-card">
+                        <span class="integration-workflow-number">03</span>
+                        <h3>"Can I place an order?"</h3>
+                        <p>XBert can collect selections, confirm details, create the order, and return the next step in the same thread.</p>
+                        <small>POS or custom workflow</small>
+                    </article>
+                    <article class="integration-workflow-card">
+                        <span class="integration-workflow-number">04</span>
+                        <h3>"Can someone follow up with me?"</h3>
+                        <p>XBert packages the transcript, facts, status, and recommended next action so your team starts with the full story.</p>
+                        <small>Summary + follow-up flag</small>
+                    </article>
+                    <article class="integration-workflow-card">
+                        <span class="integration-workflow-number">05</span>
+                        <h3>"Can you send the payment link?"</h3>
+                        <p>XBert confirms the customer's preferred channel, sends the right link, and records what happened.</p>
+                        <small>Billing workflow</small>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Existing Workflows -->
+        <section class="section-integrations-governance reveal">
+            <div class="container">
+                <div class="grid-12 integrations-governance-card">
+                    <div class="integrations-governance-copy">
+                        <span class="integrations-eyebrow"><span class="integrations-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>03 Existing Workflows</span>
+                        <h2 class="integrations-section-title">No replacement project required.</h2>
+                        <p>XBert sits in front of the systems your team already checks. When it resolves something, the record is clean. When it escalates, your team gets the conversation, the facts, and the attempted next step.</p>
+                    </div>
+
+                    <div class="integrations-rule-stack" aria-label="Existing workflow controls">
+                        <article>
+                            <span>01</span>
+                            <div>
+                                <h3>Your records stay current</h3>
+                                <p>XBert can create, look up, or update the approved fields your team would otherwise handle by hand.</p>
+                            </div>
+                        </article>
+                        <article>
+                            <span>02</span>
+                            <div>
+                                <h3>Your team stays in flow</h3>
+                                <p>Handoffs include the transcript, key facts, and recommended next action so a person can pick up fast.</p>
+                            </div>
+                        </article>
+                        <article>
+                            <span>03</span>
+                            <div>
+                                <h3>Access stays bounded</h3>
+                                <p>Define which systems, fields, actions, and sensitive moments are available to XBert.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Setup -->
+        <section class="section-integrations-setup reveal">
+            <div class="container">
+                <div class="grid-12 integrations-setup-layout">
+                    <div class="integrations-setup-copy">
+                        <h2 class="integrations-section-title">Connect the tools your team already uses.</h2>
+                        <p>XBert setup starts with the systems behind your customer conversations: the calendar, CRM, scheduling tool, or custom workflow your team already checks. Connect what matters first, then expand as more work moves through XBert.</p>
+                    </div>
+
+                    <div class="grid-12 integrations-proof-grid" aria-label="XBert integration proof points">
+                        <article>
+                            <span>5 min</span>
+                            <p>Basic setup</p>
+                        </article>
+                        <article>
+                            <span>15 min</span>
+                            <p>Setup with integrations</p>
+                        </article>
+                        <article>
+                            <span>&lt;1 sec</span>
+                            <p>Typical response speed</p>
+                        </article>
+                        <article>
+                            <span>23+</span>
+                            <p>Languages supported</p>
+                        </article>
+                        <article>
+                            <span>SOC 2</span>
+                            <p>Audited foundation</p>
+                        </article>
+                        <article>
+                            <span>100K+</span>
+                            <p>Businesses on Nextiva</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section-integrations-faq reveal">
+            <div class="container">
+                <div class="grid-12 integrations-faq-layout">
+                    <div class="integrations-faq-intro">
+                        <span class="integrations-eyebrow"><span class="integrations-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Q+A</span>
+                        <h2 class="integrations-section-title">What teams usually ask before connecting systems.</h2>
+                    </div>
+                    <div class="integrations-faq-list">
+                        <article class="integrations-faq-item">
+                            <h3>How does XBert know when to use an integration?</h3>
+                            <p>XBert starts from the customer's request. If the answer needs live availability, a customer record, a booking flow, or a follow-up action, it uses the connected system instead of relying only on static knowledge.</p>
+                        </article>
+                        <article class="integrations-faq-item">
+                            <h3>Can XBert work with custom APIs?</h3>
+                            <p>Yes. Custom API work can be scoped with support when the workflow goes beyond the core native connections.</p>
+                        </article>
+                        <article class="integrations-faq-item">
+                            <h3>How do permissions work?</h3>
+                            <p>You define the systems, fields, actions, and handoff moments. XBert should only act inside the boundaries you approve.</p>
+                        </article>
+                        <article class="integrations-faq-item">
+                            <h3>Do we need to replace our current software?</h3>
+                            <p>No. The point is to let XBert work with the software your team already knows, then keep the record and handoff clean.</p>
+                        </article>
+                        <article class="integrations-faq-item">
+                            <h3>What happens when XBert cannot safely act?</h3>
+                            <p>It escalates. Your team gets the conversation, key facts, and recommended next step instead of starting from a voicemail or a blank ticket.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom CTA -->
+        <section class="section-integrations-cta reveal">
+            <div class="container">
+                <div class="integrations-cta-content">
+                    <span class="integrations-eyebrow"><span class="integrations-eyebrow-spinner" aria-hidden="true" data-spinner="braille">⠋</span>Ready</span>
+                    <h2 class="integrations-cta-title">Bring XBert into the workflow your team already runs.</h2>
+                    <div class="integrations-cta-actions">
+                        <a href="#" class="btn btn-primary">Start Free Trial</a>
+                        <a href="#" class="btn btn-secondary">Get a Demo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="grid-12 footer-main">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo" aria-label="XBert home">
+                        <svg class="footer-logo-svg" viewBox="0 0 76.49 27.41" aria-hidden="true" focusable="false"><use href="#xbert-logo-full"/></svg>
+                    </a>
+                    <p>XBert is the AI employee for customer conversations. Built on Nextiva infrastructure for businesses that need every call, text, and chat handled well.</p>
+                    <a href="tel:18007990600" class="footer-phone"><i class="ri-phone-line" aria-hidden="true"></i>1-800-799-0600</a>
+                    <div class="footer-badges" aria-label="Trust signals">
+                        <span>SOC 2 Certified</span>
+                        <span>HIPAA Compliant</span>
+                        <span>99.999% Uptime</span>
+                    </div>
+                </div>
+
+                <div class="grid-12 footer-nav-grid">
+                    <div class="footer-nav-col">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="how-xbert-works.html">How XBert works</a></li>
+                            <li><a href="integrations.html">Integrations</a></li>
+                            <li><a href="security.html">Security &amp; Trust</a></li>
+                            <li><a href="index.html#pricing">Pricing</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-col">
+                        <h4>Industries</h4>
+                        <ul>
+                            <li><a href="#">Healthcare</a></li>
+                            <li><a href="#">Insurance</a></li>
+                            <li><a href="#">Real Estate</a></li>
+                            <li><a href="#">Retail &amp; E-commerce</a></li>
+                            <li><a href="#">Professional Services</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-col">
+                        <h4>Nextiva</h4>
+                        <ul>
+                            <li><a href="#">About Nextiva</a></li>
+                            <li><a href="#">Leadership</a></li>
+                            <li><a href="#">NEXT Platform</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span class="footer-bottom-left">A Product from <a href="https://www.nextiva.com" target="_blank" rel="noopener">Nextiva.com</a></span>
+                <span class="footer-bottom-center">&copy; <span data-year></span></span>
+                <div class="footer-bottom-right">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="security.html">Security</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
