@@ -6,7 +6,7 @@
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 
-document.addEventListener('DOMContentLoaded', () => {
+(function __xbertInit(){ if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', __xbertInit); return; }
 
     /* Dynamic copyright year */
     const yearEl = document.querySelector('[data-year]');
@@ -1412,4 +1412,4 @@ document.addEventListener('DOMContentLoaded', () => {
         revealElements.forEach(el => revealObserver.observe(el));
     }
 
-});
+})();
