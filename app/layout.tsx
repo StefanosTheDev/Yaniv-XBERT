@@ -45,6 +45,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/styles/nav.css" />
         <link rel="stylesheet" href="/styles/shared.css" />
         <link rel="stylesheet" href="/styles/section-hero.css" />
+        <link rel="stylesheet" href="/styles/section-pricing.css" />
         <link rel="stylesheet" href="/styles/footer.css" />
       </head>
       <body>

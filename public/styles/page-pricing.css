@@ -1,0 +1,544 @@
+/* ================================================================
+   PAGE: /pricing
+   Styles specific to the dedicated pricing page. The main offer
+   card, badges, price row, side stack, and trust signals are styled
+   by /styles/section-pricing.css (loaded globally), so this file
+   only contains the supporting sections: hero header, transparent-
+   pricing principles, capabilities grid, FAQ, and the bottom CTA.
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Section frame: shared spacing for non-shared sections
+   ------------------------------------------------ */
+
+.page-pricing .section-pricing-hero {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-2xl);
+    background-color: var(--bg-primary);
+}
+
+/* When the main offer follows the hero, shrink its top padding so
+   the hero and the offer card read as one composed block. */
+.page-pricing .section-pricing--standalone {
+    padding-top: var(--space-2xl);
+}
+
+.page-pricing .section-principles,
+.page-pricing .section-capabilities,
+.page-pricing .section-faq {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+    background-color: var(--bg-primary);
+}
+
+
+/* ------------------------------------------------
+   Hero deck (subtitle paragraph under the .pricing-title)
+   ------------------------------------------------ */
+
+.page-pricing .pricing-hero-deck {
+    max-width: 720px;
+    margin: var(--space-xl) 0 0;
+    font-size: var(--text-body-lg);
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+
+/* ------------------------------------------------
+   Transparent pricing principles -- 3 columns
+   Echoes the editorial numbered cards used elsewhere on the site.
+   ------------------------------------------------ */
+
+.page-pricing .principles-header {
+    align-items: end;
+    margin-bottom: var(--space-3xl);
+}
+
+.page-pricing .principles-header-copy {
+    grid-column: span 9;
+}
+
+.page-pricing .principles-title,
+.page-pricing .capabilities-title,
+.page-pricing .faq-title {
+    font-size: clamp(40px, 5.6vw, 72px);
+}
+
+.page-pricing .principles-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--grid-gap);
+}
+
+.page-pricing .principle-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-2xl);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    min-height: 280px;
+}
+
+.page-pricing .principle-num {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+}
+
+.page-pricing .principle-card h3 {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(24px, 2.4vw, 30px);
+    font-weight: 700;
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-pricing .principle-card p {
+    margin: 0;
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+
+/* ------------------------------------------------
+   Capabilities grid -- 4 columns: Learn / Connect / Resolve / Coach
+   ------------------------------------------------ */
+
+.page-pricing .capabilities-header {
+    align-items: end;
+    margin-bottom: var(--space-3xl);
+}
+
+.page-pricing .capabilities-header-copy {
+    grid-column: span 9;
+}
+
+.page-pricing .capabilities-deck {
+    max-width: 640px;
+    margin: var(--space-lg) 0 0;
+    font-size: var(--text-body-lg);
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.page-pricing .capabilities-grid {
+    gap: var(--grid-gap);
+}
+
+.page-pricing .capability-col {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding: var(--space-2xl);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+}
+
+.page-pricing .capability-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-pricing .capability-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(84, 125, 158, 0.24);
+    border-radius: var(--radius-sm);
+    background-color: rgba(84, 125, 158, 0.16);
+    color: var(--accent-blue);
+    font-size: 22px;
+}
+
+.page-pricing .capability-header h3 {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-heading-sm);
+    font-weight: 700;
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-pricing .capability-header p {
+    margin: 4px 0 0;
+    font-size: var(--text-body-sm);
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.page-pricing .capability-col > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.page-pricing .capability-col li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-body-sm);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text-primary);
+}
+
+.page-pricing .capability-col li i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--radius-sm);
+    background-color: rgba(84, 125, 158, 0.16);
+    color: var(--accent-blue);
+    font-size: 13px;
+}
+
+
+/* ------------------------------------------------
+   FAQ -- accordion list + aside card
+   ------------------------------------------------ */
+
+.page-pricing .faq-header {
+    align-items: end;
+    margin-bottom: var(--space-3xl);
+}
+
+.page-pricing .faq-header-copy {
+    grid-column: span 9;
+}
+
+.page-pricing .faq-layout {
+    gap: var(--grid-gap);
+    align-items: start;
+}
+
+.page-pricing .faq-list {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.page-pricing .faq-item {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface);
+    overflow: hidden;
+    transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.page-pricing .faq-item[open] {
+    border-color: var(--accent-blue);
+    background-color: var(--bg-surface-raised);
+}
+
+.page-pricing .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-2xl);
+    list-style: none;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.page-pricing .faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.page-pricing .faq-item summary i {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-light);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 16px;
+    transition: transform 0.18s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.page-pricing .faq-item[open] summary i {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    transform: rotate(45deg);
+}
+
+.page-pricing .faq-item summary:hover {
+    color: var(--text-primary);
+}
+
+.page-pricing .faq-item summary:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: -2px;
+}
+
+.page-pricing .faq-answer {
+    padding: 0 var(--space-2xl) var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.page-pricing .faq-answer p {
+    margin: var(--space-md) 0 0;
+    font-size: var(--text-body);
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+.page-pricing .faq-aside {
+    grid-column: span 4;
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-2xl);
+    background-color: var(--accent-blue);
+    border: 1px solid rgba(240, 236, 230, 0.24);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+}
+
+.page-pricing .faq-aside .pricing-side-kicker {
+    margin-bottom: 0;
+    border-color: rgba(240, 236, 230, 0.28);
+    color: rgba(240, 236, 230, 0.78);
+    background-color: transparent;
+}
+
+.page-pricing .faq-aside h3 {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(24px, 2.5vw, 32px);
+    font-weight: 700;
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-pricing .faq-aside p {
+    margin: 0;
+    font-size: var(--text-body-sm);
+    line-height: 1.55;
+    color: rgba(240, 236, 230, 0.78);
+}
+
+.page-pricing .faq-aside-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+
+.page-pricing .faq-aside-actions .btn-primary {
+    background-color: var(--bg-primary);
+    border-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.page-pricing .faq-aside-actions .btn-primary:hover {
+    background-color: var(--bg-surface);
+    border-color: var(--bg-surface);
+}
+
+.page-pricing .faq-aside-actions .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: transparent;
+    border-color: rgba(240, 236, 230, 0.32);
+    color: var(--text-primary);
+}
+
+.page-pricing .faq-aside-actions .btn-secondary:hover {
+    background-color: rgba(240, 236, 230, 0.08);
+    border-color: rgba(240, 236, 230, 0.56);
+}
+
+
+/* ------------------------------------------------
+   Bottom CTA -- blue solid variant (same recipe as
+   page-how-xbert-works.css, simplified for this page)
+   ------------------------------------------------ */
+
+.page-pricing .section-bottom-cta {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    min-height: 480px;
+    padding: calc(var(--space-section) * 1.1) 0;
+    overflow: hidden;
+    background-color: var(--accent-blue);
+}
+
+.page-pricing .bottom-cta-content {
+    width: min(100%, 1120px);
+}
+
+.page-pricing .bottom-cta-eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bg-primary);
+}
+
+.page-pricing .bottom-cta-title {
+    max-width: 16ch;
+    margin: 0;
+    color: var(--bg-primary);
+    font-family: var(--font-serif);
+    font-size: clamp(56px, 9vw, 120px);
+    font-weight: var(--display-weight);
+    line-height: 0.88;
+    letter-spacing: var(--display-letter-spacing);
+}
+
+.page-pricing .bottom-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+}
+
+.page-pricing .bottom-cta-actions .btn-primary {
+    background-color: var(--bg-primary);
+    border-color: var(--bg-primary);
+    color: var(--accent-blue);
+}
+
+.page-pricing .bottom-cta-actions .btn-secondary {
+    background-color: var(--accent-blue);
+    border-color: var(--bg-primary);
+    color: var(--bg-primary);
+}
+
+
+/* ------------------------------------------------
+   Responsive
+   ------------------------------------------------ */
+
+@media (max-width: 1023px) {
+    .page-pricing .principles-header-copy,
+    .page-pricing .capabilities-header-copy,
+    .page-pricing .faq-header-copy {
+        grid-column: 1 / -1;
+    }
+
+    .page-pricing .principle-card {
+        grid-column: span 6;
+        min-height: 0;
+    }
+
+    .page-pricing .capability-col {
+        grid-column: span 6;
+    }
+
+    .page-pricing .faq-list,
+    .page-pricing .faq-aside {
+        grid-column: 1 / -1;
+    }
+
+    .page-pricing .faq-aside {
+        position: static;
+    }
+}
+
+@media (max-width: 767px) {
+    .page-pricing .section-pricing-hero {
+        padding-top: var(--space-3xl);
+        padding-bottom: var(--space-xl);
+    }
+
+    .page-pricing .section-principles,
+    .page-pricing .section-capabilities,
+    .page-pricing .section-faq {
+        padding-top: var(--space-3xl);
+        padding-bottom: var(--space-3xl);
+    }
+
+    .page-pricing .principles-header,
+    .page-pricing .capabilities-header,
+    .page-pricing .faq-header {
+        margin-bottom: var(--space-2xl);
+    }
+
+    .page-pricing .principles-title,
+    .page-pricing .capabilities-title,
+    .page-pricing .faq-title {
+        font-size: clamp(36px, 11vw, 60px);
+    }
+
+    .page-pricing .principle-card,
+    .page-pricing .capability-col {
+        grid-column: 1 / -1;
+        padding: var(--space-xl);
+    }
+
+    .page-pricing .faq-item summary {
+        padding: var(--space-md) var(--space-lg);
+        font-size: var(--text-body);
+    }
+
+    .page-pricing .faq-answer {
+        padding: 0 var(--space-lg) var(--space-md);
+    }
+
+    .page-pricing .faq-aside {
+        padding: var(--space-xl);
+    }
+
+    .page-pricing .section-bottom-cta {
+        min-height: 0;
+        padding: var(--space-3xl) 0;
+    }
+
+    .page-pricing .bottom-cta-title {
+        font-size: clamp(48px, 13vw, 88px);
+    }
+
+    .page-pricing .bottom-cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-pricing .bottom-cta-actions .btn {
+        width: 100%;
+    }
+}
