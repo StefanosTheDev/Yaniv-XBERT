@@ -38,3 +38,6 @@ To migrate a page off the legacy HTML shell:
 3. Move any behavior that was in `public/script.js` and was specific to that page into a client component with `useEffect`.
 
 The other pages keep working while you refactor.
+
+test
+
