@@ -2,7 +2,17 @@
 """
 Process leadership portraits into the homepage's editorial B&W style.
 
-Mirrors the look of public/assets/images/people/person-01.png:
+NOTE: The portraits currently shipping under
+public/assets/images/people/leaders/ are AI-generated (not the output of
+this script) so they more closely match the hand-crafted look of
+public/assets/images/people/person-01.png. This script is kept as a
+reproducible, deterministic fallback in case we need to regenerate from
+the source photos without an image model in the loop, or to onboard
+additional leaders quickly.
+
+Mirrors the look of public/assets/images/people/person-01.png at a
+"clean B&W with vignette and accent bar" level (no halftone, no code-text
+overlay, no glitch bands):
   - tight square head-and-shoulders crop
   - heavy grayscale + crushed blacks (S-curve)
   - radial vignette darkening the background to near-black
