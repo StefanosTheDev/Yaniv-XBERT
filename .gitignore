@@ -7,3 +7,4 @@ out
 
 scripts/.venv/
 scripts/_compare/
+scripts/_swarm_raw/
