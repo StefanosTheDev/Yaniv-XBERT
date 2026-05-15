@@ -2,7 +2,13 @@ import Script from "next/script";
 
 type LegacyPageProps = {
   bodyClass: string;
-  pageStylesheet: string;
+  /**
+   * Page stylesheet(s). Accepts a single href or an ordered list. Listed
+   * sheets are loaded in order, so later entries override earlier ones —
+   * use this to layer a page-specific stylesheet on top of a shared
+   * section vocabulary (e.g. ["/styles/page-index.css", "/styles/page-ai-employee.css"]).
+   */
+  pageStylesheet: string | string[];
   html: string;
 };
 
@@ -20,9 +26,14 @@ export default function LegacyPage({
   pageStylesheet,
   html,
 }: LegacyPageProps) {
+  const stylesheets = Array.isArray(pageStylesheet)
+    ? pageStylesheet
+    : [pageStylesheet];
   return (
     <>
-      <link rel="stylesheet" href={pageStylesheet} />
+      {stylesheets.map((href) => (
+        <link key={href} rel="stylesheet" href={href} />
+      ))}
       {/*
         suppressHydrationWarning: the children of this div come from an opaque
         HTML string and are rendered on the server. React occasionally reports

@@ -1,0 +1,548 @@
+/* ================================================================
+   PAGE: ABOUT NEXTIVA
+   Loaded on top of page-index.css. Editorial register — no product
+   mockups; built around display typography, a numeric trust band,
+   a vision trio, a vertical timeline, and an office grid.
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Editorial display hero
+   ------------------------------------------------ */
+
+.page-about .section-ab-hero {
+    position: relative;
+    padding: clamp(80px, 12vw, 160px) 0 clamp(48px, 6vw, 80px);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-about .ab-hero-bg-terminal {
+    position: absolute;
+    inset: 0;
+    color: var(--terminal-text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.35;
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.55) 30%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.55) 30%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0));
+}
+
+.page-about .ab-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-md);
+}
+
+.page-about .ab-hero-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-about .ab-hero-title {
+    font-family: var(--font-body);
+    font-size: var(--text-display);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+    max-width: 16ch;
+}
+
+.page-about .ab-hero-title-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-blue);
+}
+
+.page-about .ab-hero-deck {
+    margin-top: var(--space-xl);
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 64ch;
+}
+
+.page-about .ab-hero-deck strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+
+/* ------------------------------------------------
+   Stats narrative band
+   ------------------------------------------------ */
+
+.page-about .section-ab-stats {
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-about .ab-stats-grid {
+    gap: var(--space-xl);
+}
+
+.page-about .ab-stat {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.page-about .ab-stat strong {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(40px, 5vw, 64px);
+    color: var(--accent-blue);
+    line-height: 1;
+}
+
+.page-about .ab-stat span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1023px) {
+    .page-about .ab-stat {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-about .ab-stat {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ------------------------------------------------
+   Mission paragraph
+   ------------------------------------------------ */
+
+.page-about .section-ab-mission {
+    padding: clamp(72px, 9vw, 120px) 0;
+}
+
+.page-about .ab-mission-grid {
+    gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+}
+
+.page-about .ab-mission-copy {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-about .ab-mission-detail {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.page-about .ab-mission-detail p {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.page-about .ab-mission-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-about .ab-mission-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-about .ab-mission-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+    max-width: 18ch;
+}
+
+@media (max-width: 1023px) {
+    .page-about .ab-mission-copy,
+    .page-about .ab-mission-detail {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ================================================================
+   Vision trio
+   ================================================================ */
+
+.page-about .section-ab-vision {
+    padding: clamp(72px, 9vw, 120px) 0;
+}
+
+.page-about .ab-vision-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 760px;
+    margin-bottom: var(--space-3xl);
+}
+
+.page-about .ab-vision-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-about .ab-vision-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-about .ab-vision-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-about .ab-vision-deck {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 64ch;
+}
+
+.page-about .ab-vision-trio {
+    gap: var(--space-xl);
+}
+
+.page-about .ab-vision-card {
+    grid-column: span 4;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 3vw, 36px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.page-about .ab-vision-card:hover {
+    border-color: var(--text-tertiary);
+    transform: translateY(-3px);
+}
+
+.page-about .ab-vision-card-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-blue);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.page-about .ab-vision-card-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 44px);
+    color: var(--text-primary);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.page-about .ab-vision-card-deck {
+    flex: 1;
+    font-size: var(--text-body);
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+.page-about .ab-vision-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-blue);
+    letter-spacing: 0.04em;
+    margin-top: auto;
+}
+
+.page-about .ab-vision-card-link:hover {
+    color: var(--accent-blue-hover);
+}
+
+@media (max-width: 1023px) {
+    .page-about .ab-vision-card {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 767px) {
+    .page-about .ab-vision-card {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ================================================================
+   Vertical timeline
+   ================================================================ */
+
+.page-about .section-ab-timeline {
+    padding: clamp(72px, 9vw, 120px) 0;
+}
+
+.page-about .ab-timeline-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 600px;
+    margin-bottom: var(--space-3xl);
+}
+
+.page-about .ab-timeline-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-about .ab-timeline-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-about .ab-timeline-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+    max-width: 22ch;
+}
+
+.page-about .ab-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px dashed var(--border-light);
+    margin-left: clamp(20px, 6vw, 80px);
+}
+
+.page-about .ab-timeline-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: clamp(24px, 4vw, 60px);
+    padding: clamp(24px, 3vw, 36px) 0;
+    padding-left: var(--space-xl);
+    position: relative;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-about .ab-timeline-row:last-child {
+    border-bottom: none;
+}
+
+.page-about .ab-timeline-row::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: clamp(28px, 3.5vw, 40px);
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: var(--bg-primary);
+    border: 2px solid var(--accent-blue);
+}
+
+.page-about .ab-timeline-year {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(36px, 4vw, 56px);
+    color: var(--accent-blue);
+    line-height: 1;
+}
+
+.page-about .ab-timeline-body h3 {
+    font-size: var(--text-heading-md);
+    font-weight: var(--heading-weight);
+    line-height: 1.2;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.page-about .ab-timeline-body p {
+    font-size: var(--text-body);
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+@media (max-width: 767px) {
+    .page-about .ab-timeline-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+    .page-about .ab-timeline-year {
+        font-size: clamp(28px, 6vw, 40px);
+    }
+}
+
+
+/* ================================================================
+   Office grid
+   ================================================================ */
+
+.page-about .section-ab-offices {
+    padding: clamp(72px, 9vw, 120px) 0;
+}
+
+.page-about .ab-offices-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 600px;
+    margin-bottom: var(--space-3xl);
+}
+
+.page-about .ab-offices-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-about .ab-offices-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-about .ab-offices-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-about .ab-offices-grid {
+    gap: var(--space-md);
+}
+
+.page-about .ab-office-card {
+    grid-column: span 4;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.page-about .ab-office-card:hover {
+    border-color: var(--text-tertiary);
+    transform: translateY(-3px);
+}
+
+.page-about .ab-office-tag {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-blue);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-about .ab-office-card h3 {
+    font-size: var(--text-heading-md);
+    font-weight: var(--heading-weight);
+    line-height: 1.1;
+    color: var(--text-primary);
+}
+
+.page-about .ab-office-card p {
+    font-size: var(--text-body-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+    flex: 1;
+}
+
+.page-about .ab-office-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-blue);
+    letter-spacing: 0.04em;
+}
+
+.page-about .ab-office-link:hover {
+    color: var(--accent-blue-hover);
+}
+
+@media (max-width: 1023px) {
+    .page-about .ab-office-card {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-about .ab-office-card {
+        grid-column: 1 / -1;
+    }
+}

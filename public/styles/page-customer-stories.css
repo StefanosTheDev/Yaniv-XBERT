@@ -1,0 +1,472 @@
+/* ================================================================
+   PAGE: CUSTOMER STORIES
+   Loaded on top of page-index.css + page-industry.css. Reuses the
+   .ind-proof-card pattern for the 6-card grid; adds:
+
+     - Hero with stat narrative and filter chips.
+     - Featured asymmetric case-study cards (lead + secondary).
+     - Pull-quote bands (3-up).
+     - Big logo wall (multi-row grid, not a marquee).
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Hero
+   ------------------------------------------------ */
+
+.page-customer-stories .section-cs-hero {
+    position: relative;
+    padding: clamp(72px, 10vw, 140px) 0 clamp(48px, 6vw, 80px);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-customer-stories .cs-hero-bg-terminal {
+    position: absolute;
+    inset: 0;
+    color: var(--terminal-text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.35;
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0));
+}
+
+.page-customer-stories .cs-hero-inner {
+    max-width: 880px;
+    margin-bottom: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-customer-stories .cs-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-customer-stories .cs-hero-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-customer-stories .cs-hero-title {
+    font-family: var(--font-body);
+    font-size: var(--text-display-sm);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-customer-stories .cs-hero-title-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-blue);
+}
+
+.page-customer-stories .cs-hero-deck {
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 64ch;
+}
+
+.page-customer-stories .cs-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+}
+
+.page-customer-stories .cs-hero-stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: var(--space-md);
+    border-left: 1px solid var(--border-light);
+}
+
+.page-customer-stories .cs-hero-stats strong {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 3.5vw, 44px);
+    color: var(--accent-blue);
+    line-height: 1;
+}
+
+.page-customer-stories .cs-hero-stats span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1023px) {
+    .page-customer-stories .cs-hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* ------------------------------------------------
+   Filter chips (visual only)
+   ------------------------------------------------ */
+
+.page-customer-stories .cs-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.page-customer-stories .cs-filter {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+    background-color: var(--bg-surface);
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.page-customer-stories .cs-filter:hover {
+    color: var(--text-primary);
+    border-color: var(--text-tertiary);
+}
+
+.page-customer-stories .cs-filter.is-active {
+    color: var(--text-primary);
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    font-weight: 600;
+}
+
+
+/* ================================================================
+   Featured asymmetric case-study cards
+   Lead card spans 7 cols, secondary card spans 5 cols.
+   ================================================================ */
+
+.page-customer-stories .section-cs-featured {
+    padding: clamp(40px, 6vw, 80px) 0;
+}
+
+.page-customer-stories .cs-featured-grid {
+    gap: clamp(20px, 2.5vw, 32px);
+}
+
+.page-customer-stories .cs-featured-card {
+    grid-column: span 6;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    transition: border-color 0.2s ease;
+}
+
+.page-customer-stories .cs-featured-card--lead {
+    grid-column: span 7;
+}
+
+.page-customer-stories .cs-featured-card--secondary {
+    grid-column: span 5;
+    background: linear-gradient(180deg, var(--bg-surface), var(--bg-primary));
+}
+
+.page-customer-stories .cs-featured-card:hover {
+    border-color: var(--text-tertiary);
+}
+
+.page-customer-stories .cs-featured-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.page-customer-stories .cs-featured-toolbar-tag {
+    color: var(--accent-blue);
+}
+
+.page-customer-stories .cs-featured-tag {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-customer-stories .cs-featured-name {
+    font-size: var(--text-heading-lg);
+    font-weight: var(--heading-weight);
+    line-height: 1.15;
+    color: var(--text-primary);
+    letter-spacing: var(--heading-letter-spacing);
+    max-width: 22ch;
+}
+
+.page-customer-stories .cs-featured-narrative {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.55;
+    flex: 1;
+}
+
+.page-customer-stories .cs-featured-kpis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    border-top: 1px dashed var(--border-light);
+    border-bottom: 1px dashed var(--border-light);
+    margin-top: auto;
+}
+
+.page-customer-stories .cs-featured-kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.page-customer-stories .cs-featured-kpi strong {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(36px, 4vw, 52px);
+    color: var(--accent-blue);
+    line-height: 1;
+}
+
+.page-customer-stories .cs-featured-kpi span {
+    font-size: var(--text-body-sm);
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.page-customer-stories .cs-featured-quote {
+    font-size: var(--text-body-lg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.page-customer-stories .cs-featured-attr {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-customer-stories .cs-featured-attr strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+@media (max-width: 1023px) {
+    .page-customer-stories .cs-featured-card,
+    .page-customer-stories .cs-featured-card--lead,
+    .page-customer-stories .cs-featured-card--secondary {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ================================================================
+   Pull-quote band — 3-up of unattributed pulls between sections
+   ================================================================ */
+
+.page-customer-stories .section-cs-band {
+    padding: clamp(48px, 7vw, 100px) 0;
+}
+
+.page-customer-stories .cs-band--alt {
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-customer-stories .cs-band-grid {
+    gap: var(--space-2xl);
+}
+
+.page-customer-stories .cs-band-quote {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    border-left: 1px solid var(--border-light);
+    padding-left: var(--space-md);
+}
+
+.page-customer-stories .cs-band-quote p {
+    font-size: var(--text-body-lg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.page-customer-stories .cs-band-quote footer {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-customer-stories .cs-band-quote footer strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+@media (max-width: 1023px) {
+    .page-customer-stories .cs-band-quote {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ================================================================
+   Standard 6-card grid
+   Reuses .ind-proof-card from page-industry.css.
+   ================================================================ */
+
+.page-customer-stories .section-cs-grid {
+    padding: clamp(32px, 5vw, 64px) 0;
+}
+
+.page-customer-stories .cs-grid {
+    gap: var(--space-xl);
+}
+
+
+/* ================================================================
+   Big logo wall — multi-row grid (not a marquee)
+   ================================================================ */
+
+.page-customer-stories .section-cs-wall {
+    padding: clamp(72px, 9vw, 120px) 0;
+}
+
+.page-customer-stories .cs-wall-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 760px;
+    margin-bottom: var(--space-2xl);
+}
+
+.page-customer-stories .cs-wall-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-customer-stories .cs-wall-eyebrow [data-spinner] {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-customer-stories .cs-wall-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-customer-stories .cs-wall-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1px;
+    background-color: var(--border-subtle);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.page-customer-stories .cs-wall-item {
+    background-color: var(--bg-primary);
+    aspect-ratio: 1.6 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    transition: background-color 0.2s ease;
+}
+
+.page-customer-stories .cs-wall-item:hover {
+    background-color: var(--bg-surface);
+}
+
+.page-customer-stories .cs-wall-item img {
+    max-width: 70%;
+    max-height: 40px;
+    object-fit: contain;
+    filter: grayscale(1) brightness(1.1) opacity(0.65);
+    transition: filter 0.2s ease;
+}
+
+.page-customer-stories .cs-wall-item:hover img {
+    filter: grayscale(0) brightness(1) opacity(1);
+}
+
+.page-customer-stories .cs-wall-disclaimer {
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+}
+
+@media (max-width: 1023px) {
+    .page-customer-stories .cs-wall-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .page-customer-stories .cs-wall-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

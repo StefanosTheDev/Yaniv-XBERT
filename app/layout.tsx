@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import XBertSvgSprite from "@/components/XBertSvgSprite";
+import Nav from "@/components/Nav";
+import MobileNav from "@/components/MobileNav";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "XBert — AI Employee by Nextiva",
@@ -54,7 +58,11 @@ export default function RootLayout({
           src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"
           strategy="beforeInteractive"
         />
+        <XBertSvgSprite />
+        <Nav />
+        <MobileNav />
         {children}
+        <Footer />
       </body>
     </html>
   );

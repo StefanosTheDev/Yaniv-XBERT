@@ -1,0 +1,962 @@
+/* ================================================================
+   PAGE: AI EMPLOYEE
+   Loaded on top of page-index.css so we can reuse the shared section
+   vocabulary (.hero-toast, .ed-card-*, .fabric-variation-feature,
+   .integration-tile, .section-bottom-cta, .section-logo-strip).
+
+   Adds:
+     - Hero variant (.section-aie-hero) — copy + live status stage.
+     - Bespoke "Day in the Life" multi-channel timeline.
+     - Numbered pillar wrapper used for each of the 4 pillars.
+     - Channel-thread + control-panel toast inserts.
+     - Integrations header variant.
+     - FAQ accordion (mirrors page-pricing FAQ pattern).
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Hero
+   Two-column layout: copy column + live status stage column.
+   Stacks under 1024px.
+   ------------------------------------------------ */
+
+.page-ai-employee .section-aie-hero {
+    position: relative;
+    padding: clamp(72px, 10vw, 140px) 0 clamp(64px, 8vw, 120px);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-ai-employee .aie-hero-bg-terminal {
+    position: absolute;
+    inset: 0;
+    color: var(--terminal-text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.35;
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.55) 30%, rgba(0, 0, 0, 0.55) 70%, rgba(0, 0, 0, 0.0));
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.55) 30%, rgba(0, 0, 0, 0.55) 70%, rgba(0, 0, 0, 0.0));
+}
+
+.page-ai-employee .aie-hero-grid {
+    align-items: center;
+    gap: clamp(32px, 5vw, 64px);
+}
+
+.page-ai-employee .aie-hero-copy {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.page-ai-employee .aie-hero-stage {
+    grid-column: span 5;
+}
+
+.page-ai-employee .aie-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-employee .aie-hero-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+    line-height: 1;
+}
+
+.page-ai-employee .aie-hero-title {
+    font-family: var(--font-body);
+    font-size: var(--text-display-sm);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+    margin-block: 4px;
+}
+
+.page-ai-employee .aie-hero-title-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-hero-deck {
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 56ch;
+}
+
+.page-ai-employee .aie-hero-deck strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-ai-employee .aie-hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.page-ai-employee .aie-hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+.page-ai-employee .aie-hero-trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.page-ai-employee .aie-hero-trust i {
+    color: var(--accent-blue);
+}
+
+
+/* ------------------------------------------------
+   Hero Stage — live status panel containing 3 toast cards
+   ------------------------------------------------ */
+
+.page-ai-employee .aie-hero-stage {
+    position: relative;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
+.page-ai-employee .aie-hero-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.page-ai-employee .aie-hero-stage-toolbar-right {
+    color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-hero-toast {
+    margin: 0;
+}
+
+.page-ai-employee .aie-hero-stage-meter {
+    margin-top: 6px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-light);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.page-ai-employee .aie-hero-stage-meter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 13px;
+}
+
+.page-ai-employee .aie-hero-stage-meter-label {
+    color: var(--text-tertiary);
+    letter-spacing: 0.04em;
+}
+
+.page-ai-employee .aie-hero-stage-meter-value {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+@media (max-width: 1023px) {
+    .page-ai-employee .aie-hero-copy,
+    .page-ai-employee .aie-hero-stage {
+        grid-column: 1 / -1;
+    }
+    .page-ai-employee .aie-hero-stage {
+        max-width: 560px;
+    }
+}
+
+
+/* ================================================================
+   "Day in the Life" — bespoke section
+   Full-width stage with 4 horizontal channel tracks. Events are
+   positioned via --day-x as a percentage along their track. On
+   small viewports tracks stack and events become a vertical list.
+   ================================================================ */
+
+.page-ai-employee .section-aie-day {
+    padding: clamp(80px, 10vw, 140px) 0;
+}
+
+.page-ai-employee .aie-day-header {
+    align-items: end;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
+}
+
+.page-ai-employee .aie-day-header-copy {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-ai-employee .aie-day-header-desc {
+    grid-column: span 5;
+}
+
+.page-ai-employee .aie-day-header-desc p {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+.page-ai-employee .aie-day-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-employee .aie-day-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+    line-height: 1;
+}
+
+.page-ai-employee .aie-day-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-ai-employee .aie-day-stage {
+    background: linear-gradient(180deg, var(--bg-surface), var(--bg-primary));
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px, 3vw, 36px);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-ai-employee .aie-day-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-light);
+    margin-bottom: 22px;
+}
+
+.page-ai-employee .aie-day-toolbar-right {
+    color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-day-axis {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    margin-bottom: 12px;
+}
+
+.page-ai-employee .aie-day-axis::before {
+    content: "";
+}
+
+.page-ai-employee .aie-day-axis > span:nth-child(1) {
+    grid-column: 2;
+}
+
+.page-ai-employee .aie-day-axis {
+    grid-template-columns: 80px repeat(7, 1fr);
+    gap: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.page-ai-employee .aie-day-axis span {
+    text-align: center;
+}
+
+.page-ai-employee .aie-day-axis > span:first-child {
+    text-align: left;
+    grid-column: 2;
+}
+
+.page-ai-employee .aie-day-tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 8px 0;
+}
+
+.page-ai-employee .aie-day-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
+    min-height: 52px;
+}
+
+.page-ai-employee .aie-day-track-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-ai-employee .aie-day-track-label i {
+    color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-day-track-line {
+    position: absolute;
+    left: 80px;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--border-light) 0 4px, transparent 4px 10px);
+    transform: translateY(-50%);
+}
+
+.page-ai-employee .aie-day-event {
+    position: absolute;
+    top: 50%;
+    left: calc(80px + var(--day-x));
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-surface-raised);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.page-ai-employee .aie-day-event:hover {
+    transform: translate(-50%, calc(-50% - 3px));
+    background-color: var(--bg-muted);
+    border-color: var(--accent-blue);
+    z-index: 2;
+}
+
+.page-ai-employee .aie-day-event strong {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-blue);
+    margin-right: 6px;
+    letter-spacing: 0.04em;
+}
+
+.page-ai-employee .aie-day-event--voice { border-left: 3px solid #547D9E; }
+.page-ai-employee .aie-day-event--sms   { border-left: 3px solid #B8A988; }
+.page-ai-employee .aie-day-event--chat  { border-left: 3px solid #8FA487; }
+.page-ai-employee .aie-day-event--ops   { border-left: 3px solid #9C7B91; }
+
+.page-ai-employee .aie-day-totals {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px dashed var(--border-light);
+}
+
+.page-ai-employee .aie-day-total {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.page-ai-employee .aie-day-total strong {
+    font-family: var(--font-body);
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-primary);
+}
+
+.page-ai-employee .aie-day-total span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+}
+
+@media (max-width: 1023px) {
+    .page-ai-employee .aie-day-header-copy,
+    .page-ai-employee .aie-day-header-desc {
+        grid-column: 1 / -1;
+    }
+    .page-ai-employee .aie-day-totals {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    /* On mobile the timeline is unreadable in track form — convert to a
+       vertical list grouped by channel. */
+    .page-ai-employee .aie-day-axis {
+        display: none;
+    }
+
+    .page-ai-employee .aie-day-tracks {
+        gap: var(--space-lg);
+    }
+
+    .page-ai-employee .aie-day-track {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+        min-height: 0;
+        padding-bottom: var(--space-sm);
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .page-ai-employee .aie-day-track-label {
+        margin-bottom: 8px;
+    }
+
+    .page-ai-employee .aie-day-track-line {
+        display: none;
+    }
+
+    .page-ai-employee .aie-day-event {
+        position: static;
+        transform: none;
+        max-width: none;
+        white-space: normal;
+        margin-bottom: 6px;
+    }
+
+    .page-ai-employee .aie-day-event:hover {
+        transform: none;
+    }
+}
+
+
+/* ================================================================
+   Numbered pillar — uses .fabric-variation-feature from page-index
+   for the 50/50 grid. We add the index badge, list bullets, and
+   spacing tweaks here.
+   ================================================================ */
+
+.page-ai-employee .section-aie-pillar {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-ai-employee .aie-pillar {
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+}
+
+.page-ai-employee .aie-pillar-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-ai-employee .aie-pillar-index {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-pillar-tag {
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.page-ai-employee .aie-pillar-heading {
+    font-size: var(--text-heading-lg);
+    font-weight: var(--heading-weight);
+    line-height: 1.1;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+    max-width: 22ch;
+}
+
+.page-ai-employee .aie-pillar-detail {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 52ch;
+}
+
+.page-ai-employee .aie-pillar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.page-ai-employee .aie-pillar-list li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    align-items: start;
+    color: var(--text-secondary);
+    font-size: var(--text-body);
+    line-height: 1.5;
+}
+
+.page-ai-employee .aie-pillar-list i {
+    color: var(--accent-blue);
+    font-size: 18px;
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+.page-ai-employee .aie-pillar-list strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-ai-employee .aie-pillar-visual {
+    position: relative;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ------------------------------------------------
+   Pillar 01 — Channel thread mock card
+   ------------------------------------------------ */
+
+.page-ai-employee .aie-channel-card {
+    width: 100%;
+    max-width: 460px;
+}
+
+.page-ai-employee .aie-channel-thread {
+    list-style: none;
+    counter-reset: chstep;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin: 4px 0 0;
+    padding: 0;
+}
+
+.page-ai-employee .aie-channel-step {
+    position: relative;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-left-width: 3px;
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+}
+
+.page-ai-employee .aie-channel-step[data-channel="chat"]  { border-left-color: #8FA487; }
+.page-ai-employee .aie-channel-step[data-channel="sms"]   { border-left-color: #B8A988; }
+.page-ai-employee .aie-channel-step[data-channel="voice"] { border-left-color: #547D9E; }
+
+.page-ai-employee .aie-channel-step-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.page-ai-employee .aie-channel-step-tag i {
+    color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-channel-step p {
+    font-size: var(--text-body-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.page-ai-employee .aie-channel-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-ai-employee .aie-channel-footer i {
+    color: var(--accent-blue);
+}
+
+
+/* ------------------------------------------------
+   Pillar 03 — Control-panel mock card
+   ------------------------------------------------ */
+
+.page-ai-employee .aie-control-card {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.page-ai-employee .aie-control-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 4px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.page-ai-employee .aie-control-row:last-of-type {
+    border-bottom: none;
+}
+
+.page-ai-employee .aie-control-key {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-ai-employee .aie-control-val {
+    font-size: var(--text-body-sm);
+    color: var(--text-primary);
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.page-ai-employee .aie-voice-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    color: var(--text-secondary);
+    background-color: var(--bg-surface);
+}
+
+.page-ai-employee .aie-voice-chip.is-active {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-ai-employee .aie-control-row--toggle .aie-control-val {
+    justify-self: end;
+}
+
+.page-ai-employee .aie-toggle {
+    width: 36px;
+    height: 20px;
+    border-radius: var(--radius-full);
+    background-color: var(--bg-muted);
+    border: 1px solid var(--border-light);
+    position: relative;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.page-ai-employee .aie-toggle span {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--text-tertiary);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.page-ai-employee .aie-toggle.is-on {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-toggle.is-on span {
+    transform: translateX(16px);
+    background-color: #ffffff;
+}
+
+.page-ai-employee .aie-control-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-ai-employee .aie-control-footer i {
+    color: var(--accent-blue);
+}
+
+
+/* ================================================================
+   Integrations subset header
+   Wraps the .integrations-panel + .integrations-grid with our own
+   eyebrow and deck.
+   ================================================================ */
+
+.page-ai-employee .section-aie-integrations {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-ai-employee .aie-integrations-header {
+    margin-bottom: var(--space-2xl);
+    align-items: end;
+}
+
+.page-ai-employee .aie-integrations-copy {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-ai-employee .aie-integrations-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-employee .aie-integrations-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-ai-employee .aie-integrations-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-ai-employee .aie-integrations-deck {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    max-width: 56ch;
+    line-height: 1.55;
+}
+
+.page-ai-employee .aie-integrations-panel {
+    /* Inherits .integrations-panel from page-index.css — no override needed. */
+}
+
+@media (max-width: 1023px) {
+    .page-ai-employee .aie-integrations-copy {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ================================================================
+   FAQ — pattern mirrors page-pricing FAQ but lives on this page.
+   ================================================================ */
+
+.page-ai-employee .section-aie-faq {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-ai-employee .aie-faq-header {
+    margin-bottom: var(--space-2xl);
+    align-items: end;
+}
+
+.page-ai-employee .aie-faq-header-copy {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-ai-employee .aie-faq-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-employee .aie-faq-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-ai-employee .aie-faq-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-ai-employee .aie-faq-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-light);
+}
+
+.page-ai-employee .aie-faq-item {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.page-ai-employee .aie-faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    font-size: var(--text-heading-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.3;
+    transition: color 0.2s ease;
+}
+
+.page-ai-employee .aie-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.page-ai-employee .aie-faq-item summary i {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    font-size: 22px;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.page-ai-employee .aie-faq-item[open] summary i {
+    transform: rotate(45deg);
+    color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-faq-item summary:hover {
+    color: var(--accent-blue);
+}
+
+.page-ai-employee .aie-faq-item summary:focus-visible {
+    outline: 1px dashed var(--accent-blue);
+    outline-offset: 4px;
+}
+
+.page-ai-employee .aie-faq-answer {
+    padding: 0 0 var(--space-lg);
+    max-width: 80ch;
+}
+
+.page-ai-employee .aie-faq-answer p {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.page-ai-employee .aie-faq-answer a {
+    color: var(--accent-blue);
+    text-decoration: underline;
+    text-decoration-color: rgba(84, 125, 158, 0.4);
+    text-underline-offset: 3px;
+}
+
+.page-ai-employee .aie-faq-answer a:hover {
+    text-decoration-color: var(--accent-blue);
+}
+
+@media (max-width: 1023px) {
+    .page-ai-employee .aie-faq-header-copy {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767px) {
+    .page-ai-employee .aie-faq-item summary {
+        font-size: var(--text-body-lg);
+    }
+}

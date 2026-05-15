@@ -1,0 +1,1019 @@
+/* ================================================================
+   PAGE: AI RECEPTIONIST
+   Loaded on top of page-index.css. Reuses the shared section
+   vocabulary and adds a Voice-specific hero (with voice picker
+   + animated waveform), bespoke transcript stage, pillar wrappers,
+   call-volume mock card, telephony integrations header, and FAQ.
+
+   Visual idiom intentionally mirrors page-ai-employee.css and
+   page-agent-assist.css so the three product pages feel like a
+   single family.
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Hero — voice picker + waveform "Start Call" mock
+   ------------------------------------------------ */
+
+.page-ai-receptionist .section-ar-hero {
+    position: relative;
+    padding: clamp(72px, 10vw, 140px) 0 clamp(64px, 8vw, 120px);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-ai-receptionist .ar-hero-bg-terminal {
+    position: absolute;
+    inset: 0;
+    color: var(--terminal-text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.35;
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0));
+}
+
+.page-ai-receptionist .ar-hero-grid {
+    align-items: center;
+    gap: clamp(32px, 5vw, 64px);
+}
+
+.page-ai-receptionist .ar-hero-copy {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.page-ai-receptionist .ar-hero-stage {
+    grid-column: span 6;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+}
+
+.page-ai-receptionist .ar-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-receptionist .ar-hero-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-ai-receptionist .ar-hero-title {
+    font-family: var(--font-body);
+    font-size: var(--text-display-sm);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-ai-receptionist .ar-hero-title-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-hero-deck {
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 56ch;
+}
+
+.page-ai-receptionist .ar-hero-deck strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-ai-receptionist .ar-hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.page-ai-receptionist .ar-hero-cta-group i {
+    margin-right: 4px;
+}
+
+.page-ai-receptionist .ar-hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+.page-ai-receptionist .ar-hero-trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.page-ai-receptionist .ar-hero-trust i {
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-hero-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.page-ai-receptionist .ar-hero-stage-toolbar-right {
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-voice-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-ai-receptionist .ar-voice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.page-ai-receptionist .ar-voice-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    background-color: var(--bg-surface-raised);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    text-align: left;
+    color: var(--text-primary);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.page-ai-receptionist .ar-voice-card:hover {
+    border-color: var(--text-tertiary);
+    transform: translateY(-2px);
+}
+
+.page-ai-receptionist .ar-voice-card.is-active {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(84, 125, 158, 0.18);
+    background-color: rgba(84, 125, 158, 0.08);
+}
+
+.page-ai-receptionist .ar-voice-name {
+    font-size: var(--text-body-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.page-ai-receptionist .ar-voice-card.is-active .ar-voice-name {
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-voice-accent {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.04em;
+}
+
+.page-ai-receptionist .ar-voice-wave {
+    display: inline-flex;
+    align-items: end;
+    gap: 3px;
+    height: 12px;
+    margin-top: 2px;
+}
+
+.page-ai-receptionist .ar-voice-wave span {
+    display: block;
+    width: 3px;
+    background-color: var(--text-tertiary);
+    border-radius: 1px;
+    animation: arWave 1.4s ease-in-out infinite;
+}
+
+.page-ai-receptionist .ar-voice-card.is-active .ar-voice-wave span {
+    background-color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-voice-wave span:nth-child(1) { height: 5px; animation-delay: 0s;   }
+.page-ai-receptionist .ar-voice-wave span:nth-child(2) { height: 9px; animation-delay: 0.1s; }
+.page-ai-receptionist .ar-voice-wave span:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+.page-ai-receptionist .ar-voice-wave span:nth-child(4) { height: 7px; animation-delay: 0.3s; }
+.page-ai-receptionist .ar-voice-wave span:nth-child(5) { height: 4px; animation-delay: 0.4s; }
+
+.page-ai-receptionist .ar-voice-card:not(.is-active) .ar-voice-wave span {
+    animation-play-state: paused;
+}
+
+@keyframes arWave {
+    0%, 100% { transform: scaleY(0.4); }
+    50%      { transform: scaleY(1); }
+}
+
+.page-ai-receptionist .ar-voice-card--clone {
+    background-color: var(--bg-surface);
+    border-style: dashed;
+    color: var(--text-secondary);
+}
+
+.page-ai-receptionist .ar-voice-card--clone:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-voice-card--clone .ar-voice-name {
+    color: inherit;
+}
+
+.page-ai-receptionist .ar-hero-call {
+    margin-top: 6px;
+    padding: 14px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.page-ai-receptionist .ar-hero-call-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-ai-receptionist .ar-hero-call-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-hero-call-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    animation: arPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes arPulse {
+    0%, 100% { opacity: 0.45; transform: scale(0.85); }
+    50%      { opacity: 1;    transform: scale(1.15); }
+}
+
+.page-ai-receptionist .ar-hero-call-timer {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-ai-receptionist .ar-hero-call-wave {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 48px;
+}
+
+.page-ai-receptionist .ar-hero-call-wave span {
+    display: block;
+    width: 3px;
+    background-color: var(--accent-blue);
+    border-radius: 1px;
+    animation: arBigWave 1.8s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes arBigWave {
+    0%, 100% { height: 20%; opacity: 0.4; }
+    50%      { height: 100%; opacity: 1; }
+}
+
+.page-ai-receptionist .ar-hero-call-wave span:nth-child(odd)  { animation-delay: 0s; }
+.page-ai-receptionist .ar-hero-call-wave span:nth-child(even) { animation-delay: 0.3s; }
+.page-ai-receptionist .ar-hero-call-wave span:nth-child(3n)   { animation-delay: 0.6s; }
+.page-ai-receptionist .ar-hero-call-wave span:nth-child(4n)   { animation-delay: 0.9s; }
+
+.page-ai-receptionist .ar-hero-call-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-blue);
+    color: var(--text-primary);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--text-body-sm);
+    transition: background-color 0.2s ease;
+}
+
+.page-ai-receptionist .ar-hero-call-btn:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+@media (max-width: 1023px) {
+    .page-ai-receptionist .ar-hero-copy,
+    .page-ai-receptionist .ar-hero-stage {
+        grid-column: 1 / -1;
+    }
+    .page-ai-receptionist .ar-hero-stage {
+        max-width: 560px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-ai-receptionist .ar-voice-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* ================================================================
+   Bespoke transcript stage
+   Two columns: caller's experience (chat-like) + work XBert did
+   in parallel (timestamped log).
+   ================================================================ */
+
+.page-ai-receptionist .section-ar-transcript {
+    padding: clamp(72px, 9vw, 120px) 0;
+}
+
+.page-ai-receptionist .ar-transcript-header {
+    align-items: end;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
+}
+
+.page-ai-receptionist .ar-transcript-header-copy {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-ai-receptionist .ar-transcript-header-desc {
+    grid-column: span 5;
+}
+
+.page-ai-receptionist .ar-transcript-header-desc p {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+.page-ai-receptionist .ar-transcript-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-receptionist .ar-transcript-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-ai-receptionist .ar-transcript-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+    max-width: 26ch;
+}
+
+.page-ai-receptionist .ar-transcript-stage {
+    background: linear-gradient(180deg, var(--bg-surface), var(--bg-primary));
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px, 3vw, 36px);
+    overflow: hidden;
+}
+
+.page-ai-receptionist .ar-transcript-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-light);
+    margin-bottom: 22px;
+}
+
+.page-ai-receptionist .ar-transcript-toolbar-right {
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-transcript-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(16px, 2vw, 24px);
+    align-items: stretch;
+}
+
+.page-ai-receptionist .ar-transcript-col {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-ai-receptionist .ar-transcript-col-toolbar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background-color: var(--bg-surface-raised);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.page-ai-receptionist .ar-transcript-col-toolbar i {
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-transcript-col-toolbar--work {
+    background-color: rgba(84, 125, 158, 0.12);
+    color: var(--text-primary);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+}
+
+.page-ai-receptionist .ar-transcript-col-icon {
+    width: 14px;
+    height: 14px;
+    fill: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-transcript-list,
+.page-ai-receptionist .ar-work-list {
+    list-style: none;
+    margin: 0;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.page-ai-receptionist .ar-line {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    line-height: 1.45;
+}
+
+.page-ai-receptionist .ar-line-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-receptionist .ar-line p {
+    font-size: var(--text-body-sm);
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.page-ai-receptionist .ar-line--xbert {
+    background-color: rgba(84, 125, 158, 0.16);
+    border: 1px solid rgba(84, 125, 158, 0.4);
+    align-self: flex-start;
+    max-width: 92%;
+}
+
+.page-ai-receptionist .ar-line--xbert .ar-line-tag {
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-line--caller {
+    background-color: var(--bg-surface-raised);
+    border: 1px solid var(--border-light);
+    align-self: flex-end;
+    max-width: 92%;
+}
+
+.page-ai-receptionist .ar-work {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 12px;
+    align-items: start;
+}
+
+.page-ai-receptionist .ar-work-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-blue);
+    letter-spacing: 0.06em;
+    padding-top: 4px;
+}
+
+.page-ai-receptionist .ar-work-desc {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.45;
+    padding: 6px 10px;
+    background-color: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+}
+
+.page-ai-receptionist .ar-work-desc i {
+    color: var(--accent-blue);
+    margin-top: 2px;
+}
+
+.page-ai-receptionist .ar-transcript-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    border-top: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-ai-receptionist .ar-transcript-summary strong {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: var(--text-body);
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.page-ai-receptionist .ar-transcript-summary i {
+    color: var(--accent-blue);
+    margin-right: 4px;
+}
+
+@media (max-width: 1023px) {
+    .page-ai-receptionist .ar-transcript-header-copy,
+    .page-ai-receptionist .ar-transcript-header-desc {
+        grid-column: 1 / -1;
+    }
+    .page-ai-receptionist .ar-transcript-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ================================================================
+   Pillar wrapper (matches AI Employee/Agent Assist pattern)
+   ================================================================ */
+
+.page-ai-receptionist .section-ar-pillar {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-ai-receptionist .ar-pillar {
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+}
+
+.page-ai-receptionist .ar-pillar-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-ai-receptionist .ar-pillar-index {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-pillar-tag {
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.page-ai-receptionist .ar-pillar-heading {
+    font-size: var(--text-heading-lg);
+    font-weight: var(--heading-weight);
+    line-height: 1.1;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+    max-width: 22ch;
+}
+
+.page-ai-receptionist .ar-pillar-detail {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 52ch;
+}
+
+.page-ai-receptionist .ar-pillar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.page-ai-receptionist .ar-pillar-list li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    align-items: start;
+    color: var(--text-secondary);
+    font-size: var(--text-body);
+    line-height: 1.5;
+}
+
+.page-ai-receptionist .ar-pillar-list i {
+    color: var(--accent-blue);
+    font-size: 18px;
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+.page-ai-receptionist .ar-pillar-list strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-ai-receptionist .ar-pillar-visual {
+    position: relative;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ------------------------------------------------
+   Pillar 01 — Call volume mock-card subcomponents
+   ------------------------------------------------ */
+
+.page-ai-receptionist .ar-volume-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 40px;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 4px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.page-ai-receptionist .ar-volume-row:last-of-type {
+    border-bottom: none;
+}
+
+.page-ai-receptionist .ar-volume-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-ai-receptionist .ar-volume-label i {
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-volume-bar {
+    display: block;
+    height: 6px;
+    background-color: var(--bg-muted);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.page-ai-receptionist .ar-volume-bar > span {
+    display: block;
+    height: 100%;
+    background-color: var(--accent-blue);
+    border-radius: 3px;
+}
+
+.page-ai-receptionist .ar-volume-val {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    text-align: right;
+    font-weight: 600;
+}
+
+.page-ai-receptionist .ar-volume-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-ai-receptionist .ar-volume-footer i {
+    color: var(--accent-blue);
+    margin-right: 4px;
+}
+
+
+/* ------------------------------------------------
+   Pillar 02 — Voice profile mock-card
+   ------------------------------------------------ */
+
+.page-ai-receptionist .ar-voice-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.page-ai-receptionist .ar-voice-detail-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    padding: 8px 4px;
+    border-bottom: 1px dashed var(--border-light);
+    align-items: baseline;
+}
+
+.page-ai-receptionist .ar-voice-detail-row:last-child {
+    border-bottom: none;
+}
+
+.page-ai-receptionist .ar-voice-detail-key {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-ai-receptionist .ar-voice-detail-val {
+    font-size: var(--text-body-sm);
+    color: var(--text-primary);
+}
+
+
+/* ================================================================
+   Telephony integrations header
+   ================================================================ */
+
+.page-ai-receptionist .section-ar-integrations {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-ai-receptionist .ar-integrations-header {
+    margin-bottom: var(--space-2xl);
+    align-items: end;
+}
+
+.page-ai-receptionist .ar-integrations-copy {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-ai-receptionist .ar-integrations-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-receptionist .ar-integrations-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-ai-receptionist .ar-integrations-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-ai-receptionist .ar-integrations-deck {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    max-width: 56ch;
+    line-height: 1.55;
+}
+
+@media (max-width: 1023px) {
+    .page-ai-receptionist .ar-integrations-copy {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ================================================================
+   FAQ accordion (matches AI Employee + Agent Assist FAQ)
+   ================================================================ */
+
+.page-ai-receptionist .section-ar-faq {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-ai-receptionist .ar-faq-header {
+    margin-bottom: var(--space-2xl);
+    align-items: end;
+}
+
+.page-ai-receptionist .ar-faq-header-copy {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-ai-receptionist .ar-faq-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-ai-receptionist .ar-faq-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-ai-receptionist .ar-faq-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-ai-receptionist .ar-faq-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-light);
+}
+
+.page-ai-receptionist .ar-faq-item {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.page-ai-receptionist .ar-faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    font-size: var(--text-heading-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.3;
+    transition: color 0.2s ease;
+}
+
+.page-ai-receptionist .ar-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.page-ai-receptionist .ar-faq-item summary i {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    font-size: 22px;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.page-ai-receptionist .ar-faq-item[open] summary i {
+    transform: rotate(45deg);
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-faq-item summary:hover {
+    color: var(--accent-blue);
+}
+
+.page-ai-receptionist .ar-faq-item summary:focus-visible {
+    outline: 1px dashed var(--accent-blue);
+    outline-offset: 4px;
+}
+
+.page-ai-receptionist .ar-faq-answer {
+    padding: 0 0 var(--space-lg);
+    max-width: 80ch;
+}
+
+.page-ai-receptionist .ar-faq-answer p {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.page-ai-receptionist .ar-faq-answer a {
+    color: var(--accent-blue);
+    text-decoration: underline;
+    text-decoration-color: rgba(84, 125, 158, 0.4);
+    text-underline-offset: 3px;
+}
+
+.page-ai-receptionist .ar-faq-answer a:hover {
+    text-decoration-color: var(--accent-blue);
+}
+
+@media (max-width: 1023px) {
+    .page-ai-receptionist .ar-faq-header-copy {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767px) {
+    .page-ai-receptionist .ar-faq-item summary {
+        font-size: var(--text-body-lg);
+    }
+}

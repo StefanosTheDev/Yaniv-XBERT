@@ -1,0 +1,864 @@
+/* ================================================================
+   PAGE: AGENT ASSIST
+   Loaded on top of page-index.css. Reuses the shared section
+   vocabulary and adds an Agent-Assist-specific hero, bespoke
+   "side-by-side" stage, pillar wrapper, integrations header,
+   and FAQ accordion.
+
+   Visual idiom intentionally mirrors page-ai-employee.css so
+   product pages feel like a family.
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Hero — stat-led headline
+   ------------------------------------------------ */
+
+.page-agent-assist .section-aa-hero {
+    position: relative;
+    padding: clamp(72px, 10vw, 140px) 0 clamp(64px, 8vw, 120px);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-agent-assist .aa-hero-bg-terminal {
+    position: absolute;
+    inset: 0;
+    color: var(--terminal-text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.35;
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0));
+}
+
+.page-agent-assist .aa-hero-grid {
+    align-items: center;
+    gap: clamp(32px, 5vw, 64px);
+}
+
+.page-agent-assist .aa-hero-copy {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.page-agent-assist .aa-hero-stage {
+    grid-column: span 5;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+}
+
+.page-agent-assist .aa-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-agent-assist .aa-hero-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-agent-assist .aa-hero-title {
+    font-family: var(--font-body);
+    font-size: var(--text-display-sm);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.page-agent-assist .aa-hero-title-stat {
+    font-family: var(--font-serif);
+    color: var(--accent-blue);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    font-size: clamp(72px, 12vw, 144px);
+}
+
+.page-agent-assist .aa-hero-title-rest {
+    font-size: var(--text-section);
+    line-height: 1.05;
+    max-width: 22ch;
+}
+
+.page-agent-assist .aa-hero-title-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-hero-deck {
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 56ch;
+}
+
+.page-agent-assist .aa-hero-deck strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-agent-assist .aa-hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.page-agent-assist .aa-hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+.page-agent-assist .aa-hero-trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.page-agent-assist .aa-hero-trust i {
+    color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-hero-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.page-agent-assist .aa-hero-stage-toolbar-right {
+    color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-hero-suggest {
+    margin: 0;
+}
+
+.page-agent-assist .aa-hero-meter {
+    margin-top: 6px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-light);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.page-agent-assist .aa-hero-meter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 13px;
+}
+
+.page-agent-assist .aa-hero-meter-row span {
+    color: var(--text-tertiary);
+}
+
+.page-agent-assist .aa-hero-meter-row strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+@media (max-width: 1023px) {
+    .page-agent-assist .aa-hero-copy,
+    .page-agent-assist .aa-hero-stage {
+        grid-column: 1 / -1;
+    }
+    .page-agent-assist .aa-hero-stage {
+        max-width: 560px;
+    }
+}
+
+
+/* ================================================================
+   Bespoke "Side by side" stage
+   Two panes side-by-side on desktop:
+     Left  — agent's view of the customer thread (mock chat UI)
+     Right — XBert coach panel with journal, draft, sources
+   ================================================================ */
+
+.page-agent-assist .section-aa-side {
+    padding: clamp(72px, 9vw, 120px) 0;
+}
+
+.page-agent-assist .aa-side-header {
+    align-items: end;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
+}
+
+.page-agent-assist .aa-side-header-copy {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-agent-assist .aa-side-header-desc {
+    grid-column: span 5;
+}
+
+.page-agent-assist .aa-side-header-desc p {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+.page-agent-assist .aa-side-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-agent-assist .aa-side-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-agent-assist .aa-side-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+    max-width: 24ch;
+}
+
+.page-agent-assist .aa-side-stage {
+    background: linear-gradient(180deg, var(--bg-surface), var(--bg-primary));
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px, 3vw, 36px);
+    overflow: hidden;
+}
+
+.page-agent-assist .aa-side-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-light);
+    margin-bottom: 22px;
+}
+
+.page-agent-assist .aa-side-toolbar-right {
+    color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-side-grid {
+    gap: clamp(16px, 2vw, 24px);
+    align-items: stretch;
+}
+
+.page-agent-assist .aa-side-pane {
+    grid-column: span 6;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+}
+
+.page-agent-assist .aa-side-pane-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background-color: var(--bg-surface-raised);
+    border-bottom: 1px solid var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-agent-assist .aa-side-pane-toolbar--coach {
+    background-color: rgba(84, 125, 158, 0.12);
+    color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-side-pane-toolbar--coach span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+}
+
+.page-agent-assist .aa-side-coach-icon {
+    width: 14px;
+    height: 14px;
+    fill: var(--accent-blue);
+}
+
+.page-agent-assist .aa-side-pane--thread .aa-side-thread {
+    flex: 1;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.page-agent-assist .aa-side-msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    line-height: 1.45;
+}
+
+.page-agent-assist .aa-side-msg-meta {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-agent-assist .aa-side-msg p {
+    font-size: var(--text-body-sm);
+    color: var(--text-primary);
+}
+
+.page-agent-assist .aa-side-msg--customer {
+    align-self: flex-start;
+    background-color: var(--bg-surface-raised);
+    border: 1px solid var(--border-light);
+}
+
+.page-agent-assist .aa-side-msg--agent {
+    align-self: flex-end;
+    background-color: rgba(84, 125, 158, 0.18);
+    border: 1px solid rgba(84, 125, 158, 0.4);
+}
+
+.page-agent-assist .aa-side-typing {
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background-color: rgba(84, 125, 158, 0.1);
+    border: 1px dashed rgba(84, 125, 158, 0.5);
+    border-radius: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-blue);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-agent-assist .aa-side-typing-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    animation: aaTypingPulse 1.2s ease-in-out infinite;
+}
+
+.page-agent-assist .aa-side-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.page-agent-assist .aa-side-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes aaTypingPulse {
+    0%, 100% { opacity: 0.25; transform: translateY(0); }
+    50%      { opacity: 1;    transform: translateY(-2px); }
+}
+
+.page-agent-assist .aa-side-typing-label {
+    margin-left: 4px;
+}
+
+.page-agent-assist .aa-side-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border-light);
+    background-color: var(--bg-primary);
+    font-size: var(--text-body-sm);
+    color: var(--text-tertiary);
+}
+
+.page-agent-assist .aa-side-input-send {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-agent-assist .aa-side-pane--coach {
+    background-color: var(--bg-surface);
+    padding-bottom: 0;
+}
+
+.page-agent-assist .aa-side-coach-block {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-agent-assist .aa-side-coach-block:last-of-type {
+    border-bottom: none;
+}
+
+.page-agent-assist .aa-side-coach-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.page-agent-assist .aa-side-coach-journal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 22px;
+    font-size: var(--text-body-sm);
+    color: var(--text-secondary);
+}
+
+.page-agent-assist .aa-side-coach-journal strong {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.page-agent-assist .aa-side-coach-suggest {
+    background-color: var(--bg-surface-raised);
+    border: 1px solid var(--border-light);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    font-size: var(--text-body-sm);
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.page-agent-assist .aa-side-coach-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.page-agent-assist .aa-side-coach-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background-color: var(--bg-surface);
+    font-size: 12px;
+    color: var(--text-primary);
+}
+
+.page-agent-assist .aa-side-coach-btn--primary {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-side-coach-sources {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.page-agent-assist .aa-side-coach-src {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-primary);
+    align-items: start;
+    padding: 8px 10px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+}
+
+.page-agent-assist .aa-side-coach-src i {
+    color: var(--accent-blue);
+    margin-top: 2px;
+}
+
+.page-agent-assist .aa-side-coach-src small {
+    display: block;
+    color: var(--text-tertiary);
+    font-size: 11px;
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
+}
+
+.page-agent-assist .aa-side-coach-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 18px;
+    border-top: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-agent-assist .aa-side-coach-footer i {
+    color: var(--accent-blue);
+}
+
+@media (max-width: 1023px) {
+    .page-agent-assist .aa-side-header-copy,
+    .page-agent-assist .aa-side-header-desc,
+    .page-agent-assist .aa-side-pane {
+        grid-column: 1 / -1;
+    }
+    .page-agent-assist .aa-side-pane {
+        min-height: 0;
+    }
+}
+
+
+/* ================================================================
+   Numbered pillar wrapper
+   Visual logic identical to .aie-pillar on the AI Employee page,
+   namespaced to .aa-pillar to keep page concerns separate.
+   ================================================================ */
+
+.page-agent-assist .section-aa-pillar {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-agent-assist .aa-pillar {
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+}
+
+.page-agent-assist .aa-pillar-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-agent-assist .aa-pillar-index {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-pillar-tag {
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.page-agent-assist .aa-pillar-heading {
+    font-size: var(--text-heading-lg);
+    font-weight: var(--heading-weight);
+    line-height: 1.1;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+    max-width: 24ch;
+}
+
+.page-agent-assist .aa-pillar-detail {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 52ch;
+}
+
+.page-agent-assist .aa-pillar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.page-agent-assist .aa-pillar-list li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    align-items: start;
+    color: var(--text-secondary);
+    font-size: var(--text-body);
+    line-height: 1.5;
+}
+
+.page-agent-assist .aa-pillar-list i {
+    color: var(--accent-blue);
+    font-size: 18px;
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+.page-agent-assist .aa-pillar-list strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-agent-assist .aa-pillar-visual {
+    position: relative;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ================================================================
+   Integrations subset header
+   ================================================================ */
+
+.page-agent-assist .section-aa-integrations {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-agent-assist .aa-integrations-header {
+    margin-bottom: var(--space-2xl);
+    align-items: end;
+}
+
+.page-agent-assist .aa-integrations-copy {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-agent-assist .aa-integrations-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-agent-assist .aa-integrations-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-agent-assist .aa-integrations-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-agent-assist .aa-integrations-deck {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    max-width: 56ch;
+    line-height: 1.55;
+}
+
+@media (max-width: 1023px) {
+    .page-agent-assist .aa-integrations-copy {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ================================================================
+   FAQ accordion (mirrors page-ai-employee FAQ)
+   ================================================================ */
+
+.page-agent-assist .section-aa-faq {
+    padding: clamp(56px, 7vw, 100px) 0;
+}
+
+.page-agent-assist .aa-faq-header {
+    margin-bottom: var(--space-2xl);
+    align-items: end;
+}
+
+.page-agent-assist .aa-faq-header-copy {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-agent-assist .aa-faq-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-agent-assist .aa-faq-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-agent-assist .aa-faq-title {
+    font-size: var(--text-section);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-agent-assist .aa-faq-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-light);
+}
+
+.page-agent-assist .aa-faq-item {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.page-agent-assist .aa-faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    font-size: var(--text-heading-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.3;
+    transition: color 0.2s ease;
+}
+
+.page-agent-assist .aa-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.page-agent-assist .aa-faq-item summary i {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    font-size: 22px;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.page-agent-assist .aa-faq-item[open] summary i {
+    transform: rotate(45deg);
+    color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-faq-item summary:hover {
+    color: var(--accent-blue);
+}
+
+.page-agent-assist .aa-faq-item summary:focus-visible {
+    outline: 1px dashed var(--accent-blue);
+    outline-offset: 4px;
+}
+
+.page-agent-assist .aa-faq-answer {
+    padding: 0 0 var(--space-lg);
+    max-width: 80ch;
+}
+
+.page-agent-assist .aa-faq-answer p {
+    font-size: var(--text-body-lg);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.page-agent-assist .aa-faq-answer a {
+    color: var(--accent-blue);
+    text-decoration: underline;
+    text-decoration-color: rgba(84, 125, 158, 0.4);
+    text-underline-offset: 3px;
+}
+
+.page-agent-assist .aa-faq-answer a:hover {
+    text-decoration-color: var(--accent-blue);
+}
+
+@media (max-width: 1023px) {
+    .page-agent-assist .aa-faq-header-copy {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767px) {
+    .page-agent-assist .aa-faq-item summary {
+        font-size: var(--text-body-lg);
+    }
+}
