@@ -56,18 +56,15 @@
 }
 
 .page-leadership .ld-hero-title {
-    font-family: var(--font-body);
+    font-family: var(--font-serif);
     font-size: var(--text-display-sm);
-    font-weight: var(--display-weight);
+    font-weight: 700;
     line-height: var(--display-line-height);
     letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 
 .page-leadership .ld-hero-title-accent {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
     color: var(--accent-blue);
 }
 
@@ -109,10 +106,11 @@
 }
 
 .page-leadership .ld-section-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 

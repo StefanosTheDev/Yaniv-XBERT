@@ -50,9 +50,9 @@
 }
 
 .page-about .ab-hero-title {
-    font-family: var(--font-body);
+    font-family: var(--font-serif);
     font-size: var(--text-display);
-    font-weight: var(--display-weight);
+    font-weight: 700;
     line-height: var(--display-line-height);
     letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
@@ -60,9 +60,6 @@
 }
 
 .page-about .ab-hero-title-accent {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
     color: var(--accent-blue);
 }
 
@@ -182,10 +179,11 @@
 }
 
 .page-about .ab-mission-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
     max-width: 18ch;
 }
@@ -232,10 +230,11 @@
 }
 
 .page-about .ab-vision-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 
@@ -354,10 +353,11 @@
 }
 
 .page-about .ab-timeline-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
     max-width: 22ch;
 }
@@ -406,12 +406,22 @@
 }
 
 .page-about .ab-timeline-body h3 {
+    font-family: var(--font-serif);
     font-size: var(--text-heading-md);
-    font-weight: var(--heading-weight);
-    line-height: 1.2;
+    font-weight: 700;
+    line-height: 1.05;
     letter-spacing: var(--heading-letter-spacing);
     color: var(--text-primary);
     margin-bottom: var(--space-sm);
+}
+
+.page-about .ab-office-card h3 {
+    font-family: var(--font-serif);
+    font-size: var(--text-heading-md);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-primary);
 }
 
 .page-about .ab-timeline-body p {
@@ -465,10 +475,11 @@
 }
 
 .page-about .ab-offices-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 
@@ -507,12 +518,8 @@
     text-transform: uppercase;
 }
 
-.page-about .ab-office-card h3 {
-    font-size: var(--text-heading-md);
-    font-weight: var(--heading-weight);
-    line-height: 1.1;
-    color: var(--text-primary);
-}
+/* .ab-office-card h3 typography lives near the timeline section above
+   to keep all serif-family headings together. */
 
 .page-about .ab-office-card p {
     font-size: var(--text-body-sm);

@@ -77,9 +77,9 @@
 }
 
 .page-agent-assist .aa-hero-title {
-    font-family: var(--font-body);
+    font-family: var(--font-serif);
     font-size: var(--text-display-sm);
-    font-weight: var(--display-weight);
+    font-weight: 700;
     line-height: var(--display-line-height);
     letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
@@ -89,10 +89,8 @@
 }
 
 .page-agent-assist .aa-hero-title-stat {
-    font-family: var(--font-serif);
     color: var(--accent-blue);
-    font-style: italic;
-    font-weight: 400;
+    font-weight: 700;
     letter-spacing: -0.04em;
     line-height: 1;
     font-size: clamp(72px, 12vw, 144px);
@@ -105,9 +103,6 @@
 }
 
 .page-agent-assist .aa-hero-title-accent {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
     color: var(--accent-blue);
 }
 
@@ -260,10 +255,11 @@
 }
 
 .page-agent-assist .aa-side-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
     max-width: 24ch;
 }
@@ -622,10 +618,11 @@
 }
 
 .page-agent-assist .aa-pillar-heading {
-    font-size: var(--text-heading-lg);
-    font-weight: var(--heading-weight);
-    line-height: 1.1;
-    letter-spacing: var(--heading-letter-spacing);
+    font-family: var(--font-serif);
+    font-size: var(--text-section-sm);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
     max-width: 24ch;
 }
@@ -713,10 +710,11 @@
 }
 
 .page-agent-assist .aa-integrations-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 
@@ -772,10 +770,11 @@
 }
 
 .page-agent-assist .aa-faq-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 

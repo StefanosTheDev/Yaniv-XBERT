@@ -76,9 +76,9 @@
 }
 
 .page-ai-employee .aie-hero-title {
-    font-family: var(--font-body);
+    font-family: var(--font-serif);
     font-size: var(--text-display-sm);
-    font-weight: var(--display-weight);
+    font-weight: 700;
     line-height: var(--display-line-height);
     letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
@@ -86,9 +86,6 @@
 }
 
 .page-ai-employee .aie-hero-title-accent {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
     color: var(--accent-blue);
 }
 
@@ -260,10 +257,11 @@
 }
 
 .page-ai-employee .aie-day-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 
@@ -526,10 +524,11 @@
 }
 
 .page-ai-employee .aie-pillar-heading {
-    font-size: var(--text-heading-lg);
-    font-weight: var(--heading-weight);
-    line-height: 1.1;
-    letter-spacing: var(--heading-letter-spacing);
+    font-family: var(--font-serif);
+    font-size: var(--text-section-sm);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
     max-width: 22ch;
 }
@@ -806,10 +805,11 @@
 }
 
 .page-ai-employee .aie-integrations-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 
@@ -869,10 +869,11 @@
 }
 
 .page-ai-employee .aie-faq-title {
+    font-family: var(--font-serif);
     font-size: var(--text-section);
-    font-weight: var(--heading-weight);
-    line-height: var(--heading-line-height);
-    letter-spacing: var(--heading-letter-spacing);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
     color: var(--text-primary);
 }
 
