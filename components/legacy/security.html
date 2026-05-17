@@ -12,9 +12,80 @@
                         </div>
                     </div>
 
-                    <div class="security-hero-placeholder" aria-label="Product illustration placeholder">
-                        <span>Illustration / product moment</span>
-                    </div>
+                    <!--
+                        Hero "product moment" — XBERT.GUARD.
+                        Mirrors the toolbar + console pattern used on
+                        /how-xbert-works and /integrations so the four
+                        product pages read as one product family. Anatomy:
+                          1) toolbar with the same XBERT.* badge pattern
+                          2) one-line lede framing the four checks
+                          3) four "gate" rows that activate sequentially —
+                             Identity, Knowledge, Scope, Sensitive content —
+                             each with an icon, name, evidence line, animated
+                             progress bar, and a green check that lights up
+                             when the gate clears
+                          4) a footer of compliance chips (SOC 2, ISO-27001,
+                             HIPAA, GDPR) — visible callbacks to the proof
+                             strip directly below
+                        Distinct from the section underneath: this shows the
+                        *runtime enforcement* moment, while the section
+                        explains the *policy structure* (You define / XBert
+                        enforces).
+                    -->
+                    <aside class="security-hero-stage" aria-label="Live example: every XBert answer passes four guardrails before it ships">
+                        <div class="security-hero-stage-toolbar">
+                            <span class="security-hero-stage-toolbar-left">XBERT.GUARD &middot; ACTIVE</span>
+                            <span class="security-hero-stage-toolbar-right" data-spinner="bracketBar">[▰▰▰▰] ALL CLEAR</span>
+                        </div>
+
+                        <p class="security-hero-stage-lede">Every answer passes four gates before it ships.</p>
+
+                        <ul class="security-hero-gates" aria-label="Live guardrails XBert just cleared">
+                            <li class="security-hero-gate" style="--gate-delay: 0s;">
+                                <span class="security-hero-gate-icon"><i class="ri-user-check-line" aria-hidden="true"></i></span>
+                                <span class="security-hero-gate-body">
+                                    <span class="security-hero-gate-name">Identity verified</span>
+                                    <span class="security-hero-gate-meta">Caller matched to record &middot; 0.1s</span>
+                                </span>
+                                <span class="security-hero-gate-bar" aria-hidden="true"><span class="security-hero-gate-bar-fill"></span></span>
+                                <i class="ri-check-line security-hero-gate-check" aria-hidden="true"></i>
+                            </li>
+                            <li class="security-hero-gate" style="--gate-delay: 0.35s;">
+                                <span class="security-hero-gate-icon"><i class="ri-book-3-line" aria-hidden="true"></i></span>
+                                <span class="security-hero-gate-body">
+                                    <span class="security-hero-gate-name">Knowledge approved</span>
+                                    <span class="security-hero-gate-meta">Answer pulled from sanctioned source &middot; 0.2s</span>
+                                </span>
+                                <span class="security-hero-gate-bar" aria-hidden="true"><span class="security-hero-gate-bar-fill"></span></span>
+                                <i class="ri-check-line security-hero-gate-check" aria-hidden="true"></i>
+                            </li>
+                            <li class="security-hero-gate" style="--gate-delay: 0.7s;">
+                                <span class="security-hero-gate-icon"><i class="ri-shield-check-line" aria-hidden="true"></i></span>
+                                <span class="security-hero-gate-body">
+                                    <span class="security-hero-gate-name">Action within scope</span>
+                                    <span class="security-hero-gate-meta">Request matches what XBert may do &middot; 0.3s</span>
+                                </span>
+                                <span class="security-hero-gate-bar" aria-hidden="true"><span class="security-hero-gate-bar-fill"></span></span>
+                                <i class="ri-check-line security-hero-gate-check" aria-hidden="true"></i>
+                            </li>
+                            <li class="security-hero-gate" style="--gate-delay: 1.05s;">
+                                <span class="security-hero-gate-icon"><i class="ri-eye-off-line" aria-hidden="true"></i></span>
+                                <span class="security-hero-gate-body">
+                                    <span class="security-hero-gate-name">Sensitive content cleared</span>
+                                    <span class="security-hero-gate-meta">No PII or unsafe content leaving &middot; 0.4s</span>
+                                </span>
+                                <span class="security-hero-gate-bar" aria-hidden="true"><span class="security-hero-gate-bar-fill"></span></span>
+                                <i class="ri-check-line security-hero-gate-check" aria-hidden="true"></i>
+                            </li>
+                        </ul>
+
+                        <div class="security-hero-stage-footer">
+                            <span class="security-hero-cert-chip"><i class="ri-shield-check-line" aria-hidden="true"></i>SOC 2</span>
+                            <span class="security-hero-cert-chip"><i class="ri-lock-line" aria-hidden="true"></i>ISO-27001</span>
+                            <span class="security-hero-cert-chip"><i class="ri-file-shield-2-line" aria-hidden="true"></i>HIPAA</span>
+                            <span class="security-hero-cert-chip"><i class="ri-global-line" aria-hidden="true"></i>GDPR</span>
+                        </div>
+                    </aside>
                 </div>
             </div>
         </section>

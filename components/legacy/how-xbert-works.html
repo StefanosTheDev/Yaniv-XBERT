@@ -13,9 +13,76 @@
                         </div>
                     </div>
 
-                    <div class="how-hero-placeholder" aria-label="Product illustration placeholder">
-                        <span>Illustration / product moment</span>
-                    </div>
+                    <!--
+                        Hero "product moment" — XBERT.WORK.
+                        Mirrors the toolbar + toast + chip language used on
+                        /ai-employee, /agent-assist, /ai-receptionist so the
+                        page feels like the same product family. Anatomy:
+                          1) toolbar with the same XBERT.* badge pattern
+                          2) one short voice thread (the conversation)
+                          3) a dashed connector that says
+                             "conversation becomes work"
+                          4) three monospace action-trace rows that tick in
+                             sequentially — calendar / CRM / SMS
+                          5) a footer chip row of the systems touched
+                        Intentionally avoids the tile-drop diagram from the
+                        section directly below so the two visuals reinforce
+                        each other instead of repeating.
+                    -->
+                    <aside class="how-hero-stage" aria-label="Live example: a customer conversation becoming completed work">
+                        <div class="how-hero-stage-toolbar">
+                            <span class="how-hero-stage-toolbar-left">XBERT.WORK &middot; LIVE</span>
+                            <span class="how-hero-stage-toolbar-right" data-spinner="fade">⣷⣶⣶⣶ ON SHIFT</span>
+                        </div>
+
+                        <div class="how-hero-thread" aria-hidden="true">
+                            <div class="how-hero-thread-top">
+                                <div class="how-hero-thread-avatars">
+                                    <span class="how-hero-thread-avatar how-hero-thread-avatar--xbert">
+                                        <svg viewBox="0 0 18.89 27.41" aria-hidden="true"><use href="#xbert-icon"/></svg>
+                                    </span>
+                                    <img class="how-hero-thread-avatar how-hero-thread-avatar--photo" src="/assets/images/people/person-04.png" alt="">
+                                </div>
+                                <div class="how-hero-thread-identity">
+                                    <span class="how-hero-thread-name">XBert AI</span>
+                                    <span class="how-hero-thread-channel">Voice</span>
+                                </div>
+                                <span class="how-hero-thread-time">Live</span>
+                            </div>
+                            <p class="how-hero-thread-quote">&ldquo;Can I move my appointment to Thursday at 2?&rdquo;</p>
+                            <p class="how-hero-thread-reply">Done. Booked Thursday at 2:00pm and texting your confirmation now.</p>
+                        </div>
+
+                        <div class="how-hero-connector" aria-hidden="true">
+                            <span class="how-hero-connector-line"></span>
+                            <span class="how-hero-connector-label">Conversation becomes work</span>
+                            <span class="how-hero-connector-line"></span>
+                        </div>
+
+                        <ul class="how-hero-trace" aria-label="Actions XBert just completed">
+                            <li class="how-hero-trace-row" style="--trace-delay: 0s;">
+                                <span class="how-hero-trace-arrow" aria-hidden="true">&rarr;</span>
+                                <span class="how-hero-trace-call"><strong>calendar.update</strong>(slot=Thu&nbsp;2:00pm)</span>
+                                <span class="how-hero-trace-status"><i class="ri-check-line" aria-hidden="true"></i>0.4s</span>
+                            </li>
+                            <li class="how-hero-trace-row" style="--trace-delay: 0.55s;">
+                                <span class="how-hero-trace-arrow" aria-hidden="true">&rarr;</span>
+                                <span class="how-hero-trace-call"><strong>crm.contact.update</strong>(prefers_text=true)</span>
+                                <span class="how-hero-trace-status"><i class="ri-check-line" aria-hidden="true"></i>0.7s</span>
+                            </li>
+                            <li class="how-hero-trace-row" style="--trace-delay: 1.1s;">
+                                <span class="how-hero-trace-arrow" aria-hidden="true">&rarr;</span>
+                                <span class="how-hero-trace-call"><strong>sms.send</strong>(template=appt_confirm)</span>
+                                <span class="how-hero-trace-status"><i class="ri-check-line" aria-hidden="true"></i>1.1s</span>
+                            </li>
+                        </ul>
+
+                        <div class="how-hero-stage-footer" aria-label="Systems touched">
+                            <span class="how-hero-stage-tag"><i class="ri-calendar-check-line" aria-hidden="true"></i>Calendar</span>
+                            <span class="how-hero-stage-tag"><i class="ri-database-2-line" aria-hidden="true"></i>CRM</span>
+                            <span class="how-hero-stage-tag"><i class="ri-message-3-line" aria-hidden="true"></i>SMS</span>
+                        </div>
+                    </aside>
                 </div>
             </div>
         </section>
