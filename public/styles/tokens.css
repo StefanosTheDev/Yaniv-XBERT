@@ -28,6 +28,13 @@
         0 0 1px rgba(125, 169, 214, 0.50),
         0 0 18px rgba(125, 169, 214, 0.28);
 
+    /* Decorative panel tones — neutral cousins of the moonlight blue.
+       Used on the homepage fabric/feature panels and the editorial cards
+       to provide warm/cool variation without competing with the
+       brand accent. Same lightness band as --accent-blue. */
+    --panel-slate: #85969E;   /* cool slate (replaces sage #8E9787) */
+    --panel-taupe: #A09185;   /* refined taupe (replaces tan #A78A6D) */
+
     /* Background motif — subtle terminal text, tinted toward moonlight blue */
     --terminal-text: rgba(170, 195, 230, 0.34);
 
