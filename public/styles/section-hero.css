@@ -15,8 +15,11 @@
 
 .section-hero {
     position: relative;
-    padding-top: 100px;
-    padding-bottom: var(--space-section);
+    /* Tightened from 100px / --space-section so the proof cards below
+       peek into the first viewport — gives users a "there's more here"
+       cue without scrolling. */
+    padding-top: clamp(48px, 6vw, 76px);
+    padding-bottom: clamp(48px, 6vw, 80px);
     overflow: hidden;
     background-color: var(--bg-primary);
 }
@@ -104,7 +107,12 @@
     align-items: start;
 }
 
-.hero-grid::after {
+/* Dark radial vignette behind the toast feed.
+   Scoped via :has() so it only renders when the legacy toast stack is
+   present (/home-old). The new homepage has a clean monogram lockup
+   that needs no backdrop — adding one made the area read as a "hot
+   spot" of darkness against the moonlight-blue background. */
+.hero-grid:has(.hero-toast-stack)::after {
     content: '';
     grid-column: 8 / 13;
     grid-row: 2;
@@ -337,6 +345,52 @@
             rgba(0, 0, 0, 0.24) 76%,
             rgba(0, 0, 0, 0) 100%
         );
+}
+
+
+/* ------------------------------------------------
+   Hero monogram — replaces the toast stack with the
+   full XBert lockup (the same X + "xBert" mark used
+   in the nav, scaled up). Sits in cols 8-12 of the
+   hero grid, vertically centered to the headline.
+   ------------------------------------------------ */
+
+.hero-monogram {
+    grid-column: 8 / 13;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* No aspect-ratio: the lockup is wide (~2.79 : 1), so let the SVG
+       set the box height naturally. */
+    max-width: clamp(280px, 34vw, 480px);
+    margin: 0;
+}
+
+/* Full XBert lockup, accent-blue with a soft moonlight glow. The glow
+   uses two stacked drop-shadows because text-shadow doesn't apply to
+   SVG paths. Slow breathing on opacity (no transform) keeps it crisp. */
+.hero-monogram-mark {
+    width: 100%;
+    height: auto;
+    color: var(--accent-blue);
+    fill: currentColor;
+    filter:
+        drop-shadow(0 0 1px rgba(125, 169, 214, 0.55))
+        drop-shadow(0 0 24px rgba(125, 169, 214, 0.40));
+    animation: hero-monogram-breathe 5s ease-in-out infinite;
+}
+
+@keyframes hero-monogram-breathe {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.82; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-monogram-mark { animation: none; }
 }
 
 .hero-toast {
@@ -847,7 +901,7 @@
         grid-template-rows: auto auto auto auto;
     }
 
-    .hero-grid::after {
+    .hero-grid:has(.hero-toast-stack)::after {
         grid-column: 1 / -1;
         grid-row: 3;
         align-self: start;
@@ -868,6 +922,13 @@
         grid-column: 1 / -1;
         grid-row: 3;
         align-self: start;
+    }
+
+    .hero-monogram {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        margin-top: 0;
+        max-width: clamp(220px, 38vw, 340px);
     }
 
     .hero-description { grid-column: 1 / 4; grid-row: 4; }
@@ -903,12 +964,19 @@
     .hero-status--right,
     .hero-title,
     .hero-toast-stack,
+    .hero-monogram,
     .hero-description,
     .hero-cta-group,
     .hero-placard {
         grid-column: 1 / -1;
         grid-row: auto;
         justify-self: stretch;
+    }
+
+    .hero-monogram {
+        justify-self: center;
+        margin-top: 0;
+        max-width: min(72vw, 320px);
     }
 
     .hero-status--left {

@@ -31,15 +31,119 @@
                     </span>
                 </h1>
 
-                <!--
-                    Big editorial XBert lockup. Replaces the rotating toast feed
-                    with the same horizontal X + "xBert" mark used in the nav,
-                    scaled up. No additional words stacked below — the lockup
-                    speaks for itself.
-                -->
-                <aside class="hero-monogram" aria-hidden="true">
-                    <svg class="hero-monogram-mark" viewBox="0 0 76.49 27.41"><use href="#xbert-logo-full"/></svg>
-                </aside>
+                <div class="hero-toast-stack" data-toast-stack>
+                    <!--
+                        Each toast represents one piece of work XBert handled.
+                        Structure: stacked avatars (XBert mark + caller initials),
+                        identity row with channel pill, meta line (channel · duration),
+                        body, and icon-led action chips.
+                        Channel options used here: voice, sms, chat, inbox.
+                    -->
+                    <div class="hero-toast channel-inbox" data-toast-key="text messages.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="/assets/images/people/person-01.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">Inbox</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">Just now</span>
+                        </div>
+                        <p class="hero-toast-message">Replied to 12 customer texts while you were out. Confirmations sent, questions answered, and two callbacks queued.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-check-line" aria-hidden="true"></i>12 resolved</span>
+                            <span class="hero-toast-tag"><i class="ri-time-line" aria-hidden="true"></i>~28 min saved</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-toast channel-voice" data-toast-key="appointments.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="/assets/images/people/person-06.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">Voice</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">2m ago</span>
+                        </div>
+                        <p class="hero-toast-message">Called in for her annual checkup. Booked her for Thursday at 2pm and sent the reminder.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-calendar-check-line" aria-hidden="true"></i>Appt booked</span>
+                            <span class="hero-toast-tag"><i class="ri-mail-send-line" aria-hidden="true"></i>SMS reminder</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-toast channel-sms" data-toast-key="follow-up.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="/assets/images/people/person-04.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">SMS</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">Just now</span>
+                        </div>
+                        <p class="hero-toast-message">Five estimates from last week hadn&rsquo;t heard back. Followed up with each &mdash; two homeowners are ready to schedule.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-message-2-line" aria-hidden="true"></i>5 Texts sent</span>
+                            <span class="hero-toast-tag"><i class="ri-thumb-up-line" aria-hidden="true"></i>2 Ready to book</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-toast channel-voice" data-toast-key="voice calls.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="/assets/images/people/person-05.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">Voice</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">1m ago</span>
+                        </div>
+                        <p class="hero-toast-message">Three calls came in during your lunch. Answered all of them, booked two consults, and transferred one urgent caller straight to you.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-calendar-check-line" aria-hidden="true"></i>2 consults</span>
+                            <span class="hero-toast-tag"><i class="ri-phone-fill" aria-hidden="true"></i>Transferred</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-toast channel-chat" data-toast-key="live chats.">
+                        <div class="hero-toast-top">
+                            <div class="hero-toast-avatars">
+                                <span class="toast-avatar toast-avatar-xbert" aria-hidden="true"><svg class="toast-avatar-icon" viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg></span>
+                                <img class="toast-avatar toast-avatar-photo" src="/assets/images/people/person-03.png" alt="" aria-hidden="true">
+                            </div>
+                            <div class="hero-toast-identity">
+                                <div class="hero-toast-header">
+                                    <span class="hero-toast-name">XBert AI</span>
+                                    <span class="hero-toast-channel">Chat</span>
+                                </div>
+                            </div>
+                            <span class="hero-toast-time">Just now</span>
+                        </div>
+                        <p class="hero-toast-message">Answered a live website chat in under 10 seconds. Qualified the lead and booked their consult for Friday at 10am.</p>
+                        <div class="hero-toast-tags">
+                            <span class="hero-toast-tag"><i class="ri-user-star-line" aria-hidden="true"></i>Lead qualified</span>
+                            <span class="hero-toast-tag"><i class="ri-calendar-event-line" aria-hidden="true"></i>Consult booked</span>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="hero-description">
                     <lottie-player
