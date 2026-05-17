@@ -670,6 +670,13 @@
     padding: var(--space-xl);
 }
 
+/* The trust grid only has 3 cards, not 4 — override to span 4 so the
+   row distributes evenly across the full 12-col container instead of
+   leaving the right ~25% empty. */
+.how-trust-card {
+    grid-column: span 4;
+}
+
 .how-flow-card i,
 .how-example-card i,
 .how-trust-card i {

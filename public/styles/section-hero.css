@@ -243,8 +243,13 @@
     font-family: var(--font-serif);
     font-weight: 700;
     font-size: clamp(54px, 8vw, 104px);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
+    line-height: var(--display-line-height);
+    /* Use the display-mode tokens so the hero breathes with every
+       other page-top headline on the site. Word-spacing widens the
+       gap between words specifically — Fraunces is naturally close-set
+       at display sizes, this pushes it back to comfortable reading. */
+    letter-spacing: var(--display-letter-spacing);
+    word-spacing: var(--display-word-spacing);
     color: var(--text-primary);
     max-width: none;
 }
@@ -252,6 +257,12 @@
 .hero-title-accent {
     display: inline;
     color: var(--accent-blue);
+    /* Editorial italic on the cycling word — the only italic in the hero.
+       Heavier SOFT axis here, so the italic Fraunces strokes feel
+       hand-cut rather than mechanical. */
+    font-style: italic;
+    font-variation-settings: "SOFT" 65;
+    text-shadow: var(--accent-glow);
 }
 
 .hero-title-cursor {
@@ -260,7 +271,8 @@
     height: 0.7em;
     margin-left: 0.08em;
     vertical-align: baseline;
-    background-color: var(--text-primary);
+    background-color: var(--accent-blue);
+    box-shadow: var(--accent-glow);
     animation: hero-title-cursor-blink 1s step-end infinite;
 }
 
@@ -443,7 +455,7 @@
 
 .hero-toast.feed-pos-4 {
     transform: translateY(calc(var(--toast-slot) * 4));
-    background-color: #000;
+    background-color: var(--bg-primary);
     opacity: 0;
     z-index: 1;
 }

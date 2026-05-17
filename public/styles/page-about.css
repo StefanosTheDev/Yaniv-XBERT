@@ -1,8 +1,13 @@
 /* ================================================================
-   PAGE: ABOUT NEXTIVA
+   PAGE: ABOUT — Agentix CX AI (a Nextiva company)
    Loaded on top of page-index.css. Editorial register — no product
-   mockups; built around display typography, a numeric trust band,
-   a vision trio, a vertical timeline, and an office grid.
+   mockups; built around display typography, a founder letter, a
+   three-card "incumbent advantage" block, the autonomous → assistive
+   → hybrid spectrum, and a numeric trust band.
+
+   Note: legacy CSS for the old timeline / offices / vision-trio /
+   mission sections is preserved further down the file but is no
+   longer referenced by the markup. Safe to prune later.
    ================================================================ */
 
 
@@ -552,4 +557,461 @@
     .page-about .ab-office-card {
         grid-column: 1 / -1;
     }
+}
+
+
+/* ================================================================
+   ALL RULES BELOW POWER THE NEW ABOUT PAGE
+   (founder letter, incumbent advantage, agentic-CX spectrum)
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Founder letter
+   Photo + identity caption on the left, signed
+   manifesto on the right. Editorial feel.
+   ------------------------------------------------ */
+
+.page-about .section-ab-founder {
+    padding: clamp(72px, 9vw, 120px) 0;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.page-about .ab-founder-grid {
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+}
+
+.page-about .ab-founder-portrait {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    position: sticky;
+    top: clamp(32px, 6vw, 96px);
+}
+
+/* Frame around the photo — subtle ring, slight inset shadow,
+   keeps the portrait feeling like an editorial plate, not a card. */
+.page-about .ab-founder-portrait-frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    background: linear-gradient(180deg, var(--bg-surface), var(--bg-primary));
+    box-shadow: inset 0 0 0 1px rgba(125, 169, 214, 0.10);
+}
+
+.page-about .ab-founder-portrait-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+    filter: saturate(0.92) contrast(1.02);
+}
+
+.page-about .ab-founder-id {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: var(--space-sm);
+    border-top: 1px dashed var(--border-light);
+}
+
+.page-about .ab-founder-name {
+    font-family: var(--font-serif);
+    font-size: var(--text-heading-md);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.page-about .ab-founder-role {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.5;
+}
+
+.page-about .ab-founder-copy {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.page-about .ab-founder-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-about .ab-founder-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+/* The opening sentence — display weight, italic Fraunces, sets
+   the tone for the whole letter. */
+.page-about .ab-founder-lede {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    max-width: 22ch;
+}
+
+/* Letter body keeps the Fraunces voice from the lede above, but
+   upright (not italic) and a notch smaller — so the italic lede is
+   the only display moment in the letter and the rest reads as a
+   calm editorial essay. */
+.page-about .ab-founder-copy p {
+    font-family: var(--font-serif);
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(17px, 1.35vw, 20px);
+    line-height: 1.65;
+    letter-spacing: -0.003em;
+    color: var(--text-secondary);
+    max-width: 60ch;
+}
+
+.page-about .ab-founder-copy p strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.page-about .ab-founder-sign {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px dashed var(--border-light);
+    width: fit-content;
+}
+
+.page-about .ab-founder-sign-mark {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(24px, 2.6vw, 32px);
+    color: var(--accent-blue);
+    text-shadow: var(--accent-glow);
+    line-height: 1;
+}
+
+.page-about .ab-founder-sign-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+@media (max-width: 1023px) {
+    .page-about .ab-founder-portrait,
+    .page-about .ab-founder-copy {
+        grid-column: 1 / -1;
+        position: static;
+    }
+    .page-about .ab-founder-portrait-frame {
+        max-width: 280px;
+    }
+}
+
+
+/* ------------------------------------------------
+   The Incumbent Advantage — three principle cards
+   ------------------------------------------------ */
+
+.page-about .section-ab-advantage {
+    padding: clamp(72px, 9vw, 120px) 0;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.page-about .ab-advantage-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 760px;
+    margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.page-about .ab-advantage-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-about .ab-advantage-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-about .ab-advantage-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-section);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+    max-width: 22ch;
+}
+
+.page-about .ab-advantage-grid {
+    gap: var(--space-xl);
+}
+
+.page-about .ab-advantage-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: clamp(28px, 3.2vw, 40px);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.page-about .ab-advantage-card:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-3px);
+}
+
+.page-about .ab-advantage-card-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-blue);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.page-about .ab-advantage-card h3 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+}
+
+.page-about .ab-advantage-card p {
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 1023px) {
+    .page-about .ab-advantage-card {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-about .ab-advantage-card {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ------------------------------------------------
+   The Agentic CX Spectrum — autonomous → hybrid
+   Three numbered items with a continuum line
+   running between them on desktop.
+   ------------------------------------------------ */
+
+.page-about .section-ab-spectrum {
+    padding: clamp(72px, 9vw, 120px) 0;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.page-about .ab-spectrum-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 880px;
+    margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.page-about .ab-spectrum-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-about .ab-spectrum-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-about .ab-spectrum-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-section);
+    font-weight: 700;
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-about .ab-spectrum-deck {
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 64ch;
+}
+
+/* Continuum: relative parent so the connecting line can sit
+   behind the items. */
+.page-about .ab-spectrum {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-xl);
+}
+
+/* The line that visually connects the three modes — sits
+   behind the cards, dashed, accent-blue. Hidden below
+   1024px where items stack vertically. */
+.page-about .ab-spectrum::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 8.333%;   /* center of col 1 */
+    right: 8.333%;  /* center of col 12 */
+    height: 1px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--accent-blue) 0 6px,
+        transparent 6px 14px
+    );
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.page-about .ab-spectrum-item {
+    grid-column: span 4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    z-index: 1;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.page-about .ab-spectrum-item:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-3px);
+}
+
+/* Mode pill — Autonomous / Assistive / Hybrid. Sits at the top
+   of the card and visually intersects the connecting line. */
+.page-about .ab-spectrum-mode {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    padding: 6px 12px;
+    border: 1px solid var(--accent-blue);
+    border-radius: var(--radius-full);
+    background-color: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-blue);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.page-about .ab-spectrum-title-card {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 3.6vw, 44px);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+}
+
+.page-about .ab-spectrum-item p {
+    flex: 1;
+    font-size: var(--text-body);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.page-about .ab-spectrum-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-blue);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.page-about .ab-spectrum-link:hover {
+    color: var(--accent-blue-hover);
+}
+
+@media (max-width: 1023px) {
+    .page-about .ab-spectrum-item {
+        grid-column: span 6;
+    }
+    .page-about .ab-spectrum::before {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-about .ab-spectrum-item {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ------------------------------------------------
+   Hero accent — slightly tighter wrap on the new
+   manifesto headline so the four-line shape lands
+   crisply. Override of the generic ab-hero-title.
+   ------------------------------------------------ */
+
+.page-about .ab-hero-title {
+    max-width: 24ch;
+    font-size: clamp(40px, 5.6vw, 84px);
 }

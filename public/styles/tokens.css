@@ -8,19 +8,28 @@
 
     /* ===== Colors ===== */
 
-    /* Backgrounds (dark theme) */
-    --bg-primary: #000000;
-    --bg-surface: #0F0F0F;
-    --bg-surface-raised: #1A1A1A;
-    --bg-muted: #2A2A2A;
+    /* Backgrounds (midnight-blue dark theme).
+       Tonal scale stays close in lightness to the original near-blacks
+       so contrast ratios for text/borders stay equivalent. */
+    --bg-primary: #0B1428;          /* midnight base */
+    --bg-surface: #101A33;          /* one step up */
+    --bg-surface-raised: #18243F;   /* cards / elevated panels */
+    --bg-muted: #27365A;            /* muted chips / dividers */
 
     /* Brand blue — used for emphasis text and main CTAs
-       (Buy Now, Get a Demo, hero accent text, XBert AI toast). */
-    --accent-blue: #547D9E;
-    --accent-blue-hover: #4A6E8B;
+       (Buy Now, Get a Demo, hero accent text, XBert AI toast).
+       Slightly more luminous to sit cleanly on the new midnight bg. */
+    --accent-blue: #7DA9D6;
+    --accent-blue-hover: #6B97C3;
 
-    /* Background motif */
-    --terminal-text: rgba(180, 180, 200, 0.38);
+    /* Soft moonlight glow used behind the brand-blue accent text.
+       Two-stop shadow — close inner halo + wider outer bloom. */
+    --accent-glow:
+        0 0 1px rgba(125, 169, 214, 0.50),
+        0 0 18px rgba(125, 169, 214, 0.28);
+
+    /* Background motif — subtle terminal text, tinted toward moonlight blue */
+    --terminal-text: rgba(170, 195, 230, 0.34);
 
     /* Text */
     --text-primary: #F0ECE6;
@@ -28,29 +37,40 @@
     --text-tertiary: #7A756F;
 
     /* Borders */
-    --border-subtle: #1F1F1F;
-    --border-light: #2A2A2A;
+    --border-subtle: #1A2543;
+    --border-light: #2A3A5C;
 
     /* ===== Typography ===== */
 
-    /* Font families */
+    /* Font families
+       --font-serif: editorial display face used for hero / large headings.
+         Fraunces is a variable serif with retro/personality (SOFT axis,
+         high optical contrast) but smooth — replaces the pixel-bitmap
+         Mondwest while keeping the retro editorial feel.
+       --font-mono: terminal/code motif. Space Mono is a clean retro
+         mono — replaces the pixel-bitmap NeueBit with smoother strokes. */
     --font-body: 'Space Grotesk', sans-serif;
-    --font-serif: 'Mondwest', Georgia, serif;
-    --font-mono: 'NeueBit', ui-monospace, monospace;
+    --font-serif: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+    --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
 
     /* Body mode tuning */
     --body-letter-spacing: -0.02em;
     --body-line-height: 1.5;
 
-    /* Heading mode tuning */
+    /* Heading mode tuning.
+       Letter-spacing was tightened heavily for the original pixel-bitmap
+       Mondwest. Fraunces is a proportional serif and reads cramped at
+       those values, so we hold tightening to a whisper. */
     --heading-weight: 700;
     --heading-line-height: 1;
-    --heading-letter-spacing: -0.03em;
+    --heading-letter-spacing: -0.01em;
+    --heading-word-spacing: 0.04em;
 
     /* Display mode tuning (largest headings) */
     --display-weight: 700;
-    --display-line-height: 0.92;
-    --display-letter-spacing: -0.04em;
+    --display-line-height: 0.96;
+    --display-letter-spacing: -0.015em;
+    --display-word-spacing: 0.06em;
 
     /* Type scale */
     --text-display: clamp(56px, 10vw, 120px);

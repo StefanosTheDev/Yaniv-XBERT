@@ -592,6 +592,39 @@
 .page-agent-assist .aa-pillar {
     align-items: center;
     gap: clamp(32px, 5vw, 80px);
+    padding: clamp(32px, 4vw, 64px);
+}
+
+/* Distribute the pillar across the 12-col grid: copy on the left half,
+   visual on the right half. Without these rules the children fall back
+   to grid auto-placement and collapse into the leftmost sliver of the
+   article. Mirrors the .aie-pillar fix on the AI Employee page. */
+.page-agent-assist .aa-pillar-copy,
+.page-agent-assist .aa-pillar-visual {
+    grid-column: span 6;
+}
+
+/* Reverse variant — visual on the left, copy on the right. Both items
+   share row 1 so the article stays a single row at desktop. */
+.page-agent-assist .fabric-variation-feature--reverse .aa-pillar-visual {
+    grid-column: 1 / 7;
+    grid-row: 1;
+}
+
+.page-agent-assist .fabric-variation-feature--reverse .aa-pillar-copy {
+    grid-column: 7 / 13;
+    grid-row: 1;
+}
+
+/* Tablet and below — stack copy above visual, full bleed in either order. */
+@media (max-width: 1023px) {
+    .page-agent-assist .aa-pillar-copy,
+    .page-agent-assist .aa-pillar-visual,
+    .page-agent-assist .fabric-variation-feature--reverse .aa-pillar-copy,
+    .page-agent-assist .fabric-variation-feature--reverse .aa-pillar-visual {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
 }
 
 .page-agent-assist .aa-pillar-copy {
