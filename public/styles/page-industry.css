@@ -467,19 +467,19 @@
     padding: clamp(72px, 9vw, 120px) 0;
 }
 
-.page-industry .ind-proof-header {
+:is(.page-industry, .page-customer-stories) .ind-proof-header {
     margin-bottom: var(--space-2xl);
     align-items: end;
 }
 
-.page-industry .ind-proof-header-copy {
+:is(.page-industry, .page-customer-stories) .ind-proof-header-copy {
     grid-column: span 8;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
 }
 
-.page-industry .ind-proof-eyebrow {
+:is(.page-industry, .page-customer-stories) .ind-proof-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -491,12 +491,12 @@
     color: var(--text-tertiary);
 }
 
-.page-industry .ind-proof-eyebrow-spinner {
+:is(.page-industry, .page-customer-stories) .ind-proof-eyebrow-spinner {
     color: var(--accent-blue);
     font-size: 14px;
 }
 
-.page-industry .ind-proof-title {
+:is(.page-industry, .page-customer-stories) .ind-proof-title {
     font-family: var(--font-serif);
     font-size: var(--text-section);
     font-weight: 700;
@@ -505,12 +505,12 @@
     color: var(--text-primary);
 }
 
-.page-industry .ind-proof-grid {
+:is(.page-industry, .page-customer-stories) .ind-proof-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xl);
 }
 
-.page-industry .ind-proof-card {
+:is(.page-industry, .page-customer-stories) .ind-proof-card {
     grid-column: span 4;
     display: flex;
     flex-direction: column;
@@ -522,12 +522,12 @@
     transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.page-industry .ind-proof-card:hover {
+:is(.page-industry, .page-customer-stories) .ind-proof-card:hover {
     border-color: var(--text-tertiary);
     transform: translateY(-3px);
 }
 
-.page-industry .ind-proof-card-tag {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-tag {
     display: inline-flex;
     align-items: center;
     width: fit-content;
@@ -541,7 +541,7 @@
     text-transform: uppercase;
 }
 
-.page-industry .ind-proof-card-name {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-name {
     font-family: var(--font-serif);
     font-size: var(--text-heading-md);
     font-weight: 700;
@@ -550,14 +550,14 @@
     color: var(--text-primary);
 }
 
-.page-industry .ind-proof-card-narrative {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-narrative {
     font-size: var(--text-body);
     color: var(--text-secondary);
     line-height: 1.55;
     flex: 1;
 }
 
-.page-industry .ind-proof-card-kpi {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-kpi {
     display: flex;
     flex-direction: column;
     padding: var(--space-md);
@@ -567,7 +567,7 @@
     margin-top: var(--space-sm);
 }
 
-.page-industry .ind-proof-card-kpi strong {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-kpi strong {
     font-family: var(--font-serif);
     font-style: italic;
     font-size: clamp(36px, 4vw, 52px);
@@ -575,14 +575,14 @@
     color: var(--accent-blue);
 }
 
-.page-industry .ind-proof-card-kpi span {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-kpi span {
     margin-top: 4px;
     font-size: var(--text-body-sm);
     color: var(--text-secondary);
     line-height: 1.4;
 }
 
-.page-industry .ind-proof-card-quote {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-quote {
     margin-top: var(--space-sm);
     padding-top: var(--space-md);
     border-top: 1px dashed var(--border-light);
@@ -592,7 +592,7 @@
     font-style: italic;
 }
 
-.page-industry .ind-proof-card-attr {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-attr {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -604,16 +604,16 @@
     text-transform: uppercase;
 }
 
-.page-industry .ind-proof-card-attr strong {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-attr strong {
     color: var(--text-primary);
     font-weight: 700;
 }
 
-.page-industry .ind-proof-card-attr-divider {
+:is(.page-industry, .page-customer-stories) .ind-proof-card-attr-divider {
     color: var(--border-light);
 }
 
-.page-industry .ind-proof-disclaimer {
+:is(.page-industry, .page-customer-stories) .ind-proof-disclaimer {
     margin-top: var(--space-xl);
     font-family: var(--font-mono);
     font-size: 11px;
@@ -622,19 +622,19 @@
 }
 
 @media (max-width: 1023px) {
-    .page-industry .ind-proof-header-copy {
+    :is(.page-industry, .page-customer-stories) .ind-proof-header-copy {
         grid-column: 1 / -1;
     }
-    .page-industry .ind-proof-grid {
+    :is(.page-industry, .page-customer-stories) .ind-proof-grid {
         grid-template-columns: 1fr 1fr;
     }
-    .page-industry .ind-proof-card {
+    :is(.page-industry, .page-customer-stories) .ind-proof-card {
         grid-column: span 1;
     }
 }
 
 @media (max-width: 767px) {
-    .page-industry .ind-proof-grid {
+    :is(.page-industry, .page-customer-stories) .ind-proof-grid {
         grid-template-columns: 1fr;
     }
 }
