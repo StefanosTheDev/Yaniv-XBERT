@@ -483,6 +483,22 @@ def process_one(path: Path, out_path: Path) -> None:
     # while still blending into the black background without a hard cutout.
     alpha = alpha.filter(ImageFilter.GaussianBlur(radius=1.2))
 
+    # Vertical alpha gradient: dissolve the subject smoothly into the
+    # studio background toward the bottom of the frame. Without this the
+    # silhouette ends in a hard horizontal edge against the (slightly
+    # darker) faded bg, which reads as a visible "dark stripe" — most
+    # noticeably for subjects with bright clothing (Bob, Tracy, Stephen).
+    # With it, the silhouette dissolves naturally like the references
+    # (leaders/tomas-gorny.png, swarm/swarm-22.png).
+    alpha_arr = np.asarray(alpha, dtype=np.float32) / 255.0
+    yy_a = np.arange(alpha_arr.shape[0], dtype=np.float32)[:, None]
+    fade_start_y = SIZE * 0.62
+    fade_end_y = SIZE * 1.05
+    t_a = np.clip((yy_a - fade_start_y) / max(1.0, fade_end_y - fade_start_y), 0.0, 1.0)
+    t_a = t_a * t_a * (3.0 - 2.0 * t_a)  # smoothstep
+    alpha_arr = alpha_arr * (1.0 - t_a * 0.85)
+    alpha = Image.fromarray(np.clip(alpha_arr * 255.0, 0, 255).astype(np.uint8), "L")
+
     # Smooth B&W subject. No halftone, no shadow lift.
     bw = to_swarm_bw(src)
 
@@ -503,7 +519,7 @@ def process_one(path: Path, out_path: Path) -> None:
     final = Image.merge("RGB", (composite_grey,) * 3)
     final = add_side_lighting(final, side=light_side, strength=0.20)
     final = add_vignette(final, strength=0.28)
-    final = add_bottom_fade(final, strength=0.50)
+    final = add_bottom_fade(final, strength=0.22)
     final = add_film_grain(final, amount=3.0, seed=seed)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
