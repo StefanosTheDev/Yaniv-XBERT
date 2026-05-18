@@ -1,0 +1,1045 @@
+/* ================================================================
+   PAGE: OUR CUSTOMERS
+   The page is the emotional anchor of the site — "built for the
+   businesses that keep the economy running" — so the design DNA
+   matches the modern product pages (/how-xbert-works,
+   /integrations, /security, /platform): 12-col grid heroes with a
+   console-style stage on the right, a logo trust strip directly
+   below, section headers with eyebrow+title (left) and deck (right
+   align-self end), module patterns with stage right (toolbar +
+   numbered rows + footer chips), and leadership-style cards with
+   the photo on top and the body below.
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Shared eyebrow + section header (reused by every module)
+   ------------------------------------------------ */
+
+.page-our-customers .oc-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-our-customers .oc-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-our-customers .oc-section-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(40px, 5.6vw, 64px);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-our-customers .oc-section-title em {
+    font-style: italic;
+    color: var(--accent-blue);
+    font-weight: inherit;
+}
+
+.page-our-customers .oc-section-deck {
+    grid-column: 8 / -1;
+    align-self: end;
+    margin: 0;
+    max-width: 600px;
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-section-header {
+    align-items: start;
+    margin-bottom: var(--space-3xl);
+}
+
+.page-our-customers .oc-section-header-copy {
+    grid-column: span 6;
+}
+
+
+/* ================================================================
+   HERO — copy left + console-style stage right
+   ================================================================ */
+
+.page-our-customers .section-oc-hero {
+    position: relative;
+    padding: clamp(96px, 13vw, 180px) 0 clamp(64px, 8vw, 112px);
+    overflow: hidden;
+    isolation: isolate;
+    background-color: var(--bg-primary);
+}
+
+.page-our-customers .section-oc-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 80% 0%, rgba(125, 169, 214, 0.10), transparent 55%),
+        radial-gradient(circle at 0% 100%, rgba(125, 169, 214, 0.06), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.page-our-customers .oc-hero-grid {
+    align-items: start;
+    gap: clamp(40px, 5vw, 80px);
+}
+
+.page-our-customers .oc-hero-copy {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-our-customers .oc-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-our-customers .oc-hero-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-our-customers .oc-hero-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(48px, 6.4vw, 88px);
+    font-weight: var(--display-weight);
+    line-height: 0.98;
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+    max-width: 16ch;
+}
+
+.page-our-customers .oc-hero-title-accent {
+    color: var(--accent-blue);
+    font-style: italic;
+}
+
+.page-our-customers .oc-hero-deck {
+    margin: 0;
+    max-width: 64ch;
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+
+/* ----- Hero stage console ----- */
+
+.page-our-customers .oc-hero-stage {
+    grid-column: span 5;
+    align-self: stretch;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(125, 169, 214, 0.10), transparent 60%),
+        var(--bg-surface);
+    overflow: hidden;
+}
+
+.page-our-customers .oc-hero-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-our-customers .oc-hero-stage > * {
+    position: relative;
+    z-index: 1;
+}
+
+.page-our-customers .oc-hero-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.page-our-customers .oc-hero-stage-toolbar-left {
+    color: var(--accent-blue);
+}
+
+.page-our-customers .oc-hero-stage-toolbar-right {
+    color: var(--text-tertiary);
+}
+
+/* ----- Hero industry collage (6 tiles · breadth-of-America grid) ----- */
+
+.page-our-customers .oc-hero-collage {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.page-our-customers .oc-collage-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 8px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: oc-tile-in 0.55s ease forwards;
+    animation-delay: var(--tile-delay, 0s);
+    transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.page-our-customers .oc-collage-tile:hover {
+    border-color: rgba(125, 169, 214, 0.40);
+    transform: translateY(-2px);
+}
+
+@keyframes oc-tile-in {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page-our-customers .oc-collage-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+
+/* ================================================================
+   .oc-portrait — shared human-portrait surface used by the hero
+   collage tiles AND the larger industry portrait cards below.
+   Mirrors the leadership .ld-card-photo treatment exactly: square
+   window, leadership-bg PNG composited into the image itself
+   (swarm photos), subtle grayscale at rest, full color on hover.
+   ================================================================ */
+
+.page-our-customers .oc-portrait {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    background-color: var(--bg-muted, #0a1428);
+    overflow: hidden;
+}
+
+.page-our-customers .oc-portrait--lg {
+    border-radius: var(--radius-lg);
+}
+
+.page-our-customers .oc-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(0.15);
+    transition: filter 0.3s ease, transform 0.4s ease;
+}
+
+.page-our-customers .oc-portrait-card-link:hover .oc-portrait img,
+.page-our-customers .oc-collage-tile:hover .oc-portrait img {
+    filter: grayscale(0);
+    transform: scale(1.02);
+}
+
+/* ----- Industry icon badge (bottom-right corner of any portrait) ----- */
+
+.page-our-customers .oc-portrait-badge {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    color: var(--bg-primary);
+    box-shadow:
+        0 0 0 2px var(--bg-primary),
+        0 6px 16px -8px rgba(125, 169, 214, 0.8);
+    transition: transform 0.25s ease;
+}
+
+.page-our-customers .oc-portrait-badge i {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.page-our-customers .oc-portrait-badge--lg {
+    width: 40px;
+    height: 40px;
+    right: 12px;
+    bottom: 12px;
+    box-shadow:
+        0 0 0 3px var(--bg-surface),
+        0 10px 22px -10px rgba(125, 169, 214, 0.8);
+}
+
+.page-our-customers .oc-portrait-badge--lg i {
+    font-size: 20px;
+}
+
+.page-our-customers .oc-portrait-card-link:hover .oc-portrait-badge,
+.page-our-customers .oc-collage-tile:hover .oc-portrait-badge {
+    transform: scale(1.06);
+}
+
+.page-our-customers .oc-hero-stage-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: var(--space-sm);
+    border-top: 1px dashed var(--border-light);
+}
+
+.page-our-customers .oc-hero-stage-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    background-color: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-hero-stage-chip i {
+    color: var(--accent-blue);
+    font-size: 11px;
+}
+
+.page-our-customers .oc-hero-stage-chip--accent {
+    border-color: rgba(125, 169, 214, 0.40);
+    background-color: rgba(125, 169, 214, 0.08);
+    color: var(--accent-blue);
+}
+
+
+/* ================================================================
+   INDUSTRY PORTRAITS — leadership ld-card rhythm, but the portrait
+   surface is the shared .oc-portrait abstract-constellation
+   component (defined above) with an industry icon centered.
+   Replaces both the old "Brands Like You" Fortune-500 photo row
+   and the flat industries chip strip with one richer, more human
+   surface that doubles as navigation into /industries/* pages.
+   ================================================================ */
+
+.page-our-customers .section-oc-portraits {
+    padding: var(--space-section) 0;
+    background-color: var(--bg-primary);
+}
+
+.page-our-customers .oc-portraits-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+}
+
+.page-our-customers .oc-portrait-card {
+    display: flex;
+}
+
+.page-our-customers .oc-portrait-card-link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-surface);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+a.oc-portrait-card-link:hover {
+    transform: translateY(-4px);
+    border-color: rgba(125, 169, 214, 0.40);
+    box-shadow: 0 14px 36px -22px rgba(125, 169, 214, 0.50);
+}
+
+.page-our-customers .oc-portrait-card .oc-portrait {
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.page-our-customers .oc-portrait-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--space-lg);
+}
+
+.page-our-customers .oc-portrait-card-name {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 1.8vw, 24px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+
+.page-our-customers .oc-portrait-card-role {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+}
+
+.page-our-customers .oc-portrait-card-line {
+    margin: 4px 0 0;
+    font-size: var(--text-body-sm);
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-portrait-card-meta {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+
+/* ================================================================
+   OPERATOR EMPATHY THESIS — module pattern (copy left + stage right)
+   ================================================================ */
+
+.page-our-customers .section-oc-thesis {
+    padding: var(--space-section) 0;
+    background-color: var(--bg-primary);
+}
+
+.page-our-customers .oc-module {
+    align-items: start;
+    gap: clamp(40px, 5vw, 80px);
+}
+
+.page-our-customers .oc-module-copy {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.page-our-customers .oc-module-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(36px, 4.6vw, 56px);
+    font-weight: var(--display-weight);
+    line-height: 1.05;
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-our-customers .oc-module-title em {
+    font-style: italic;
+    color: var(--accent-blue);
+    font-weight: inherit;
+}
+
+.page-our-customers .oc-module-deck {
+    margin: 0;
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-module-callout {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: var(--space-xs) 0 0;
+    padding: 10px 14px;
+    border: 1px dashed var(--border-light);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    align-self: flex-start;
+}
+
+.page-our-customers .oc-module-callout i {
+    font-size: 14px;
+}
+
+/* ----- Thesis stage (PRINCIPLES · ACTIVE) ----- */
+
+.page-our-customers .oc-thesis-stage {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(125, 169, 214, 0.08), transparent 60%),
+        var(--bg-surface);
+}
+
+.page-our-customers .oc-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.page-our-customers .oc-stage-toolbar-left {
+    color: var(--accent-blue);
+}
+
+.page-our-customers .oc-stage-toolbar-right {
+    color: var(--text-tertiary);
+}
+
+.page-our-customers .oc-thesis-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.page-our-customers .oc-thesis-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px 1fr 36px;
+    align-items: start;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+}
+
+.page-our-customers .oc-thesis-row--accent {
+    border-color: rgba(125, 169, 214, 0.40);
+    background:
+        linear-gradient(180deg, rgba(125, 169, 214, 0.06), transparent 70%),
+        var(--bg-primary);
+}
+
+.page-our-customers .oc-thesis-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background-color: var(--bg-surface);
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+}
+
+.page-our-customers .oc-thesis-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.page-our-customers .oc-thesis-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-our-customers .oc-thesis-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 2vw, 24px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+
+.page-our-customers .oc-thesis-lead {
+    margin: 0;
+    font-size: var(--text-body-sm);
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-thesis-glyph {
+    font-size: 20px;
+    line-height: 1;
+    color: var(--accent-blue);
+    align-self: center;
+    justify-self: end;
+}
+
+.page-our-customers .oc-stage-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: var(--space-sm);
+    border-top: 1px dashed var(--border-light);
+}
+
+.page-our-customers .oc-stage-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    background-color: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-stage-chip i {
+    color: var(--accent-blue);
+    font-size: 11px;
+}
+
+.page-our-customers .oc-stage-chip--accent {
+    border-color: rgba(125, 169, 214, 0.40);
+    background-color: rgba(125, 169, 214, 0.08);
+    color: var(--accent-blue);
+}
+
+
+/* ================================================================
+   CUSTOMER SCALE — modernized console-style panel with four
+   archetype cards (Very Small / Small / Medium / Large). No
+   financials, no user counts: qualitative spectrum only. Mirrors
+   the platform pl-spectrum-panel + how-xbert-works step card DNA
+   so it reads as a sibling of the rest of the site.
+   ================================================================ */
+
+.page-our-customers .section-oc-mix {
+    position: relative;
+    padding: var(--space-section) 0;
+    background-color: var(--bg-primary);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-our-customers .section-oc-mix::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(125, 169, 214, 0.08), transparent 55%),
+        radial-gradient(circle at 0% 100%, rgba(125, 169, 214, 0.05), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.page-our-customers .oc-mix-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(125, 169, 214, 0.08), transparent 60%),
+        var(--bg-surface);
+    overflow: hidden;
+}
+
+.page-our-customers .oc-mix-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-our-customers .oc-mix-panel > * {
+    position: relative;
+    z-index: 1;
+}
+
+.page-our-customers .oc-mix-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+}
+
+.page-our-customers .oc-mix-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: var(--space-lg) var(--space-xl) var(--space-lg);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    background-color: var(--bg-primary);
+    background-image: radial-gradient(80% 100% at 50% 0%, rgba(125, 169, 214, 0.05), transparent 70%);
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-our-customers .oc-mix-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(125, 169, 214, 0.45), transparent);
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.page-our-customers .oc-mix-card:hover {
+    border-color: rgba(125, 169, 214, 0.40);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px -22px rgba(125, 169, 214, 0.55);
+}
+
+.page-our-customers .oc-mix-card--accent {
+    border-color: rgba(125, 169, 214, 0.35);
+    background-image: radial-gradient(80% 100% at 50% 0%, rgba(125, 169, 214, 0.16), transparent 70%);
+    box-shadow:
+        0 0 0 1px rgba(125, 169, 214, 0.15) inset,
+        0 14px 32px -22px rgba(125, 169, 214, 0.40);
+}
+
+.page-our-customers .oc-mix-card--accent::before {
+    background: linear-gradient(90deg, transparent, rgba(125, 169, 214, 0.85), transparent);
+    opacity: 0.85;
+}
+
+.page-our-customers .oc-mix-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: var(--space-md);
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.page-our-customers .oc-mix-card-num {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--accent-blue);
+}
+
+.page-our-customers .oc-mix-card-pill {
+    padding: 4px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    background-color: var(--bg-surface);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+}
+
+.page-our-customers .oc-mix-card--accent .oc-mix-card-pill {
+    color: var(--accent-blue);
+    border-color: rgba(125, 169, 214, 0.30);
+    background-color: rgba(125, 169, 214, 0.08);
+}
+
+.page-our-customers .oc-mix-card-icon {
+    align-self: flex-start;
+    width: 52px;
+    height: 52px;
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    border: 1px solid var(--border-light);
+    background-color: var(--bg-surface);
+    background-image: radial-gradient(circle at 30% 30%, rgba(125, 169, 214, 0.18), transparent 70%);
+    color: var(--accent-blue);
+    font-size: 26px;
+    box-shadow: 0 0 0 3px rgba(125, 169, 214, 0.04);
+}
+
+.page-our-customers .oc-mix-card--accent .oc-mix-card-icon {
+    border-color: rgba(125, 169, 214, 0.35);
+    background-color: rgba(125, 169, 214, 0.12);
+    box-shadow:
+        0 0 0 3px rgba(125, 169, 214, 0.08),
+        0 6px 16px -8px rgba(125, 169, 214, 0.55);
+}
+
+.page-our-customers .oc-mix-card-title {
+    margin: 4px 0 0;
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 2.2vw, 28px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+
+.page-our-customers .oc-mix-card-line {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.4;
+    color: var(--accent-blue);
+}
+
+.page-our-customers .oc-mix-card-line em {
+    font-style: italic;
+    font-weight: 500;
+}
+
+.page-our-customers .oc-mix-card-body {
+    margin: 4px 0 0;
+    font-size: var(--text-body-sm);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-mix-card-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: var(--space-md);
+    border-top: 1px dashed var(--border-light);
+}
+
+.page-our-customers .oc-mix-card-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    background-color: var(--bg-surface);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.page-our-customers .oc-mix-card--accent .oc-mix-card-chip {
+    border-color: rgba(125, 169, 214, 0.25);
+    background-color: rgba(125, 169, 214, 0.06);
+    color: var(--text-primary);
+}
+
+
+/* ================================================================
+   ANIMATIONS + REDUCED MOTION
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .page-our-customers .oc-collage-tile,
+    .page-our-customers .oc-portrait-card-link {
+        animation: none;
+        transition: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 1023px) {
+    .page-our-customers .oc-hero-copy,
+    .page-our-customers .oc-hero-stage,
+    .page-our-customers .oc-module-copy,
+    .page-our-customers .oc-thesis-stage {
+        grid-column: 1 / -1;
+    }
+
+    .page-our-customers .oc-section-header-copy,
+    .page-our-customers .oc-section-deck {
+        grid-column: 1 / -1;
+    }
+
+    .page-our-customers .oc-section-deck {
+        margin-top: var(--space-md);
+    }
+
+    .page-our-customers .oc-portraits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .page-our-customers .oc-mix-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .page-our-customers .section-oc-portraits,
+    .page-our-customers .section-oc-thesis,
+    .page-our-customers .section-oc-mix {
+        padding: var(--space-3xl) 0;
+    }
+
+    .page-our-customers .oc-hero-title,
+    .page-our-customers .oc-section-title,
+    .page-our-customers .oc-module-title {
+        font-size: clamp(36px, 9vw, 56px);
+    }
+
+    .page-our-customers .oc-hero-deck,
+    .page-our-customers .oc-section-deck,
+    .page-our-customers .oc-module-deck {
+        font-size: var(--text-body-lg);
+    }
+
+    .page-our-customers .oc-hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-our-customers .oc-hero-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .page-our-customers .oc-hero-collage {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .page-our-customers .oc-portraits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-our-customers .oc-mix-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-our-customers .oc-mix-card {
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    .page-our-customers .oc-thesis-row {
+        grid-template-columns: 36px 1fr;
+        gap: var(--space-sm);
+    }
+
+    .page-our-customers .oc-thesis-glyph {
+        display: none;
+    }
+
+    .page-our-customers .oc-portrait-badge--lg {
+        width: 32px;
+        height: 32px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .page-our-customers .oc-portrait-badge--lg i {
+        font-size: 16px;
+    }
+}
