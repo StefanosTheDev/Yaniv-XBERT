@@ -8,3 +8,6 @@ out
 scripts/.venv/
 scripts/_compare/
 scripts/_swarm_raw/
+scripts/_board_originals/
+.venv-img/
+.u2net-cache/
