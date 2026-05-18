@@ -89,34 +89,28 @@ def square_crop_head(img: Image.Image) -> Image.Image:
     return img.crop((x, y, x + s, y + s))
 
 
-def compute_subject_placement(
-    src: Image.Image,
-    alpha: Image.Image,
-    target_head_frac: float = 0.40,
-    target_head_top_frac: float = 0.16,
-) -> tuple[Image.Image, Image.Image, int, int]:
-    """Scale the source + alpha so the subject's *head* occupies a target
-    fraction of the canvas width, and return them along with the (x, y) paste
-    offsets that put the head at a consistent vertical position.
+def head_focused_crop_box(
+    alpha: Image.Image, img_size: tuple[int, int]
+) -> tuple[int, int, int, int]:
+    """Compute a head-and-shoulders square crop box from the rembg alpha mask.
 
-    This is what gives every portrait the same head-and-shoulders framing
-    regardless of how the original was shot — tight head-shot (Tomas) or
-    full-torso (Hari). Target framing is calibrated against
-    leaders/tomas-gorny.png and leaders/marco-burgarello.png, where the head
-    occupies ~40% of frame width with ~16% negative space above the hair.
+    Sizes the crop relative to the subject's *head width* (sampled at eye
+    level via the mask) so framing is consistent regardless of whether the
+    source is a tight head-shot (Tomas) or a full-torso photo (Hari).
+    Target framing matches /leaders/tomas-gorny.png and /swarm/swarm-04.png:
+    head occupies ~40% of the frame width with ~14% headroom and full
+    shoulders/upper chest visible at the bottom.
     """
-    w, h = src.size
+    w, h = img_size
     a = np.asarray(alpha)
     if a.ndim == 3:
         a = a[..., 0]
     mask = a > 96
     if not mask.any():
-        # No mask — fall back to centred fit.
-        scale = SIZE / float(min(w, h))
-        sw, sh = int(round(w * scale)), int(round(h * scale))
-        src_r = src.resize((sw, sh), Image.LANCZOS)
-        alpha_r = alpha.resize((sw, sh), Image.LANCZOS)
-        return src_r, alpha_r, (SIZE - sw) // 2, (SIZE - sh) // 2
+        s = min(w, h)
+        x = max(0, (w - s) // 2)
+        y = max(0, int((h - s) * 0.18)) if h >= w else max(0, (h - s) // 2)
+        return (x, y, x + s, y + s)
 
     rows = np.any(mask, axis=1)
     cols = np.any(mask, axis=0)
@@ -126,30 +120,45 @@ def compute_subject_placement(
     right = int(len(cols) - 1 - np.argmax(cols[::-1]))
 
     bbox_h = max(1, bottom - top)
+    bbox_w = max(1, right - left)
     bbox_cx = (left + right) // 2
 
-    # Head width sampled at ~28% from the top of the subject bbox (eye line).
+    # Sample mask width at ~28% from the top of the bbox — that's near the
+    # eye line for a typical portrait, well above the shoulder transition.
     sample_y = min(h - 1, top + int(bbox_h * 0.28))
     head_width = int(mask[sample_y].sum())
     if head_width < 30:
-        # Fall back to bbox width (handles weirdly-cropped sources).
-        head_width = max(1, right - left) // 2
+        head_width = bbox_w // 2  # fallback heuristic
 
-    # Scale so the head reaches target_head_frac of the canvas width.
-    target_px = SIZE * target_head_frac
-    scale = target_px / float(head_width)
-    new_w = max(1, int(round(w * scale)))
-    new_h = max(1, int(round(h * scale)))
-    src_r = src.resize((new_w, new_h), Image.LANCZOS)
-    alpha_r = alpha.resize((new_w, new_h), Image.LANCZOS)
+    # Crop square ≈ 2.5x head width gives head ~40% of frame width with
+    # full shoulders and clear headroom — matches the framing of
+    # /leaders/tomas-gorny.png, /leaders/marco-burgarello.png, and
+    # /swarm/swarm-04.png.
+    crop_size = int(head_width * 2.5)
+    # Don't go smaller than 70% of the source's smaller dimension — keeps the
+    # crop wide even when the source is already a tight head-shot, so the
+    # subject doesn't dominate the frame.
+    crop_size = max(crop_size, int(min(w, h) * 0.70))
+    crop_size = max(crop_size, 64)
+    crop_size = min(crop_size, w, h)
 
-    # Paste so the head sits at a fixed vertical position.
-    new_top = int(round(top * scale))
-    new_cx = int(round(bbox_cx * scale))
-    paste_x = SIZE // 2 - new_cx
-    paste_y = int(round(SIZE * target_head_top_frac)) - new_top
+    # Horizontal: centred on subject mid.
+    crop_left = max(0, bbox_cx - crop_size // 2)
+    crop_right = crop_left + crop_size
+    if crop_right > w:
+        crop_left = w - crop_size
+        crop_right = w
 
-    return src_r, alpha_r, paste_x, paste_y
+    # Vertical: top of head ~14% below the top of the crop, leaving
+    # comfortable headroom like the executive team photos.
+    head_top_offset = int(crop_size * 0.14)
+    crop_top = max(0, top - head_top_offset)
+    crop_bottom = crop_top + crop_size
+    if crop_bottom > h:
+        crop_top = h - crop_size
+        crop_bottom = h
+
+    return (crop_left, crop_top, crop_right, crop_bottom)
 
 
 _REMBG_SESSION = None
@@ -186,30 +195,33 @@ def rembg_alpha(img: Image.Image) -> Image.Image:
 
 
 def to_swarm_bw(img: Image.Image) -> Image.Image:
-    """B&W base plate. We keep tonal range present (no blown highlights,
-    no full crushed blacks on the skin) so the halftone screen applied
-    afterwards has gradient to work with — matching the dot variation
-    visible in leaders/tomas-gorny.png and leaders/marco-burgarello.png."""
+    """B&W portrait matching the /swarm/* and /leaders/* studio look: jet-black
+    clothing/shadows that blend into the background, deep skin midtones with
+    real bone structure (eye sockets, nose bridge, cheekbones, jawline),
+    bright but un-clipped highlights."""
     g = img.convert("L")
     g = ImageOps.autocontrast(g, cutoff=2)
     arr = np.asarray(g, dtype=np.float32) / 255.0
 
-    # Moderate S-curve: shadows crushed enough that clothing reads as black,
-    # highlights lifted but never clipped, midtones full of skin shape.
+    # 1. Strong S-curve. Shadows crushed harder so clothing reads as black,
+    #    highlights kept moderate so skin doesn't blow out.
     arr = np.where(
         arr < 0.5,
-        (arr * 2.0) ** 1.80 / 2.0,
-        1.0 - ((1.0 - arr) * 2.0) ** 1.40 / 2.0,
+        (arr * 2.0) ** 2.00 / 2.0,
+        1.0 - ((1.0 - arr) * 2.0) ** 1.55 / 2.0,
     )
 
-    # Soft shadow toe: anything below 0.10 → black so dark clothing/hair
-    # blend with the background.
-    floor = 0.10
+    # 2. Hard shadow toe: anything below 0.15 luminance goes to true black.
+    floor = 0.15
     arr = np.where(arr < floor, 0.0, (arr - floor) / (1.0 - floor))
 
-    # Slight midtone darkening for richer skin.
-    arr = np.power(arr, 1.10)
-    arr = arr * 0.94
+    # 3. Pull skin tones down — power > 1 darkens midtones more than extremes,
+    #    giving skin the rich mid-grey look of swarm-26 instead of pale.
+    arr = np.power(arr, 1.18)
+
+    # 4. Global brightness scale — final touch so the overall plate matches
+    #    the slightly-underexposed editorial feel of the reference photos.
+    arr = arr * 0.92
 
     arr = np.clip(arr, 0, 1)
     arr = (arr * 255.0).astype(np.uint8)
@@ -254,31 +266,28 @@ def load_font(size: int) -> ImageFont.FreeTypeFont:
 
 
 def render_editorial_canvas(seed: int) -> Image.Image:
-    """Editorial canvas matching the leaders/* halftoned bg: not pure black
-    (which would halftone to a flat dense dot field) but a dark grey field
-    so the screen produces ~70% density dots, with brighter code +
-    constellation overlays that read as lower-density 'open' text after the
-    screen is applied."""
+    """Black canvas with very faint pseudo-code and a small constellation graph,
+    matching the /swarm/* portraits' background presence: visible only when
+    you look closely, never competing with the subject."""
     rng = random.Random(seed)
-    # Dark grey background — gives halftone a gradient to work with.
-    canvas = Image.new("RGB", (SIZE, SIZE), (28, 28, 28))
+    canvas = Image.new("RGB", (SIZE, SIZE), (0, 0, 0))
     draw = ImageDraw.Draw(canvas, "RGBA")
 
     code_font = load_font(10)
     line_h = 13
-    code_ink = (170, 180, 196)
+    code_ink = (130, 140, 156)
 
     # Sparse code lines scattered along the right edge.
-    code_x = int(SIZE * 0.78)
-    for i, line in enumerate(CODE_LINES[:26]):
-        y = 12 + i * line_h
+    code_x = int(SIZE * 0.82)
+    for i, line in enumerate(CODE_LINES[:24]):
+        y = 14 + i * line_h
         if y > SIZE - 16:
             break
         draw.text(
             (code_x + rng.randint(-1, 1), y),
             line,
             font=code_font,
-            fill=(*code_ink, rng.randint(110, 145)),
+            fill=(*code_ink, rng.randint(35, 55)),
         )
 
     # A few faint code lines top-left.
@@ -292,38 +301,38 @@ def render_editorial_canvas(seed: int) -> Image.Image:
             (10, 12 + i * line_h),
             line,
             font=code_font,
-            fill=(*code_ink, rng.randint(95, 130)),
+            fill=(*code_ink, rng.randint(28, 42)),
         )
 
-    # Sparse constellation graph: small dots with thin connecting lines on
-    # the left side, brighter than before so they survive the halftone screen.
-    n_nodes = 16
+    # Sparse constellation graph: small dots with thin connecting lines, kept
+    # very dim so they sit behind the portrait rather than next to it.
+    n_nodes = 14
     nodes: list[tuple[int, int]] = []
-    region_x = (10, int(SIZE * 0.32))
-    region_y = (int(SIZE * 0.50), SIZE - 14)
+    region_x = (10, int(SIZE * 0.30))
+    region_y = (int(SIZE * 0.55), SIZE - 14)
     for _ in range(n_nodes):
         nodes.append((rng.randint(*region_x), rng.randint(*region_y)))
     for i, (ax, ay) in enumerate(nodes):
         for j in range(i + 1, n_nodes):
             bx, by = nodes[j]
             d = math.hypot(ax - bx, ay - by)
-            if d < 90 and rng.random() < 0.45:
+            if d < 80 and rng.random() < 0.4:
                 draw.line(
-                    [(ax, ay), (bx, by)], fill=(150, 160, 178, 95), width=1
+                    [(ax, ay), (bx, by)], fill=(110, 118, 134, 35), width=1
                 )
     label_font = load_font(9)
     for x, y in nodes:
         draw.ellipse(
             [x - 1, y - 1, x + 1, y + 1],
-            fill=(190, 200, 216, 160),
+            fill=(150, 158, 174, 80),
         )
-        if rng.random() < 0.30:
-            label = rng.choice(["0x7F4A", "0.91", "n=5", "0xB2C1"])
+        if rng.random() < 0.25:
+            label = rng.choice(["0x7F4A", "0.91", "n=5"])
             draw.text(
                 (x + 4, y - 5),
                 label,
                 font=label_font,
-                fill=(170, 178, 194, 130),
+                fill=(120, 128, 144, 55),
             )
 
     return canvas
@@ -415,28 +424,60 @@ def add_bottom_fade(img: Image.Image, strength: float = 0.55) -> Image.Image:
 
 
 def process_one(path: Path, out_path: Path) -> None:
-    """Bake one board portrait to match the /leaders/* editorial halftone
-    treatment: head-and-shoulders B&W subject on a black studio void with
-    faint code + constellation overlays, then a uniform halftone dot screen
-    applied across the whole frame.
-
-    Subject is rescaled (not just cropped) onto a 512x512 black canvas so the
-    head occupies ~40% of the frame width regardless of how tightly the
-    original was shot — that's how leaders/tomas-gorny.png is framed.
-    """
+    """Bake one board portrait to match the /swarm/* editorial style: smooth
+    continuous-tone B&W subject on a black studio background with very faint
+    code/constellation overlays. No halftone."""
+    # rembg mask on the full-resolution source for the cleanest cutout.
     src = Image.open(path).convert("RGB")
     full_alpha = rembg_alpha(src)
 
-    # Place the subject on a SIZE x SIZE black canvas with consistent head
-    # size and headroom, scaling up or down as needed.
-    src_r, alpha_r, paste_x, paste_y = compute_subject_placement(
-        src,
-        full_alpha,
-        target_head_frac=0.46,
-        target_head_top_frac=0.15,
-    )
-    alpha_r = alpha_r.filter(ImageFilter.GaussianBlur(radius=1.2))
-    bw = to_swarm_bw(src_r)
+    # The board source photos vary wildly: some arrive as tight head-shots
+    # (~330x360, head fills the frame) while others are wide torso-and-up
+    # shots (Hari at 800x800). To produce consistent executive-team framing
+    # — head occupying ~40% of the frame width with full shoulders and clear
+    # headroom — we pad the source with black up to the size the
+    # head_focused_crop_box function actually needs (~3x the detected head
+    # width). Tight head-shots get a lot of padding; wider sources get
+    # little or none.
+    a = np.asarray(full_alpha)
+    if a.ndim == 3:
+        a = a[..., 0]
+    head_mask = a > 96
+    if head_mask.any():
+        rows = np.any(head_mask, axis=1)
+        cols = np.any(head_mask, axis=0)
+        bbox_top = int(np.argmax(rows))
+        bbox_bot = int(len(rows) - 1 - np.argmax(rows[::-1]))
+        sample_y = min(a.shape[0] - 1, bbox_top + int((bbox_bot - bbox_top) * 0.28))
+        sampled = int(head_mask[sample_y].sum())
+        bbox_w = int(cols.sum())
+        head_w_est = max(sampled, bbox_w // 2, 30)
+    else:
+        head_w_est = min(src.size) // 3
+    target = int(head_w_est * 3.0)
+    src_w, src_h = src.size
+    pad_w = max(0, (target - src_w) // 2)
+    pad_h = max(0, (target - src_h) // 2)
+    if pad_w or pad_h:
+        padded = Image.new("RGB", (src_w + 2 * pad_w, src_h + 2 * pad_h), (0, 0, 0))
+        padded.paste(src, (pad_w, pad_h))
+        padded_alpha = Image.new("L", padded.size, 0)
+        padded_alpha.paste(full_alpha, (pad_w, pad_h))
+        src = padded
+        full_alpha = padded_alpha
+
+    # Head-focused square crop driven by the subject mask so every portrait
+    # gets the same head-and-shoulders framing regardless of how the source
+    # photo was shot.
+    box = head_focused_crop_box(full_alpha, src.size)
+    src = src.crop(box).resize((SIZE, SIZE), Image.LANCZOS)
+    alpha = full_alpha.crop(box).resize((SIZE, SIZE), Image.LANCZOS)
+    # Light feather so the silhouette stays crisp like the swarm/* portraits
+    # while still blending into the black background without a hard cutout.
+    alpha = alpha.filter(ImageFilter.GaussianBlur(radius=1.2))
+
+    # Smooth B&W subject. No halftone, no shadow lift.
+    bw = to_swarm_bw(src)
 
     # Editorial canvas: black with very faint code + constellation.
     seed = sum(ord(c) for c in path.name)
@@ -444,26 +485,19 @@ def process_one(path: Path, out_path: Path) -> None:
 
     # Composite the subject onto the canvas as a single grayscale plate.
     composite_grey = canvas_grey.copy()
-    composite_grey.paste(bw, (paste_x, paste_y), alpha_r)
+    composite_grey.paste(bw, (0, 0), alpha)
 
-    # Apply the halftone screen *uniformly* across the entire frame — subject
-    # and background alike — exactly the way leaders/tomas-gorny.png renders.
-    halftone = true_halftone(
-        composite_grey,
-        cell_size=3,
-        dot_max_factor=1.45,
-        edge_softness=0.7,
-    )
-
-    # Light vignette + gentle bottom fade so clothing blends into the studio
-    # background, subtle side lighting, then a touch of film grain.
+    # Soft vignette + bottom fade so clothing blends into the studio black,
+    # subtle side lighting for sculpted faces, then a touch of film grain.
+    # Side alternates per portrait so the page has visual variety like
+    # /swarm/* photos rather than every face lit identically.
     rng = random.Random(seed)
     light_side = rng.choice(["left", "right"])
-    final = Image.merge("RGB", (halftone,) * 3)
-    final = add_side_lighting(final, side=light_side, strength=0.12)
-    final = add_vignette(final, strength=0.18)
-    final = add_bottom_fade(final, strength=0.30)
-    final = add_film_grain(final, amount=2.5, seed=seed)
+    final = Image.merge("RGB", (composite_grey,) * 3)
+    final = add_side_lighting(final, side=light_side, strength=0.20)
+    final = add_vignette(final, strength=0.28)
+    final = add_bottom_fade(final, strength=0.55)
+    final = add_film_grain(final, amount=3.0, seed=seed)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     final.save(out_path, format="PNG", optimize=True)

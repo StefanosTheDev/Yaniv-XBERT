@@ -369,9 +369,14 @@
     color: var(--accent-blue-hover);
 }
 
-/* Board cards inherit the executive card treatment exactly so the two
-   grids share the same visual rhythm (matching photo size, padding,
-   name typography). No board-specific overrides. */
+/* Board cards are denser — same pattern, smaller padding */
+.page-leadership .ld-card--board {
+    padding: var(--space-md);
+}
+
+.page-leadership .ld-card--board .ld-card-name {
+    font-size: var(--text-body-lg);
+}
 
 .page-leadership .ld-disclaimer {
     margin-top: var(--space-xl);
