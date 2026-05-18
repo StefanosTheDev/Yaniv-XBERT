@@ -149,9 +149,10 @@ def head_focused_crop_box(
         crop_left = w - crop_size
         crop_right = w
 
-    # Vertical: top of head ~14% below the top of the crop, leaving
-    # comfortable headroom like the executive team photos.
-    head_top_offset = int(crop_size * 0.14)
+    # Vertical: top of head ~11% below the top of the crop. Slightly
+    # tighter headroom than the executive team so the lower portion of
+    # the frame has plenty of room for the clothing to fade into black.
+    head_top_offset = int(crop_size * 0.11)
     crop_top = max(0, top - head_top_offset)
     crop_bottom = crop_top + crop_size
     if crop_bottom > h:
@@ -405,17 +406,21 @@ def add_vignette(img: Image.Image, strength: float = 0.55) -> Image.Image:
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), mode=img.mode)
 
 
-def add_bottom_fade(img: Image.Image, strength: float = 0.55) -> Image.Image:
-    """Darken the lower portion of the frame so clothing fades into the black
-    background, matching the swarm/* studio look where shoulders blend with
-    the void rather than reading as a separate silhouette."""
+def add_bottom_fade(img: Image.Image, strength: float = 0.98) -> Image.Image:
+    """Crush the lower portion of the frame to near-black so clothing —
+    even bright white dress shirts or light plaid — dissolves into the
+    studio void instead of being clipped at the bottom edge. Matches the
+    swarm/* studio look where shoulders blend seamlessly with the
+    background.
+
+    Fade starts mid-frame (at the chest/neck transition) and reaches near-
+    full strength well before the bottom edge so the silhouette never
+    appears to be cut off by the crop.
+    """
     arr = np.asarray(img, dtype=np.float32)
     h, w = arr.shape[:2]
     yy = np.arange(h, dtype=np.float32)[:, None]
-    # Fade kicks in around the lower 40% of the frame and ramps to full
-    # darkening at the bottom. Smoothstep transition keeps the boundary
-    # invisible.
-    start, end = h * 0.55, h * 0.98
+    start, end = h * 0.48, h * 0.88
     t = np.clip((yy - start) / max(1.0, end - start), 0.0, 1.0)
     t = t * t * (3.0 - 2.0 * t)  # smoothstep
     mask = 1.0 - t * strength
@@ -496,7 +501,7 @@ def process_one(path: Path, out_path: Path) -> None:
     final = Image.merge("RGB", (composite_grey,) * 3)
     final = add_side_lighting(final, side=light_side, strength=0.20)
     final = add_vignette(final, strength=0.28)
-    final = add_bottom_fade(final, strength=0.55)
+    final = add_bottom_fade(final, strength=0.98)
     final = add_film_grain(final, amount=3.0, seed=seed)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
