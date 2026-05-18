@@ -933,6 +933,70 @@ a.oc-portrait-card-link:hover {
 
 
 /* ================================================================
+   PREVIEW VARIANT — applied only on /our-customers-preview, only on
+   the body industry portraits (.section-oc-portraits). Studio
+   photos with light backgrounds get a cinematic B&W + cool blue
+   tint + bottom darkening gradient + abstract dot constellation
+   overlay so they read consistently with the swarm-photo aesthetic
+   used on the live page. The hero collage and live /our-customers
+   page are intentionally untouched.
+   ================================================================ */
+
+.page-our-customers-preview .section-oc-portraits .oc-portrait {
+    background-color: #0a1428;
+}
+
+.page-our-customers-preview .section-oc-portraits .oc-portrait img {
+    filter: grayscale(1) brightness(0.88) contrast(1.08);
+    transition: filter 0.35s ease, transform 0.4s ease;
+}
+
+/* Cool blue color cast (multiplies into bright background to darken
+   it and pull the whole image toward the brand cool palette). */
+.page-our-customers-preview .section-oc-portraits .oc-portrait::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: rgba(125, 169, 214, 0.10);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+/* Abstract code-constellation dot grid + bottom darkening gradient
+   to give every studio photo the cinematic depth the swarm photos
+   have baked in. */
+.page-our-customers-preview .section-oc-portraits .oc-portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image:
+        radial-gradient(rgba(125, 169, 214, 0.18) 0.8px, transparent 1.4px),
+        linear-gradient(180deg, rgba(10, 20, 40, 0) 45%, rgba(10, 20, 40, 0.55) 100%),
+        radial-gradient(circle at 100% 0%, rgba(125, 169, 214, 0.10), transparent 55%);
+    background-size: 16px 16px, auto, auto;
+    background-position: 0 0, 0 0, 0 0;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+/* Hover: drop the filters and overlays so the portrait blooms to
+   full color, same affordance as the swarm photos on the live page. */
+.page-our-customers-preview .section-oc-portraits .oc-portrait-card-link:hover .oc-portrait img {
+    filter: grayscale(0) brightness(1) contrast(1);
+    transform: scale(1.03);
+}
+
+.page-our-customers-preview .section-oc-portraits .oc-portrait-card-link:hover .oc-portrait::before,
+.page-our-customers-preview .section-oc-portraits .oc-portrait-card-link:hover .oc-portrait::after {
+    opacity: 0;
+}
+
+
+/* ================================================================
    ANIMATIONS + REDUCED MOTION
    ================================================================ */
 
