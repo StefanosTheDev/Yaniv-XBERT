@@ -640,24 +640,25 @@
 }
 
 /* ----------------------------------------------------------------
-   Healthcare proof grid — 2-up case studies
+   Industry proof grid — 2-up case studies
    The shared rule above puts the proof grid on 3 columns with each
    card spanning 4 grid lines (designed for the master grid-12
-   layout). On healthcare we reframe the section as paired case
-   studies, so we override to a clean 2-up at ≥1024px. With an odd
-   number of cards, the trailing card stretches across both columns
-   so the layout never has dead space at the bottom.
+   layout). On every industry page we reframe the section as paired
+   case studies, so we override to a clean 2-up at ≥1024px. With an
+   odd number of cards, the trailing card stretches across both
+   columns so the layout never has dead space at the bottom — kept
+   as a safety net for pages whose card count drifts back to odd.
    ---------------------------------------------------------------- */
 @media (min-width: 1024px) {
-    .industry-healthcare .ind-proof-grid {
+    .page-industry .ind-proof-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .industry-healthcare .ind-proof-grid .ind-proof-card {
+    .page-industry .ind-proof-grid .ind-proof-card {
         grid-column: auto;
     }
 
-    .industry-healthcare .ind-proof-grid .ind-proof-card:nth-child(odd):last-child {
+    .page-industry .ind-proof-grid .ind-proof-card:nth-child(odd):last-child {
         grid-column: 1 / -1;
     }
 }
