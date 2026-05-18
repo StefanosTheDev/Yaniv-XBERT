@@ -406,24 +406,27 @@ def add_vignette(img: Image.Image, strength: float = 0.55) -> Image.Image:
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), mode=img.mode)
 
 
-def add_bottom_fade(img: Image.Image, strength: float = 0.98) -> Image.Image:
-    """Crush the lower portion of the frame to near-black so clothing —
-    even bright white dress shirts or light plaid — dissolves into the
-    studio void instead of being clipped at the bottom edge. Matches the
-    swarm/* studio look where shoulders blend seamlessly with the
-    background.
+def add_bottom_fade(
+    img: Image.Image, strength: float = 0.65, floor: float = 0.18
+) -> Image.Image:
+    """Subdue the lower portion of the frame so clothing blends into the
+    studio background, but leave a touch of dark-grey tonality and a
+    visible floor so editorial overlays (code text, constellation graph)
+    stay legible — matching the way leaders/tomas-gorny.png keeps its
+    shirt and 'while True:' code readable rather than dropping to a flat
+    black void.
 
-    Fade starts mid-frame (at the chest/neck transition) and reaches near-
-    full strength well before the bottom edge so the silhouette never
-    appears to be cut off by the crop.
+    Mask never multiplies below `floor`, so even at the very bottom of
+    the frame there is still ~18% of the original luminance preserved.
     """
     arr = np.asarray(img, dtype=np.float32)
     h, w = arr.shape[:2]
     yy = np.arange(h, dtype=np.float32)[:, None]
-    start, end = h * 0.48, h * 0.88
+    start, end = h * 0.50, h * 0.92
     t = np.clip((yy - start) / max(1.0, end - start), 0.0, 1.0)
     t = t * t * (3.0 - 2.0 * t)  # smoothstep
     mask = 1.0 - t * strength
+    mask = np.maximum(mask, floor)
     arr = arr * mask[..., None]
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), mode=img.mode)
 
@@ -501,7 +504,7 @@ def process_one(path: Path, out_path: Path) -> None:
     final = Image.merge("RGB", (composite_grey,) * 3)
     final = add_side_lighting(final, side=light_side, strength=0.20)
     final = add_vignette(final, strength=0.28)
-    final = add_bottom_fade(final, strength=0.98)
+    final = add_bottom_fade(final, strength=0.65, floor=0.18)
     final = add_film_grain(final, amount=3.0, seed=seed)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
