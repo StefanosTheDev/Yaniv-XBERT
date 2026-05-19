@@ -216,6 +216,7 @@ def to_swarm_bw(
     shadow_curve: float = 2.00,
     highlight_curve: float = 1.55,
     pre_lift: float = 0.0,
+    highlight_lift: float = 0.0,
 ) -> Image.Image:
     """B&W portrait matching the /swarm/* and /leaders/* studio look: jet-black
     clothing/shadows that blend into the background, deep skin midtones with
@@ -268,6 +269,16 @@ def to_swarm_bw(
     # 4. Global brightness scale — final touch so the overall plate
     #    matches the editorial feel of the reference photos.
     arr = arr * brightness
+
+    # 5. Optional highlight lift — pushes the brightest tones (anything
+    #    above ~0.7 luminance) up toward pure white. Used for the
+    #    customer industry portraits where source white shirts appear
+    #    grey/dirty after the curve, which makes the subject look
+    #    discoloured against the deep-black studio bg.
+    if highlight_lift > 0.0:
+        t_h = np.clip((arr - 0.65) / 0.35, 0.0, 1.0)
+        t_h = t_h * t_h * (3.0 - 2.0 * t_h)  # smoothstep
+        arr = arr + highlight_lift * t_h * (1.0 - arr)
 
     arr = np.clip(arr, 0, 1)
     arr = (arr * 255.0).astype(np.uint8)
@@ -506,6 +517,8 @@ def process_one(
     bw_shadow_curve: float = 2.00,
     bw_highlight_curve: float = 1.55,
     bw_pre_lift: float = 0.0,
+    bw_highlight_lift: float = 0.0,
+    min_source_size: int = 0,
     overlay_scale: float = 1.0,
     film_grain_amount: float = 3.0,
 ) -> None:
@@ -521,6 +534,20 @@ def process_one(
     """
     # rembg mask on the full-resolution source for the cleanest cutout.
     src = Image.open(path).convert("RGB")
+
+    # If the source is small (some customer industry sources are only
+    # 158-225px on the smaller dimension), upscale it before any
+    # processing so the final 512x512 frame doesn't have to magnify
+    # 3-5x at the very end and produce a visibly pixelated face.
+    # LANCZOS gives the smoothest upscale for portrait detail.
+    if min_source_size > 0:
+        sw, sh = src.size
+        smin = min(sw, sh)
+        if smin < min_source_size:
+            scale = min_source_size / float(smin)
+            new_size = (int(round(sw * scale)), int(round(sh * scale)))
+            src = src.resize(new_size, Image.LANCZOS)
+
     full_alpha = rembg_alpha(src)
 
     # The board source photos vary wildly: some arrive as tight head-shots
@@ -593,6 +620,7 @@ def process_one(
         shadow_curve=bw_shadow_curve,
         highlight_curve=bw_highlight_curve,
         pre_lift=bw_pre_lift,
+        highlight_lift=bw_highlight_lift,
     )
 
     # Editorial canvas: black with very faint code + constellation.

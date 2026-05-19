@@ -61,18 +61,31 @@ def main() -> None:
         # the original); adding a synthetic side-light on top would
         # crush the dim half to black. Disable it.
         side_lighting_strength=0.0,
-        # Gentler shadow curve and a triangular shadow-lift so the dim
-        # half of directionally-lit source faces (hospitality,
-        # insurance, healthcare) holds detail instead of crushing to
-        # pure black. The triangular shadow-lift only touches values
-        # below 0.5 — already-dark midtones in low-contrast sources
-        # (construction) are left alone so they don't fog up.
-        bw_pre_lift=0.18,
-        bw_shadow_curve=1.75,
-        bw_highlight_curve=1.55,
-        bw_brightness=0.94,
-        bw_midtone_power=1.10,
-        bw_shadow_floor=0.06,
+        # Gentler shadow curve, a triangular shadow-lift, and a
+        # smoothstep highlight lift so:
+        #   * the dim half of directionally-lit source faces
+        #     (hospitality, insurance, healthcare) holds detail and
+        #     reads as evenly-lit like swarm-31, instead of crushing
+        #     to pure black;
+        #   * white shirts/highlights (insurance especially) clip to
+        #     a clean white instead of the dirty-grey the unlifted
+        #     curve produces against the deep-black studio bg;
+        #   * already-dark midtones in low-contrast sources
+        #     (construction) are left alone — the triangular shadow-
+        #     lift is zero above 0.5 luminance so it doesn't fog them.
+        bw_pre_lift=0.30,
+        bw_shadow_curve=1.65,
+        bw_highlight_curve=1.30,
+        bw_highlight_lift=0.40,
+        bw_brightness=0.96,
+        bw_midtone_power=1.05,
+        bw_shadow_floor=0.05,
+        # Source photos in scripts/_industry_originals/ are between
+        # 158x196 (real-estate) and 1024x798 (healthcare). Pre-upscale
+        # any source whose smaller dimension is under 600px so the
+        # final 512x512 crop never has to magnify more than ~1.5x at
+        # the end — eliminates the visible pixelation on construction.
+        min_source_size=600,
         overlay_scale=0.18,
         film_grain_amount=2.5,
     )
