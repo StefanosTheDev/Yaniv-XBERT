@@ -213,6 +213,9 @@ def to_swarm_bw(
     shadow_floor: float = 0.15,
     midtone_power: float = 1.18,
     brightness: float = 0.92,
+    shadow_curve: float = 2.00,
+    highlight_curve: float = 1.55,
+    pre_lift: float = 0.0,
 ) -> Image.Image:
     """B&W portrait matching the /swarm/* and /leaders/* studio look: jet-black
     clothing/shadows that blend into the background, deep skin midtones with
@@ -220,21 +223,36 @@ def to_swarm_bw(
     bright but un-clipped highlights.
 
     The board defaults aim for the slightly-underexposed editorial feel of
-    leaders/tomas-gorny.png and board/tracy-conrad.png (rich midtones, deep
-    blacks). Lighter values can be passed for sources that already start
-    out darker (e.g. seated full-body subjects on dark walls), where the
-    default would otherwise crush them into the bg.
+    leaders/tomas-gorny.png and board/tracy-conrad.png (rich midtones,
+    deep blacks). Lighter values can be passed for sources that already
+    start out with one side of the face in deep shadow (e.g. the
+    hospitality and insurance industry sources), where the default
+    crushes the dim half of the face into pure black instead of holding
+    detail.
     """
     g = img.convert("L")
     g = ImageOps.autocontrast(g, cutoff=2)
     arr = np.asarray(g, dtype=np.float32) / 255.0
 
-    # 1. Strong S-curve. Shadows crushed harder so clothing reads as black,
-    #    highlights kept moderate so skin doesn't blow out.
+    # 0. Optional shadow lift (`pre_lift`) — recovers detail in source
+    #    images that have one side of the face in deep shadow (e.g. the
+    #    hospitality and insurance industry sources). The lift is
+    #    triangular: max amount at pure black, zero at mid-grey, zero
+    #    above. This avoids fogging up already-dark midtones in
+    #    low-contrast sources (construction's dark wall + dark shirt)
+    #    that don't actually need their shadows lifted.
+    if pre_lift > 0.0:
+        arr = arr + pre_lift * np.maximum(0.0, 1.0 - 2.0 * arr)
+
+    # 1. S-curve. The shadow half is steeper than the highlight half so
+    #    clothing reads as black while highlights stay un-clipped. The
+    #    `shadow_curve` exponent controls how aggressively the shadow
+    #    side is crushed — softer values (e.g. 1.6) preserve midtone
+    #    detail in the dim half of a directionally-lit face.
     arr = np.where(
         arr < 0.5,
-        (arr * 2.0) ** 2.00 / 2.0,
-        1.0 - ((1.0 - arr) * 2.0) ** 1.55 / 2.0,
+        (arr * 2.0) ** shadow_curve / 2.0,
+        1.0 - ((1.0 - arr) * 2.0) ** highlight_curve / 2.0,
     )
 
     # 2. Hard shadow toe: anything below `shadow_floor` luminance goes to
@@ -243,8 +261,9 @@ def to_swarm_bw(
 
     # 3. Pull skin tones down — power > 1 darkens midtones more than
     #    extremes, giving skin the rich mid-grey look of swarm-26 instead
-    #    of pale.
-    arr = np.power(arr, midtone_power)
+    #    of pale. Pass `midtone_power=1.0` to disable.
+    if midtone_power != 1.0:
+        arr = np.power(arr, midtone_power)
 
     # 4. Global brightness scale — final touch so the overall plate
     #    matches the editorial feel of the reference photos.
@@ -484,6 +503,9 @@ def process_one(
     bw_brightness: float = 0.92,
     bw_midtone_power: float = 1.18,
     bw_shadow_floor: float = 0.15,
+    bw_shadow_curve: float = 2.00,
+    bw_highlight_curve: float = 1.55,
+    bw_pre_lift: float = 0.0,
     overlay_scale: float = 1.0,
     film_grain_amount: float = 3.0,
 ) -> None:
@@ -568,6 +590,9 @@ def process_one(
         shadow_floor=bw_shadow_floor,
         midtone_power=bw_midtone_power,
         brightness=bw_brightness,
+        shadow_curve=bw_shadow_curve,
+        highlight_curve=bw_highlight_curve,
+        pre_lift=bw_pre_lift,
     )
 
     # Editorial canvas: black with very faint code + constellation.

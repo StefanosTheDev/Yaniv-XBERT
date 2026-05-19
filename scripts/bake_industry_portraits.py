@@ -53,12 +53,26 @@ def main() -> None:
         bottom_dissolve_strength=0.40,
         bottom_dissolve_start=0.78,
         bottom_dissolve_end=1.10,
-        bottom_fade_strength=0.14,
-        vignette_strength=0.22,
-        side_lighting_strength=0.14,
-        bw_brightness=0.98,
+        bottom_fade_strength=0.10,
+        vignette_strength=0.18,
+        # The customer industry source photos already carry natural
+        # directional studio lighting (the hospitality and insurance
+        # subjects in particular have one side of the face in shadow in
+        # the original); adding a synthetic side-light on top would
+        # crush the dim half to black. Disable it.
+        side_lighting_strength=0.0,
+        # Gentler shadow curve and a triangular shadow-lift so the dim
+        # half of directionally-lit source faces (hospitality,
+        # insurance, healthcare) holds detail instead of crushing to
+        # pure black. The triangular shadow-lift only touches values
+        # below 0.5 — already-dark midtones in low-contrast sources
+        # (construction) are left alone so they don't fog up.
+        bw_pre_lift=0.18,
+        bw_shadow_curve=1.75,
+        bw_highlight_curve=1.55,
+        bw_brightness=0.94,
         bw_midtone_power=1.10,
-        bw_shadow_floor=0.10,
+        bw_shadow_floor=0.06,
         overlay_scale=0.18,
         film_grain_amount=2.5,
     )
