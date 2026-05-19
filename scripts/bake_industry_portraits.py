@@ -61,53 +61,31 @@ def main() -> None:
         # the original); adding a synthetic side-light on top would
         # crush the dim half to black. Disable it.
         side_lighting_strength=0.0,
-        # Move closer to the board look (deeper blacks, sharper
-        # bone-structure midtones, the look of board/karen-walker.png
-        # and board/hari.png) while keeping a small shadow-lift so
-        # the dim half of the hospitality face still holds. The big
-        # change vs the previous bake is restoring contrast: we use
-        # a near-board shadow curve (1.95) and shadow floor (0.10)
-        # so the construction portrait — whose source is
-        # low-contrast and was reading as a washed-out fog — now
-        # has real blacks and sharper face shape.
-        #
-        # The triangular pre_lift is kept small (0.10) so it lifts
-        # only the deepest shadows on the dim half of a directional
-        # face without flattening already-low-contrast sources.
-        #
-        # highlight_lift is bumped to 0.35 to push the brightest
-        # tones (white shirts on insurance, healthcare, real-estate)
-        # cleanly to white against the deep-black bg, so they no
-        # longer read as a discoloured grey patch.
-        #
-        # min_source_size=500 pre-upscales the smallest sources
-        # (183-225px) before any cropping so the final 512x512
-        # frame doesn't have to magnify ~3x and produce a pixelated
-        # face on construction.
-        bw_pre_lift=0.10,
-        bw_shadow_curve=1.95,
-        bw_highlight_curve=1.55,
-        # Lower the highlight-lift threshold so the smoothstep
-        # reaches into the upper midtones (everything above ~0.50
-        # luminance), enough to flatten the fold/wrinkle shadows in
-        # insurance's white t-shirt while still leaving skin
-        # midtones (typically below 0.50 on the shadow side of a
-        # face) untouched.
-        bw_highlight_lift=0.55,
-        bw_highlight_lift_threshold=0.50,
-        bw_brightness=0.95,
-        bw_midtone_power=1.15,
-        bw_shadow_floor=0.10,
-        min_source_size=500,
-        # Industry sources have noisier rembg masks than the board
-        # studio shots: small selfies (insurance) leak hedge/wall
-        # pixels into the subject's t-shirt area, and dark hair on a
-        # dim wall (construction) leaves a bright halo around the
-        # head. Extra erosion passes pull the mask in a few pixels
-        # so those edge-pixel artefacts are dropped, then the
-        # Gaussian re-softens the boundary so the cutout still
-        # blends cleanly into the bg.
-        mask_extra_erode=2,
+        # Gentler shadow curve, a triangular shadow-lift, and a
+        # smoothstep highlight lift so:
+        #   * the dim half of directionally-lit source faces
+        #     (hospitality, insurance, healthcare) holds detail and
+        #     reads as evenly-lit like swarm-31, instead of crushing
+        #     to pure black;
+        #   * white shirts/highlights (insurance especially) clip to
+        #     a clean white instead of the dirty-grey the unlifted
+        #     curve produces against the deep-black studio bg;
+        #   * already-dark midtones in low-contrast sources
+        #     (construction) are left alone — the triangular shadow-
+        #     lift is zero above 0.5 luminance so it doesn't fog them.
+        bw_pre_lift=0.30,
+        bw_shadow_curve=1.65,
+        bw_highlight_curve=1.30,
+        bw_highlight_lift=0.40,
+        bw_brightness=0.96,
+        bw_midtone_power=1.05,
+        bw_shadow_floor=0.05,
+        # Source photos in scripts/_industry_originals/ are between
+        # 158x196 (real-estate) and 1024x798 (healthcare). Pre-upscale
+        # any source whose smaller dimension is under 600px so the
+        # final 512x512 crop never has to magnify more than ~1.5x at
+        # the end — eliminates the visible pixelation on construction.
+        min_source_size=600,
         overlay_scale=0.18,
         film_grain_amount=2.5,
     )
