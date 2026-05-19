@@ -207,11 +207,24 @@ def rembg_alpha(img: Image.Image) -> Image.Image:
     return alpha
 
 
-def to_swarm_bw(img: Image.Image) -> Image.Image:
+def to_swarm_bw(
+    img: Image.Image,
+    *,
+    shadow_floor: float = 0.15,
+    midtone_power: float = 1.18,
+    brightness: float = 0.92,
+) -> Image.Image:
     """B&W portrait matching the /swarm/* and /leaders/* studio look: jet-black
     clothing/shadows that blend into the background, deep skin midtones with
     real bone structure (eye sockets, nose bridge, cheekbones, jawline),
-    bright but un-clipped highlights."""
+    bright but un-clipped highlights.
+
+    The board defaults aim for the slightly-underexposed editorial feel of
+    leaders/tomas-gorny.png and board/tracy-conrad.png (rich midtones, deep
+    blacks). Lighter values can be passed for sources that already start
+    out darker (e.g. seated full-body subjects on dark walls), where the
+    default would otherwise crush them into the bg.
+    """
     g = img.convert("L")
     g = ImageOps.autocontrast(g, cutoff=2)
     arr = np.asarray(g, dtype=np.float32) / 255.0
@@ -224,17 +237,18 @@ def to_swarm_bw(img: Image.Image) -> Image.Image:
         1.0 - ((1.0 - arr) * 2.0) ** 1.55 / 2.0,
     )
 
-    # 2. Hard shadow toe: anything below 0.15 luminance goes to true black.
-    floor = 0.15
-    arr = np.where(arr < floor, 0.0, (arr - floor) / (1.0 - floor))
+    # 2. Hard shadow toe: anything below `shadow_floor` luminance goes to
+    #    true black so clothing/shadows blend into the studio bg.
+    arr = np.where(arr < shadow_floor, 0.0, (arr - shadow_floor) / (1.0 - shadow_floor))
 
-    # 3. Pull skin tones down — power > 1 darkens midtones more than extremes,
-    #    giving skin the rich mid-grey look of swarm-26 instead of pale.
-    arr = np.power(arr, 1.18)
+    # 3. Pull skin tones down — power > 1 darkens midtones more than
+    #    extremes, giving skin the rich mid-grey look of swarm-26 instead
+    #    of pale.
+    arr = np.power(arr, midtone_power)
 
-    # 4. Global brightness scale — final touch so the overall plate matches
-    #    the slightly-underexposed editorial feel of the reference photos.
-    arr = arr * 0.92
+    # 4. Global brightness scale — final touch so the overall plate
+    #    matches the editorial feel of the reference photos.
+    arr = arr * brightness
 
     arr = np.clip(arr, 0, 1)
     arr = (arr * 255.0).astype(np.uint8)
@@ -278,17 +292,39 @@ def load_font(size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.load_default()
 
 
-def render_editorial_canvas(seed: int) -> Image.Image:
-    """Black canvas with very faint pseudo-code and a small constellation graph,
-    matching the /swarm/* portraits' background presence: visible only when
-    you look closely, never competing with the subject."""
+def render_editorial_canvas(
+    seed: int,
+    *,
+    overlay_scale: float = 1.0,
+) -> Image.Image:
+    """Black canvas with very faint pseudo-code and a small constellation
+    graph, matching the /swarm/* portraits' background presence: visible
+    only when you look closely, never competing with the subject.
+
+    ``overlay_scale`` linearly attenuates every alpha used for code text and
+    constellation marks. The default (1.0) reproduces the board portrait
+    overlay density used on /leadership; the customer industry baker uses a
+    lower value so the overlays read as a faint trace rather than legible
+    code, matching swarm-31.png and swarm-34.png.
+    """
     rng = random.Random(seed)
     canvas = Image.new("RGB", (SIZE, SIZE), (0, 0, 0))
-    draw = ImageDraw.Draw(canvas, "RGBA")
+    draw = ImageDraw.Draw(canvas)
 
     code_font = load_font(10)
     line_h = 13
     code_ink = (130, 140, 156)
+
+    # Pillow's ImageDraw.text/line/ellipse don't honour the alpha channel
+    # of the `fill` colour for text glyph rendering — the alpha controls
+    # antialiasing only and the RGB is always drawn at full intensity. To
+    # get true "very faint" overlays we instead pre-scale the ink colour
+    # itself by the requested opacity (0-255) and draw without alpha. The
+    # bg is solid black, so an ink of e.g. (18, 19, 21) reads as a dim
+    # grey on the canvas.
+    def _ink(rgb: tuple[int, int, int], opacity: int) -> tuple[int, int, int]:
+        op = max(0, min(255, int(opacity * overlay_scale)))
+        return tuple(max(0, min(255, int(c * op / 255))) for c in rgb)
 
     # Sparse code lines scattered along the right edge.
     code_x = int(SIZE * 0.82)
@@ -300,7 +336,7 @@ def render_editorial_canvas(seed: int) -> Image.Image:
             (code_x + rng.randint(-1, 1), y),
             line,
             font=code_font,
-            fill=(*code_ink, rng.randint(35, 55)),
+            fill=_ink(code_ink, rng.randint(35, 55)),
         )
 
     # A few faint code lines top-left.
@@ -314,7 +350,7 @@ def render_editorial_canvas(seed: int) -> Image.Image:
             (10, 12 + i * line_h),
             line,
             font=code_font,
-            fill=(*code_ink, rng.randint(28, 42)),
+            fill=_ink(code_ink, rng.randint(28, 42)),
         )
 
     # Sparse constellation graph: small dots with thin connecting lines, kept
@@ -325,28 +361,21 @@ def render_editorial_canvas(seed: int) -> Image.Image:
     region_y = (int(SIZE * 0.55), SIZE - 14)
     for _ in range(n_nodes):
         nodes.append((rng.randint(*region_x), rng.randint(*region_y)))
+    line_color = _ink((110, 118, 134), 35)
+    dot_color = _ink((150, 158, 174), 80)
+    label_color = _ink((120, 128, 144), 55)
     for i, (ax, ay) in enumerate(nodes):
         for j in range(i + 1, n_nodes):
             bx, by = nodes[j]
             d = math.hypot(ax - bx, ay - by)
             if d < 80 and rng.random() < 0.4:
-                draw.line(
-                    [(ax, ay), (bx, by)], fill=(110, 118, 134, 35), width=1
-                )
+                draw.line([(ax, ay), (bx, by)], fill=line_color, width=1)
     label_font = load_font(9)
     for x, y in nodes:
-        draw.ellipse(
-            [x - 1, y - 1, x + 1, y + 1],
-            fill=(150, 158, 174, 80),
-        )
+        draw.ellipse([x - 1, y - 1, x + 1, y + 1], fill=dot_color)
         if rng.random() < 0.25:
             label = rng.choice(["0x7F4A", "0.91", "n=5"])
-            draw.text(
-                (x + 4, y - 5),
-                label,
-                font=label_font,
-                fill=(120, 128, 144, 55),
-            )
+            draw.text((x + 4, y - 5), label, font=label_font, fill=label_color)
 
     return canvas
 
@@ -442,10 +471,32 @@ def add_bottom_fade(img: Image.Image, strength: float = 0.50) -> Image.Image:
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), mode=img.mode)
 
 
-def process_one(path: Path, out_path: Path) -> None:
-    """Bake one board portrait to match the /swarm/* editorial style: smooth
+def process_one(
+    path: Path,
+    out_path: Path,
+    *,
+    bottom_dissolve_strength: float = 0.85,
+    bottom_dissolve_start: float = 0.62,
+    bottom_dissolve_end: float = 1.05,
+    bottom_fade_strength: float = 0.22,
+    vignette_strength: float = 0.28,
+    side_lighting_strength: float = 0.20,
+    bw_brightness: float = 0.92,
+    bw_midtone_power: float = 1.18,
+    bw_shadow_floor: float = 0.15,
+    overlay_scale: float = 1.0,
+    film_grain_amount: float = 3.0,
+) -> None:
+    """Bake one portrait to match the /swarm/* editorial style: smooth
     continuous-tone B&W subject on a black studio background with very faint
-    code/constellation overlays. No halftone."""
+    code/constellation overlays. No halftone.
+
+    All visual-tuning knobs are exposed as keyword-only arguments so other
+    bakers (e.g. customer industry portraits) can tone down the dissolve
+    and overlay density when they're processing source photos with bright
+    clothing or busy backgrounds, without affecting the canonical board
+    look used on /leadership.
+    """
     # rembg mask on the full-resolution source for the cleanest cutout.
     src = Image.open(path).convert("RGB")
     full_alpha = rembg_alpha(src)
@@ -504,19 +555,24 @@ def process_one(path: Path, out_path: Path) -> None:
     # (leaders/tomas-gorny.png, swarm/swarm-22.png).
     alpha_arr = np.asarray(alpha, dtype=np.float32) / 255.0
     yy_a = np.arange(alpha_arr.shape[0], dtype=np.float32)[:, None]
-    fade_start_y = SIZE * 0.62
-    fade_end_y = SIZE * 1.05
+    fade_start_y = SIZE * bottom_dissolve_start
+    fade_end_y = SIZE * bottom_dissolve_end
     t_a = np.clip((yy_a - fade_start_y) / max(1.0, fade_end_y - fade_start_y), 0.0, 1.0)
     t_a = t_a * t_a * (3.0 - 2.0 * t_a)  # smoothstep
-    alpha_arr = alpha_arr * (1.0 - t_a * 0.85)
+    alpha_arr = alpha_arr * (1.0 - t_a * bottom_dissolve_strength)
     alpha = Image.fromarray(np.clip(alpha_arr * 255.0, 0, 255).astype(np.uint8), "L")
 
     # Smooth B&W subject. No halftone, no shadow lift.
-    bw = to_swarm_bw(src)
+    bw = to_swarm_bw(
+        src,
+        shadow_floor=bw_shadow_floor,
+        midtone_power=bw_midtone_power,
+        brightness=bw_brightness,
+    )
 
     # Editorial canvas: black with very faint code + constellation.
     seed = sum(ord(c) for c in path.name)
-    canvas_grey = render_editorial_canvas(seed).convert("L")
+    canvas_grey = render_editorial_canvas(seed, overlay_scale=overlay_scale).convert("L")
 
     # Composite the subject onto the canvas as a single grayscale plate.
     composite_grey = canvas_grey.copy()
@@ -529,21 +585,25 @@ def process_one(path: Path, out_path: Path) -> None:
     rng = random.Random(seed)
     light_side = rng.choice(["left", "right"])
     final = Image.merge("RGB", (composite_grey,) * 3)
-    final = add_side_lighting(final, side=light_side, strength=0.20)
-    final = add_vignette(final, strength=0.28)
-    final = add_bottom_fade(final, strength=0.22)
-    final = add_film_grain(final, amount=3.0, seed=seed)
+    final = add_side_lighting(final, side=light_side, strength=side_lighting_strength)
+    final = add_vignette(final, strength=vignette_strength)
+    final = add_bottom_fade(final, strength=bottom_fade_strength)
+    final = add_film_grain(final, amount=film_grain_amount, seed=seed)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     final.save(out_path, format="PNG", optimize=True)
     print(f"  -> wrote {out_path.relative_to(ROOT)} ({out_path.stat().st_size // 1024} KB)")
 
 
-def bake_directory(src_dir: Path, out_dir: Path, label: str = "portraits") -> None:
+def bake_directory(
+    src_dir: Path, out_dir: Path, label: str = "portraits", **process_kwargs
+) -> None:
     """Bake every image in ``src_dir`` into the output directory using the
     same swarm-style editorial treatment. Used by both this script (board
     portraits) and ``bake_industry_portraits.py`` (customer industry
-    portraits)."""
+    portraits). Extra keyword arguments are forwarded to ``process_one``
+    so callers can adjust the visual treatment per-baker (e.g. softer
+    bottom dissolve and fainter overlays for the industry portraits)."""
     if not src_dir.exists():
         raise SystemExit(f"missing source dir: {src_dir}")
     patterns = ("*.png", "*.jpg", "*.jpeg", "*.webp")
@@ -556,12 +616,18 @@ def bake_directory(src_dir: Path, out_dir: Path, label: str = "portraits") -> No
     print(f"Re-baking {len(files)} {label} from {src_dir}")
     for p in files:
         out = out_dir / (p.stem + ".png")
-        process_one(p, out)
+        process_one(p, out, **process_kwargs)
     print("Done.")
 
 
 def main() -> None:
-    bake_directory(SRC_DIR, OUT_DIR, label="board portraits")
+    # The board portraits target the leaders/* aesthetic — visible code and
+    # constellation overlays sitting in the bg so the page reads as
+    # editorial-tech, not just a clean studio portrait. We pre-scale the
+    # overlay alpha generously so the canvas's intentionally low base
+    # alphas (28-80) read as clearly visible after Pillow's RGB-only ink
+    # path bottoms out at 100% — matching the look the user has approved.
+    bake_directory(SRC_DIR, OUT_DIR, label="board portraits", overlay_scale=3.0)
 
 
 if __name__ == "__main__":
