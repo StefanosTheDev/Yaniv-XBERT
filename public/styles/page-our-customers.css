@@ -985,8 +985,12 @@ a.oc-portrait-card-link:hover {
 
 /* Hover: keep the cinematic B&W + blue tint + dot overlays in place; only
    apply a subtle scale so the card still has interactive feedback without
-   switching to full color. */
+   switching to full color. The explicit filter declaration here is
+   required so the generic `.page-our-customers` hover rule (which sets
+   `filter: grayscale(0)`) doesn't take over and reveal full color on the
+   preview page. */
 .page-our-customers-preview .section-oc-portraits .oc-portrait-card-link:hover .oc-portrait img {
+    filter: grayscale(1) brightness(0.88) contrast(1.08);
     transform: scale(1.03);
 }
 
