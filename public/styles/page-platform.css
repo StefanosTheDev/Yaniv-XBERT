@@ -1,0 +1,1664 @@
+/* ================================================================
+   PAGE: PLATFORM
+   Loaded on top of page-index.css. Translates the Nextiva AI thesis
+   ("infrastructure + real-time data + agentic AI") into a sequence of
+   sections that read in the same visual language as /how-xbert-works,
+   /integrations, and /security: mono eyebrows with braille spinners,
+   Fraunces section titles, raised-surface cards bordered with
+   --border-light, accent-blue used sparingly, and full-width left/
+   right modules where copy on one side meets a "console" stage on
+   the other (toolbar + body + footer chips).
+   ================================================================ */
+
+
+/* ------------------------------------------------
+   Shared eyebrow + section header
+   ------------------------------------------------ */
+
+.page-platform .pl-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-platform .pl-section-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(40px, 5.6vw, 64px);
+    font-weight: var(--display-weight);
+    line-height: var(--display-line-height);
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-platform .pl-section-deck {
+    grid-column: 8 / -1;
+    align-self: end;
+    margin: 0;
+    max-width: 600px;
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.page-platform .pl-section-header {
+    align-items: start;
+    margin-bottom: var(--space-3xl);
+}
+
+.page-platform .pl-section-header-copy {
+    grid-column: span 6;
+}
+
+
+/* ================================================================
+   Hero
+   ================================================================ */
+
+.page-platform .section-pl-hero {
+    position: relative;
+    padding: clamp(96px, 13vw, 180px) 0 clamp(64px, 8vw, 112px);
+    overflow: hidden;
+    isolation: isolate;
+    background-color: var(--bg-primary);
+}
+
+.page-platform .section-pl-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 78% 6%, rgba(125, 169, 214, 0.12), transparent 55%),
+        radial-gradient(circle at 0% 100%, rgba(125, 169, 214, 0.06), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.page-platform .pl-hero-grid {
+    align-items: center;
+}
+
+.page-platform .pl-hero-copy {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-platform .pl-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-hero-eyebrow-spinner {
+    color: var(--accent-blue);
+    font-size: 14px;
+}
+
+.page-platform .pl-hero-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(48px, 6.4vw, 84px);
+    font-weight: var(--display-weight);
+    line-height: 0.96;
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-platform .pl-hero-title-accent {
+    color: var(--accent-blue);
+}
+
+.page-platform .pl-hero-deck {
+    margin: var(--space-md) 0 0;
+    max-width: 56ch;
+    font-size: var(--text-body-xl);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.page-platform .pl-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+}
+
+
+/* ------------------------------------------------
+   Hero "product moment" — XBERT.PLATFORM
+   A live console showing one customer interaction
+   firing all three platform layers (Comms / Data /
+   Agentic AI) at the same moment. Same toolbar +
+   chip vocabulary as /how-xbert-works, /integrations,
+   /security, so the four hero consoles read as one
+   product family.
+   ------------------------------------------------ */
+
+.page-platform .pl-hero-stage {
+    grid-column: 8 / -1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-surface);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.page-platform .pl-hero-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-hero-stage-toolbar-left {
+    color: var(--text-primary);
+}
+
+.page-platform .pl-hero-stage-toolbar-right {
+    color: var(--accent-blue);
+    font-size: 13px;
+    letter-spacing: 0;
+}
+
+/* "Now serving" event card — the cause that fires the layers */
+.page-platform .pl-hero-stage-event {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 14px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+    animation: pl-hero-event-in 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+.page-platform .pl-hero-stage-event-pulse {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 0 0 rgba(125, 169, 214, 0.55);
+    animation: pl-hero-event-pulse 2.2s ease-out infinite;
+}
+
+.page-platform .pl-hero-stage-event-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.page-platform .pl-hero-stage-event-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+}
+
+.page-platform .pl-hero-stage-event-text {
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.page-platform .pl-hero-stage-event-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+}
+
+/* Three layers — each row shows the layer's contribution
+   to the live moment. Numbered badge on the left, chip +
+   status in the middle, and a thin progress bar on the
+   right that fills when the layer is "engaged." */
+.page-platform .pl-hero-stage-layers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.page-platform .pl-hero-stage-layer {
+    display: grid;
+    grid-template-columns: 30px 1fr 64px;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    animation: pl-hero-layer-in 0.55s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) backwards;
+}
+
+.page-platform .pl-hero-stage-layer--comms { animation-delay: 0.15s; }
+.page-platform .pl-hero-stage-layer--data { animation-delay: 0.30s; }
+.page-platform .pl-hero-stage-layer--ai { animation-delay: 0.45s; }
+
+.page-platform .pl-hero-stage-layer--comms {
+    box-shadow: inset 3px 0 0 var(--accent-blue);
+}
+
+.page-platform .pl-hero-stage-layer--data {
+    box-shadow: inset 3px 0 0 var(--text-primary);
+}
+
+.page-platform .pl-hero-stage-layer--ai {
+    box-shadow: inset 3px 0 0 var(--panel-slate);
+}
+
+.page-platform .pl-hero-stage-layer-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.page-platform .pl-hero-stage-layer-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.page-platform .pl-hero-stage-layer-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+.page-platform .pl-hero-stage-layer-status {
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.page-platform .pl-hero-stage-layer-bar {
+    position: relative;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--bg-surface);
+    overflow: hidden;
+}
+
+.page-platform .pl-hero-stage-layer-bar > span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background-color: var(--accent-blue);
+    border-radius: inherit;
+    animation: pl-hero-bar-fill 1.4s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+}
+
+.page-platform .pl-hero-stage-layer--comms .pl-hero-stage-layer-bar > span {
+    animation-delay: 0.45s;
+    --pl-bar-target: 100%;
+}
+.page-platform .pl-hero-stage-layer--data .pl-hero-stage-layer-bar > span {
+    animation-delay: 0.65s;
+    --pl-bar-target: 86%;
+}
+.page-platform .pl-hero-stage-layer--ai .pl-hero-stage-layer-bar > span {
+    animation-delay: 0.85s;
+    --pl-bar-target: 96%;
+}
+
+/* Footer chips */
+.page-platform .pl-hero-stage-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-light);
+}
+
+.page-platform .pl-hero-stage-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    background-color: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.page-platform .pl-hero-stage-chip--accent {
+    border-color: rgba(125, 169, 214, 0.40);
+    color: var(--accent-blue);
+    background-color: rgba(125, 169, 214, 0.08);
+}
+
+
+/* Hero stage animations */
+@keyframes pl-hero-event-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pl-hero-event-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(125, 169, 214, 0.55); }
+    70%  { box-shadow: 0 0 0 12px rgba(125, 169, 214, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(125, 169, 214, 0); }
+}
+
+@keyframes pl-hero-layer-in {
+    from { opacity: 0; transform: translateX(8px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pl-hero-bar-fill {
+    from { width: 0; }
+    to   { width: var(--pl-bar-target, 80%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-platform .pl-hero-stage-event,
+    .page-platform .pl-hero-stage-layer {
+        animation: none;
+    }
+    .page-platform .pl-hero-stage-event-pulse {
+        animation: none;
+    }
+    .page-platform .pl-hero-stage-layer-bar > span {
+        animation: none;
+        width: var(--pl-bar-target, 80%);
+    }
+}
+
+
+/* ================================================================
+   Problem grid — 3-up numbered cards (how-step-card pattern)
+   Numbered badge at the top, title + body pushed to the bottom via
+   margin-bottom: auto on the number. Same shape as the /how-xbert-
+   works "Setup" and "Under The Hood" sections so the page reads as
+   a sibling, not a cousin.
+   ================================================================ */
+
+.page-platform .section-pl-problem {
+    position: relative;
+    padding: clamp(72px, 10vw, 140px) 0;
+    background-color: var(--bg-primary);
+    isolation: isolate;
+}
+
+.page-platform .section-pl-problem::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 12% 10%, rgba(125, 169, 214, 0.06), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.page-platform .pl-problem-grid {
+    gap: var(--space-xl);
+    align-items: stretch;
+}
+
+.page-platform .pl-problem-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    padding: var(--space-2xl);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface-raised);
+    color: var(--text-primary);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.page-platform .pl-problem-card:hover {
+    border-color: var(--text-tertiary);
+    transform: translateY(-3px);
+}
+
+.page-platform .pl-problem-number {
+    display: block;
+    margin-bottom: auto;
+    font-family: var(--font-mono);
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent-blue);
+}
+
+.page-platform .pl-problem-card h3 {
+    margin: var(--space-xl) 0 var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-heading-sm);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.page-platform .pl-problem-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: var(--text-body-sm);
+    line-height: 1.55;
+}
+
+
+/* ================================================================
+   Shared module pattern — copy LEFT + stage RIGHT (or reversed).
+   This is the same rhythm as /how-xbert-works' .how-work-module:
+   5-col copy, 7-col console, optional .pl-module--reverse to flip.
+   ================================================================ */
+
+.page-platform .pl-module {
+    align-items: start;
+    gap: var(--space-3xl);
+}
+
+.page-platform .pl-module-copy {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-platform .pl-module-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(40px, 5.4vw, 60px);
+    font-weight: var(--display-weight);
+    line-height: 1.05;
+    letter-spacing: var(--display-letter-spacing);
+    color: var(--text-primary);
+}
+
+.page-platform .pl-module-title em {
+    font-style: italic;
+    color: var(--accent-blue);
+    font-weight: inherit;
+}
+
+.page-platform .pl-module-deck {
+    margin: var(--space-md) 0 0;
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 52ch;
+}
+
+.page-platform .pl-module-callout {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: var(--space-lg) 0 0;
+    padding: 12px 18px;
+    border: 1px dashed var(--border-light);
+    border-radius: var(--radius-full);
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background-color: var(--bg-surface);
+}
+
+.page-platform .pl-module-callout i {
+    color: var(--accent-blue);
+    font-size: 16px;
+}
+
+/* Stage cell (default = right) */
+.page-platform .pl-stack-stage,
+.page-platform .pl-advantages-stage {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--bg-surface);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
+/* Reversed module = copy on the right, stage on the left */
+.page-platform .pl-module--reverse .pl-module-copy {
+    grid-column: 8 / -1;
+    grid-row: 1;
+}
+
+.page-platform .pl-module--reverse .pl-advantages-stage,
+.page-platform .pl-module--reverse .pl-stack-stage {
+    grid-column: 1 / 8;
+    grid-row: 1;
+}
+
+
+/* ------------------------------------------------
+   Shared stage shell (toolbar / body / footer)
+   ------------------------------------------------ */
+
+.page-platform .pl-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px dashed var(--border-light);
+    background-color: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-stage-toolbar-left {
+    color: var(--text-primary);
+}
+
+.page-platform .pl-stage-toolbar-right {
+    color: var(--accent-blue);
+    font-size: 13px;
+    letter-spacing: 0;
+}
+
+.page-platform .pl-stage-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 18px;
+    border-top: 1px dashed var(--border-light);
+    background-color: var(--bg-primary);
+}
+
+.page-platform .pl-stage-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    background-color: var(--bg-surface);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.page-platform .pl-stage-chip i {
+    font-size: 13px;
+    color: var(--accent-blue);
+}
+
+.page-platform .pl-stage-chip--accent {
+    border-color: rgba(125, 169, 214, 0.40);
+    color: var(--accent-blue);
+    background-color: rgba(125, 169, 214, 0.08);
+}
+
+
+/* ================================================================
+   Section A — The Stack module
+   "NEXT.STACK · LIVE" console: 3 stacked layers + flow arrows.
+   ================================================================ */
+
+.page-platform .section-pl-stack {
+    position: relative;
+    padding: clamp(72px, 10vw, 140px) 0;
+    background-color: var(--bg-primary);
+    isolation: isolate;
+}
+
+.page-platform .section-pl-stack::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 88% 30%, rgba(125, 169, 214, 0.06), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.page-platform .pl-stack-flow {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(20px, 3vw, 32px);
+    gap: 0;
+}
+
+.page-platform .pl-stack-flow-layer {
+    display: grid;
+    grid-template-columns: 36px 1fr 28px;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    animation: pl-stack-layer-in 0.6s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) backwards;
+}
+
+.page-platform .pl-stack-flow-layer:hover {
+    border-color: var(--text-tertiary);
+    transform: translateX(2px);
+}
+
+.page-platform .pl-stack-flow-layer--comms { animation-delay: 0.05s; }
+.page-platform .pl-stack-flow-layer--data { animation-delay: 0.20s; }
+.page-platform .pl-stack-flow-layer--ai { animation-delay: 0.35s; }
+
+.page-platform .pl-stack-flow-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.page-platform .pl-stack-flow-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.page-platform .pl-stack-flow-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+.page-platform .pl-stack-flow-desc {
+    font-size: var(--text-body);
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.page-platform .pl-stack-flow-glyph {
+    justify-self: end;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--text-tertiary);
+}
+
+/* Layer accents — each layer carries a hairline tint on its left
+   border so the three layers read as distinct without leaning on
+   colored backgrounds. AI = slate, Data = neutral, Comms = brand. */
+.page-platform .pl-stack-flow-layer--ai {
+    box-shadow: inset 4px 0 0 var(--panel-slate);
+}
+
+.page-platform .pl-stack-flow-layer--data {
+    box-shadow: inset 4px 0 0 var(--text-primary);
+}
+
+.page-platform .pl-stack-flow-layer--comms {
+    box-shadow: inset 4px 0 0 var(--accent-blue);
+}
+
+.page-platform .pl-stack-flow-layer--comms .pl-stack-flow-glyph {
+    color: var(--accent-blue);
+}
+
+/* The connector arrow between layers */
+.page-platform .pl-stack-flow-arrow {
+    position: relative;
+    height: 28px;
+    margin-left: 16px;          /* line up under the number badge */
+}
+
+.page-platform .pl-stack-flow-arrow::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom,
+        var(--border-light) 0%,
+        var(--accent-blue) 50%,
+        var(--border-light) 100%);
+    opacity: 0.5;
+}
+
+.page-platform .pl-stack-flow-pulse {
+    position: absolute;
+    left: 12px;
+    top: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 16px rgba(125, 169, 214, 0.6);
+    animation: pl-stack-pulse 2.6s ease-in-out infinite;
+}
+
+.page-platform .pl-stack-flow-arrow:nth-of-type(4) .pl-stack-flow-pulse {
+    animation-delay: 1.3s;
+}
+
+
+/* ================================================================
+   Section B — Three structural advantages module
+   "PLATFORM.MOAT · ACTIVE" console: 3 horizontal advantage rows.
+   ================================================================ */
+
+.page-platform .section-pl-advantages {
+    position: relative;
+    padding: clamp(72px, 10vw, 140px) 0;
+    background-color: var(--bg-primary);
+    isolation: isolate;
+}
+
+.page-platform .section-pl-advantages::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 8% 24%, rgba(125, 169, 214, 0.06), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.page-platform .pl-advantages-list {
+    list-style: none;
+    margin: 0;
+    padding: clamp(20px, 3vw, 28px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.page-platform .pl-advantage-row {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 18px;
+    padding: 18px 20px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    animation: pl-stack-layer-in 0.6s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) backwards;
+}
+
+.page-platform .pl-advantage-row:nth-child(1) { animation-delay: 0.05s; }
+.page-platform .pl-advantage-row:nth-child(2) { animation-delay: 0.20s; }
+.page-platform .pl-advantage-row:nth-child(3) { animation-delay: 0.35s; }
+
+.page-platform .pl-advantage-row:hover {
+    border-color: var(--text-tertiary);
+    transform: translateX(2px);
+}
+
+.page-platform .pl-advantage-row--accent {
+    border-color: rgba(125, 169, 214, 0.40);
+    background:
+        linear-gradient(180deg, rgba(125, 169, 214, 0.06), transparent 60%),
+        var(--bg-primary);
+    box-shadow: 0 0 0 1px rgba(125, 169, 214, 0.12) inset;
+}
+
+.page-platform .pl-advantage-row--accent:hover {
+    border-color: var(--accent-blue);
+}
+
+.page-platform .pl-advantage-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.page-platform .pl-advantage-body {
+    min-width: 0;
+}
+
+.page-platform .pl-advantage-eyebrow {
+    display: inline-flex;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-advantage-row--accent .pl-advantage-eyebrow {
+    color: var(--accent-blue);
+}
+
+.page-platform .pl-advantage-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 1.9vw, 24px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+
+.page-platform .pl-advantage-lead {
+    margin: 6px 0 0;
+    font-size: var(--text-body);
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.page-platform .pl-advantage-hits {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+}
+
+.page-platform .pl-advantage-hits li {
+    position: relative;
+    padding-left: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-advantage-hits li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    top: -2px;
+    color: var(--accent-blue);
+    font-weight: 700;
+}
+
+.page-platform .pl-advantage-hits li:first-child::before {
+    content: "";
+}
+
+.page-platform .pl-advantage-hits li:first-child {
+    padding-left: 0;
+}
+
+.page-platform .pl-advantage-glyph {
+    align-self: start;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-advantage-row--accent .pl-advantage-glyph {
+    color: var(--accent-blue);
+}
+
+
+/* ================================================================
+   Section: The Magic / Data Fusion
+   Reuses .pl-module, .pl-stage-toolbar, .pl-stage-footer, .pl-stage-chip
+   so it inherits the same visual DNA as the Stack and Advantages
+   modules. The stage body renders a concrete moment-of-interaction
+   event with two data streams fused into outcomes.
+   ================================================================ */
+
+.page-platform .section-pl-fusion {
+    position: relative;
+    padding: clamp(80px, 10vw, 140px) 0;
+    background-color: var(--bg-primary);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-platform .section-pl-fusion::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(60% 50% at 50% 0%, rgba(54, 122, 246, 0.08), transparent 70%),
+        radial-gradient(50% 40% at 50% 100%, rgba(54, 122, 246, 0.05), transparent 75%);
+    pointer-events: none;
+}
+
+.page-platform .pl-fusion-stage {
+    grid-column: 7 / -1;
+    align-self: start;
+    position: relative;
+    padding: 0;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    background-color: var(--bg-surface-raised);
+    overflow: hidden;
+}
+
+/* ----- Event header (label : value rows, like the handoff module
+        in /how-xbert-works) ----- */
+
+.page-platform .pl-fusion-event {
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.page-platform .pl-fusion-event-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+}
+
+.page-platform .pl-fusion-event-row + .pl-fusion-event-row {
+    border-top: 1px dashed var(--border-light);
+}
+
+.page-platform .pl-fusion-event-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-fusion-event-value {
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-primary);
+}
+
+/* ----- Two streams (unstructured + structured) side by side ----- */
+
+.page-platform .pl-fusion-streams {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.page-platform .pl-fusion-stream {
+    padding: var(--space-md) var(--space-lg) var(--space-lg);
+}
+
+.page-platform .pl-fusion-stream + .pl-fusion-stream {
+    border-left: 1px solid var(--border-light);
+}
+
+.page-platform .pl-fusion-stream-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.page-platform .pl-fusion-stream-header i {
+    color: var(--accent-blue);
+    font-size: 16px;
+}
+
+.page-platform .pl-fusion-stream-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+.page-platform .pl-fusion-stream-tag {
+    margin-left: auto;
+    padding: 3px 8px;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    background-color: var(--bg-surface);
+}
+
+.page-platform .pl-fusion-stream-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.page-platform .pl-fusion-stream-list li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    background-color: var(--bg-surface);
+}
+
+.page-platform .pl-fusion-stream-key {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-fusion-stream-val {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+}
+
+/* ----- "Fused in real time" divider band ----- */
+
+.page-platform .pl-fusion-fuse {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px var(--space-lg);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    background-color: rgba(54, 122, 246, 0.04);
+}
+
+.page-platform .pl-fusion-fuse-line {
+    flex: 1 1 auto;
+    height: 1px;
+    background-image: linear-gradient(90deg, transparent, rgba(54, 122, 246, 0.55), transparent);
+}
+
+.page-platform .pl-fusion-fuse-label {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+}
+
+/* ----- Real-time outcome block ----- */
+
+.page-platform .pl-fusion-outcome {
+    padding: var(--space-lg);
+}
+
+.page-platform .pl-fusion-outcome-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.page-platform .pl-fusion-outcome-header i {
+    color: var(--accent-blue);
+    font-size: 16px;
+}
+
+.page-platform .pl-fusion-outcome-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+.page-platform .pl-fusion-outcome-status {
+    margin-left: auto;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    background-color: rgba(54, 122, 246, 0.12);
+    border: 1px solid rgba(54, 122, 246, 0.28);
+}
+
+.page-platform .pl-fusion-outcome-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.page-platform .pl-fusion-outcome-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    background-color: var(--bg-surface);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    animation: pl-fusion-outcome-in 0.6s ease both;
+}
+
+.page-platform .pl-fusion-outcome-list li:nth-child(1) { animation-delay: 0.05s; }
+.page-platform .pl-fusion-outcome-list li:nth-child(2) { animation-delay: 0.25s; }
+.page-platform .pl-fusion-outcome-list li:nth-child(3) { animation-delay: 0.45s; }
+
+.page-platform .pl-fusion-outcome-list li i {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(54, 122, 246, 0.15);
+    color: var(--accent-blue);
+    font-size: 12px;
+}
+
+/* Tighter footer chips inside the fusion stage so the four chips
+   fit without overflowing on medium widths */
+
+.page-platform .pl-fusion-stage .pl-stage-footer {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+}
+
+
+/* ================================================================
+   Section: Experience Spectrum
+   Uses .pl-section-header + a 3-card grid that matches the
+   .pl-problem-card / how-flow-card rhythm. A subtle scale strip at
+   the bottom carries the "More Human → More AI" metaphor in the
+   page's mono-chip language.
+   ================================================================ */
+
+.page-platform .section-pl-spectrum {
+    position: relative;
+    padding: clamp(80px, 10vw, 140px) 0;
+    background-color: var(--bg-primary);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.page-platform .section-pl-spectrum::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(55% 50% at 50% 0%, rgba(54, 122, 246, 0.07), transparent 70%);
+    pointer-events: none;
+}
+
+/* ----- Console panel wrapping the spectrum cards (same DNA as
+        .integrations-panel on /integrations) ----- */
+
+.page-platform .pl-spectrum-panel {
+    position: relative;
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    background-color: var(--bg-surface-raised);
+    overflow: hidden;
+}
+
+.page-platform .pl-spectrum-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(55% 70% at 50% 0%, rgba(54, 122, 246, 0.07), transparent 70%);
+}
+
+.page-platform .pl-spectrum-panel > * {
+    position: relative;
+    z-index: 1;
+}
+
+.page-platform .pl-spectrum-grid {
+    gap: var(--space-lg);
+    margin: 0;
+    padding: clamp(20px, 2.4vw, 32px) clamp(20px, 2.4vw, 32px) clamp(12px, 1.4vw, 20px);
+}
+
+.page-platform .pl-spectrum-card {
+    grid-column: span 4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: var(--space-lg) var(--space-xl) var(--space-lg);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    background-color: var(--bg-surface);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-platform .pl-spectrum-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(54, 122, 246, 0.30);
+    box-shadow: 0 12px 32px -18px rgba(54, 122, 246, 0.45);
+}
+
+.page-platform .pl-spectrum-card--accent {
+    border-color: rgba(54, 122, 246, 0.30);
+    background-image: radial-gradient(80% 100% at 50% 0%, rgba(54, 122, 246, 0.10), transparent 70%);
+}
+
+.page-platform .pl-spectrum-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: var(--space-md);
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.page-platform .pl-spectrum-card-num {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--accent-blue);
+}
+
+.page-platform .pl-spectrum-card-pill {
+    padding: 4px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    background-color: var(--bg-surface-raised);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-spectrum-card--accent .pl-spectrum-card-pill {
+    color: var(--accent-blue);
+    border-color: rgba(54, 122, 246, 0.30);
+    background-color: rgba(54, 122, 246, 0.08);
+}
+
+.page-platform .pl-spectrum-card-icon {
+    align-self: flex-start;
+    width: 52px;
+    height: 52px;
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    border: 1px solid var(--border-light);
+    background-color: var(--bg-surface-raised);
+    color: var(--accent-blue);
+    font-size: 22px;
+}
+
+.page-platform .pl-spectrum-card--accent .pl-spectrum-card-icon {
+    border-color: rgba(54, 122, 246, 0.30);
+    background-color: rgba(54, 122, 246, 0.10);
+    box-shadow: 0 0 0 3px rgba(54, 122, 246, 0.06);
+}
+
+.page-platform .pl-spectrum-card-title {
+    margin: 4px 0 0;
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 2.4vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+
+.page-platform .pl-spectrum-card-line {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-body-lg);
+    line-height: 1.4;
+    color: var(--accent-blue);
+}
+
+.page-platform .pl-spectrum-card-desc {
+    margin: 4px 0 0;
+    font-size: var(--text-body);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+/* Per-card human↔AI position track at the bottom of each card. The
+   dot is positioned via the data-spectrum-position attribute so each
+   mode shows where it sits on the spectrum. */
+
+.page-platform .pl-spectrum-card-foot {
+    margin-top: auto;
+    padding-top: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-platform .pl-spectrum-card-foot-end {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.page-platform .pl-spectrum-card-track {
+    position: relative;
+    flex: 1 1 auto;
+    height: 4px;
+    border-radius: 999px;
+    background-color: rgba(54, 122, 246, 0.10);
+}
+
+.page-platform .pl-spectrum-card-dot {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, rgba(140, 180, 255, 0.95), var(--accent-blue) 70%);
+    box-shadow:
+        0 0 0 3px rgba(54, 122, 246, 0.15),
+        0 0 12px rgba(54, 122, 246, 0.45);
+    transform: translate(-50%, -50%);
+}
+
+.page-platform .pl-spectrum-card[data-spectrum-position="human"] .pl-spectrum-card-dot { left: 18%; }
+.page-platform .pl-spectrum-card[data-spectrum-position="hybrid"] .pl-spectrum-card-dot { left: 50%; }
+.page-platform .pl-spectrum-card[data-spectrum-position="ai"] .pl-spectrum-card-dot { left: 82%; }
+
+/* Mini fill behind the dot, accent-tinted from the human end up to
+   the dot position, so the track visually reads as "more AI". */
+
+.page-platform .pl-spectrum-card-track::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(54, 122, 246, 0.05), rgba(54, 122, 246, 0.55));
+    -webkit-mask-image: linear-gradient(90deg, #000 0 var(--pl-spectrum-fill, 50%), transparent var(--pl-spectrum-fill, 50%));
+    mask-image: linear-gradient(90deg, #000 0 var(--pl-spectrum-fill, 50%), transparent var(--pl-spectrum-fill, 50%));
+}
+
+.page-platform .pl-spectrum-card[data-spectrum-position="human"] { --pl-spectrum-fill: 18%; }
+.page-platform .pl-spectrum-card[data-spectrum-position="hybrid"] { --pl-spectrum-fill: 50%; }
+.page-platform .pl-spectrum-card[data-spectrum-position="ai"] { --pl-spectrum-fill: 82%; }
+
+.page-platform .pl-spectrum-panel .pl-stage-footer {
+    border-top: 1px solid var(--border-light);
+    background-color: rgba(54, 122, 246, 0.03);
+}
+
+
+/* ================================================================
+   Animations
+   ================================================================ */
+
+@keyframes pl-stack-layer-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pl-stack-pulse {
+    0% {
+        transform: translateY(-6px) scale(0.6);
+        opacity: 0;
+    }
+    35% {
+        opacity: 1;
+        transform: translateY(8px) scale(1);
+    }
+    100% {
+        transform: translateY(28px) scale(0.6);
+        opacity: 0;
+    }
+}
+
+@keyframes pl-fusion-outcome-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-platform .pl-stack-flow-layer,
+    .page-platform .pl-advantage-row {
+        animation: none;
+    }
+    .page-platform .pl-stack-flow-pulse {
+        animation: none;
+        opacity: 0.6;
+    }
+    .page-platform .pl-fusion-outcome-list li {
+        animation: none;
+    }
+}
+
+
+/* ================================================================
+   Responsive
+   ================================================================ */
+
+@media (max-width: 1023px) {
+    .page-platform .pl-section-header-copy,
+    .page-platform .pl-section-deck,
+    .page-platform .pl-problem-card {
+        grid-column: 1 / -1;
+    }
+
+    .page-platform .pl-section-deck {
+        margin-top: var(--space-md);
+    }
+
+    .page-platform .pl-module {
+        gap: var(--space-xl);
+    }
+
+    .page-platform .pl-hero-copy,
+    .page-platform .pl-hero-stage,
+    .page-platform .pl-module-copy,
+    .page-platform .pl-stack-stage,
+    .page-platform .pl-advantages-stage {
+        grid-column: 1 / -1;
+    }
+
+    .page-platform .pl-hero-grid {
+        gap: var(--space-xl);
+    }
+
+    .page-platform .pl-module--reverse .pl-module-copy {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+
+    .page-platform .pl-module--reverse .pl-stack-stage,
+    .page-platform .pl-module--reverse .pl-advantages-stage {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 1023px) {
+    .page-platform .pl-fusion-stage {
+        grid-column: 1 / -1;
+    }
+
+    .page-platform .pl-spectrum-card {
+        grid-column: span 12;
+    }
+}
+
+@media (max-width: 767px) {
+    .page-platform .pl-hero-title,
+    .page-platform .pl-section-title,
+    .page-platform .pl-module-title {
+        font-size: clamp(36px, 9vw, 56px);
+    }
+
+    .page-platform .pl-hero-deck,
+    .page-platform .pl-section-deck,
+    .page-platform .pl-module-deck {
+        font-size: var(--text-body-lg);
+    }
+
+    .page-platform .pl-hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-platform .pl-hero-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .page-platform .pl-stack-flow-layer,
+    .page-platform .pl-advantage-row {
+        grid-template-columns: 32px 1fr;
+    }
+
+    .page-platform .pl-stack-flow-glyph,
+    .page-platform .pl-advantage-glyph {
+        display: none;
+    }
+
+    .page-platform .pl-fusion-streams {
+        grid-template-columns: 1fr;
+    }
+
+    .page-platform .pl-fusion-stream + .pl-fusion-stream {
+        border-left: 0;
+        border-top: 1px solid var(--border-light);
+    }
+
+    .page-platform .pl-fusion-stream-tag {
+        display: none;
+    }
+
+    .page-platform .pl-fusion-event-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+
+    .page-platform .pl-spectrum-grid {
+        padding: var(--space-md);
+    }
+
+    .page-platform .pl-spectrum-card {
+        padding: var(--space-md) var(--space-lg);
+    }
+}

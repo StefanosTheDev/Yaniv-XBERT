@@ -102,24 +102,252 @@
     margin-top: var(--space-xl);
 }
 
-.integrations-hero-placeholder {
+/* ------------------------------------------------
+   Hero "product moment" — XBERT.SYNC
+   Live console showing one customer turn fanning out
+   across the connected stack (Salesforce, Google
+   Calendar, QuickBooks, Slack). Reuses the same
+   toolbar + raised-card vocabulary as /how-xbert-works
+   so the four product pages read as one product family.
+   ------------------------------------------------ */
+
+.integrations-hero-stage {
     grid-column: 8 / -1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 440px;
+    padding: 18px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-surface);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.integrations-hero-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.integrations-hero-stage-toolbar-right {
+    color: var(--accent-blue);
+    white-space: pre;
+}
+
+/* Caller context strip — anchors the pipeline to a real human asking. */
+.integrations-hero-context {
     display: flex;
     align-items: center;
-    justify-content: center;
-    align-self: stretch;
-    min-height: 440px;
-    padding: var(--space-xl);
+    gap: var(--space-sm);
+    padding: 10px 12px;
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
-    background-color: #1E1E1D; /* TODO: tokenize */
+    background-color: var(--bg-surface-raised);
+}
+
+.integrations-hero-context-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-blue);
+    background-color: var(--bg-primary);
+    color: var(--accent-blue);
+}
+
+.integrations-hero-context-avatar svg {
+    width: 12px;
+    height: auto;
+}
+
+.integrations-hero-context-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.integrations-hero-context-name {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.integrations-hero-context-meta {
     color: var(--text-tertiary);
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+}
+
+.integrations-hero-context-status {
+    flex-shrink: 0;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    background-color: rgba(125, 169, 214, 0.14);
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.14em;
-    text-align: center;
+}
+
+/* Section divider with caption — separates context from pipeline rows. */
+.integrations-hero-stage-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 2px 4px;
+}
+
+.integrations-hero-stage-label-line {
+    flex: 1;
+    height: 1px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.integrations-hero-stage-label-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+/* Pipeline rows — staggered fade-in driven by per-row --pipe-delay. */
+.integrations-hero-pipeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.integrations-hero-pipe-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    background-color: rgba(11, 20, 40, 0.6);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.2;
+    color: var(--text-secondary);
+    opacity: 0;
+    transform: translateX(-6px);
+    animation: integrations-hero-pipe-in 700ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--pipe-delay, 0s);
+}
+
+.integrations-hero-pipe-logo {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    object-fit: contain;
+    background-color: rgba(255, 255, 255, 0.04);
+    padding: 2px;
+}
+
+.integrations-hero-pipe-call {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-primary);
+}
+
+.integrations-hero-pipe-call strong {
+    color: var(--accent-blue);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.integrations-hero-pipe-state {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.integrations-hero-pipe-state--read {
+    background-color: rgba(125, 169, 214, 0.14);
+    color: var(--accent-blue);
+}
+
+.integrations-hero-pipe-state--write {
+    background-color: rgba(160, 145, 133, 0.18); /* taupe panel token, tinted */
+    color: var(--panel-taupe);
+}
+
+.integrations-hero-pipe-state i {
+    font-size: 13px;
+    line-height: 1;
+}
+
+@keyframes integrations-hero-pipe-in {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.integrations-hero-stage-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-light);
+}
+
+.integrations-hero-foot-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.integrations-hero-foot-chip i {
+    font-size: 14px;
+    line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .integrations-hero-pipe-row {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
 }
 
 
@@ -489,7 +717,7 @@
 
 @media (max-width: 1023px) {
     .integrations-hero-copy,
-    .integrations-hero-placeholder,
+    .integrations-hero-stage,
     .integrations-section-header-copy,
     .integrations-section-deck,
     .integration-workflow-card,
@@ -510,7 +738,7 @@
         grid-column: span 3;
     }
 
-    .integrations-hero-placeholder {
+    .integrations-hero-stage {
         min-height: 460px;
         margin-top: var(--space-2xl);
     }
@@ -560,8 +788,16 @@
         font-size: var(--text-body-lg);
     }
 
-    .integrations-hero-placeholder {
+    .integrations-hero-stage {
         min-height: 360px;
+    }
+
+    .integrations-hero-pipe-call {
+        font-size: 11px;
+    }
+
+    .integrations-hero-pipe-state {
+        font-size: 11px;
     }
 
     .integration-tile {

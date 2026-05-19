@@ -49,6 +49,12 @@ export default function Nav() {
                         AI safety, guardrails, and compliance foundation.
                       </span>
                     </a>
+                    <a href="/platform" className="mega-menu-item">
+                      <span className="mega-menu-title">The Platform</span>
+                      <span className="mega-menu-desc">
+                        AI and humans in tandem. The platform advantage.
+                      </span>
+                    </a>
                   </div>
 
                   <div className="mega-menu-section">
@@ -99,6 +105,12 @@ export default function Nav() {
                 <div className="mega-menu-inner">
                   <div className="mega-menu-section">
                     <span className="mega-menu-label">Learn</span>
+                    <a href="/our-customers" className="mega-menu-item">
+                      <span className="mega-menu-title">Our Customers</span>
+                      <span className="mega-menu-desc">
+                        Delivering for every business.
+                      </span>
+                    </a>
                     <a href="/customer-stories" className="mega-menu-item">
                       <span className="mega-menu-title">Customer Stories</span>
                       <span className="mega-menu-desc">

@@ -104,24 +104,287 @@
     margin-top: var(--space-xl);
 }
 
-.how-hero-placeholder {
+/* ------------------------------------------------
+   Hero "product moment" — XBERT.WORK
+   A live console card that shows the page promise
+   ("AI that does actual work, not just conversation")
+   by animating the moment a voice thread becomes three
+   completed system actions. Reuses the same toolbar +
+   chip vocabulary as /ai-employee, /agent-assist, and
+   /ai-receptionist so the four product pages read as
+   one product family.
+   ------------------------------------------------ */
+
+.how-hero-stage {
     grid-column: 8 / -1;
     align-self: stretch;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
     min-height: 440px;
+    padding: 18px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-surface);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.how-hero-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.how-hero-stage-toolbar-right {
+    color: var(--accent-blue);
+    white-space: pre;
+}
+
+/* Conversation card — the *cause*. Built fresh rather than
+   reusing .hero-toast because that class is positioned as
+   part of an absolute stack on the homepage. */
+.how-hero-thread {
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
-    background-color: #1E1E1D; /* TODO: tokenize */
+    background-color: var(--bg-surface-raised);
+    padding: 14px 16px;
+}
+
+.how-hero-thread-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.how-hero-thread-avatars {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.how-hero-thread-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-surface-raised);
+    background-color: var(--bg-primary);
+    overflow: hidden;
+}
+
+.how-hero-thread-avatar--xbert {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    z-index: 1;
+}
+
+.how-hero-thread-avatar--xbert svg {
+    width: 14px;
+    height: auto;
+}
+
+.how-hero-thread-avatar--photo {
+    margin-left: -12px;
+    object-fit: cover;
+}
+
+.how-hero-thread-identity {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.how-hero-thread-name {
+    color: var(--text-primary);
+}
+
+.how-hero-thread-channel {
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background-color: rgba(125, 169, 214, 0.12); /* tinted accent */
+    border: 1px solid rgba(125, 169, 214, 0.32);
+    color: var(--accent-blue);
+    font-size: 9px;
+}
+
+.how-hero-thread-time {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--text-tertiary);
+}
+
+.how-hero-thread-quote {
+    margin: 0 0 6px;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.how-hero-thread-reply {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+/* Connector — the visual hinge between conversation and work.
+   Two thin dashed rules with a small mono caption between them. */
+.how-hero-connector {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 2px 4px;
+}
+
+.how-hero-connector-line {
+    flex: 1;
+    height: 1px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.how-hero-connector-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+/* Action trace — the *effect*. Three monospace rows that tick
+   in one after another via per-row --trace-delay. Each row
+   slides up a few px and fades from 0 -> 1; the green check
+   confirms the action landed. */
+.how-hero-trace {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.how-hero-trace-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    background-color: rgba(11, 20, 40, 0.6); /* --bg-primary @ 60% */
     font-family: var(--font-mono);
     font-size: 12px;
+    line-height: 1.2;
+    color: var(--text-secondary);
+    opacity: 0;
+    transform: translateY(6px);
+    animation: how-hero-trace-in 700ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--trace-delay, 0s);
+}
+
+.how-hero-trace-arrow {
+    color: var(--accent-blue);
     font-weight: 700;
-    letter-spacing: 0.14em;
-    text-align: center;
-    text-transform: uppercase;
-    padding: var(--space-xl);
+}
+
+.how-hero-trace-call {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-primary);
+}
+
+.how-hero-trace-call strong {
+    color: var(--accent-blue);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.how-hero-trace-status {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    background-color: rgba(125, 169, 214, 0.14);
+    color: var(--accent-blue);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.how-hero-trace-status i {
+    font-size: 14px;
+    line-height: 1;
+}
+
+@keyframes how-hero-trace-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer chips — the systems touched. Solid light fill against
+   the raised surface, matching .hero-toast-tag from the homepage. */
+.how-hero-stage-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-light);
+}
+
+.how-hero-stage-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.how-hero-stage-tag i {
+    font-size: 14px;
+    line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .how-hero-trace-row {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .how-step-card,
@@ -668,6 +931,13 @@
     grid-column: span 3;
     min-height: 280px;
     padding: var(--space-xl);
+}
+
+/* The trust grid only has 3 cards, not 4 — override to span 4 so the
+   row distributes evenly across the full 12-col container instead of
+   leaving the right ~25% empty. */
+.how-trust-card {
+    grid-column: span 4;
 }
 
 .how-flow-card i,
@@ -1461,7 +1731,7 @@
 
 @media (max-width: 1023px) {
     .how-hero-copy,
-    .how-hero-placeholder,
+    .how-hero-stage,
     .how-work-module-copy,
     .how-story-stack,
     .how-section-header-copy,

@@ -367,8 +367,31 @@
     padding: clamp(32px, 5vw, 64px) 0;
 }
 
+/* The element is `<div class="grid-12 ind-proof-grid cs-grid">`. We
+   intentionally override both the inherited 12-track grid and the
+   ind-proof-grid's own template so customer-stories cards lay out as a
+   simple 3-up grid on desktop (matches the asymmetric featured cards
+   above), 2-up on tablet, 1-up on mobile. Each card sits in one cell,
+   so we also reset the inherited `grid-column: span 4` to `auto`. */
 .page-customer-stories .cs-grid {
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xl);
+}
+
+.page-customer-stories .cs-grid .ind-proof-card {
+    grid-column: auto;
+}
+
+@media (max-width: 1023px) {
+    .page-customer-stories .cs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 639px) {
+    .page-customer-stories .cs-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 

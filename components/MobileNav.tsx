@@ -22,6 +22,7 @@ export default function MobileNav() {
               <a href="/how-xbert-works">How XBert works</a>
               <a href="/integrations">Integrations</a>
               <a href="/security">Security &amp; Trust</a>
+              <a href="/platform">The Platform</a>
             </div>
           </div>
           <div className="mobile-nav-dropdown">
@@ -43,6 +44,7 @@ export default function MobileNav() {
               Resources <span className="mobile-carat" />
             </a>
             <div className="mobile-dropdown-items">
+              <a href="/our-customers">Our Customers</a>
               <a href="/customer-stories">Customer Stories</a>
               <a href="/about">About Nextiva</a>
               <a href="/leadership">Leadership</a>

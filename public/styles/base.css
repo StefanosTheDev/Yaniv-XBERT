@@ -103,7 +103,55 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /* Variable-font tuning.
+       font-optical-sizing:auto lets Fraunces switch to its display optical
+       size on big headings (warmer, higher contrast strokes) and back to
+       a text optical size for small copy. SOFT softens stroke endings —
+       a touch only, so it still reads editorial, not bubbly. */
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 35;
+
+    /* Position context for the grain overlay below. */
+    position: relative;
 }
+
+/* ------------------------------------------------
+   Background grain overlay
+   A barely-there fractal-noise SVG fixed over the
+   midnight-blue bg, gently drifting. Adds organic
+   texture so the dark theme doesn't read flat / sterile.
+   pointer-events: none so it never intercepts clicks.
+   Disabled when prefers-reduced-motion is set.
+   ------------------------------------------------ */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 240px 240px;
+    animation: grain-drift 16s steps(8) infinite;
+}
+
+@keyframes grain-drift {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(-3%, 2%); }
+    50%  { transform: translate(2%, -2%); }
+    75%  { transform: translate(-2%, -3%); }
+    100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
+}
+
+/* Real page content sits above the grain overlay. */
+body > * { position: relative; z-index: 1; }
 
 
 /* ------------------------------------------------
@@ -137,6 +185,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: var(--heading-weight);
     line-height: var(--heading-line-height);
     letter-spacing: var(--heading-letter-spacing);
+    /* Extra word gap on every heading so multi-word titles aren't
+       crowded — applies to display-sized hero headlines too via
+       --display-word-spacing override on the hero rule itself. */
+    word-spacing: var(--heading-word-spacing);
     color: var(--text-primary);
 }
 
@@ -198,8 +250,24 @@ strong, b {
    Utility Classes
    ------------------------------------------------ */
 
-/* Brand accent color for inline text highlights */
-.text-accent { color: var(--accent-blue); }
+/* Brand accent color for inline text highlights.
+   Soft moonlight glow tightens the brand voice — used on .text-accent
+   anywhere it appears and on the typewriter hero accent. */
+.text-accent {
+    color: var(--accent-blue);
+    text-shadow: var(--accent-glow);
+}
+
+/* Editorial italic emphasis — only on serif headings, so body copy
+   <em> isn't disturbed. Fraunces italic adds personality without
+   pulling weight from the surrounding upright text. */
+h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
+.editorial-em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: inherit;
+    font-variation-settings: "SOFT" 60;
+}
 
 /* Line break visible only on mobile */
 .mobile-br { display: none; }

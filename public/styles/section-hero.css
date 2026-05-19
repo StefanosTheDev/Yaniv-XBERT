@@ -15,8 +15,11 @@
 
 .section-hero {
     position: relative;
-    padding-top: 100px;
-    padding-bottom: var(--space-section);
+    /* Tightened from 100px / --space-section so the proof cards below
+       peek into the first viewport — gives users a "there's more here"
+       cue without scrolling. */
+    padding-top: clamp(48px, 6vw, 76px);
+    padding-bottom: clamp(48px, 6vw, 80px);
     overflow: hidden;
     background-color: var(--bg-primary);
 }
@@ -104,7 +107,12 @@
     align-items: start;
 }
 
-.hero-grid::after {
+/* Dark radial vignette behind the toast feed.
+   Scoped via :has() so it only renders when the legacy toast stack is
+   present (/home-old). The new homepage has a clean monogram lockup
+   that needs no backdrop — adding one made the area read as a "hot
+   spot" of darkness against the moonlight-blue background. */
+.hero-grid:has(.hero-toast-stack)::after {
     content: '';
     grid-column: 8 / 13;
     grid-row: 2;
@@ -146,9 +154,15 @@
     color: var(--text-tertiary);
 }
 
+/* Centered top status pill — "Backed by Nextiva | 4.6 ★ | 27,128+
+   business reviews" reads as one balanced banner above the headline
+   instead of being shoved against the left edge. */
 .hero-status--left {
-    grid-column: 1 / 7;
+    grid-column: 1 / -1;
     grid-row: 1;
+    justify-self: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .hero-status--right {
@@ -237,21 +251,36 @@
    ------------------------------------------------ */
 
 .hero-title {
-    grid-column: 1 / 8;
+    grid-column: 1 / -1;
     grid-row: 2;
-    margin: 0;
+    margin: 0 auto;
     font-family: var(--font-serif);
     font-weight: 700;
     font-size: clamp(54px, 8vw, 104px);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
+    line-height: var(--display-line-height);
+    /* Use the display-mode tokens so the hero breathes with every
+       other page-top headline on the site. Word-spacing widens the
+       gap between words specifically — Fraunces is naturally close-set
+       at display sizes, this pushes it back to comfortable reading. */
+    letter-spacing: var(--display-letter-spacing);
+    word-spacing: var(--display-word-spacing);
     color: var(--text-primary);
-    max-width: none;
+    /* Centered hero — title takes the full grid width, but caps at a
+       readable measure so long lines don't run edge-to-edge. 24ch
+       fits "AI employee that does" on one line at every breakpoint. */
+    max-width: 24ch;
+    text-align: center;
 }
 
 .hero-title-accent {
     display: inline;
     color: var(--accent-blue);
+    /* Editorial italic on the cycling word — the only italic in the hero.
+       Heavier SOFT axis here, so the italic Fraunces strokes feel
+       hand-cut rather than mechanical. */
+    font-style: italic;
+    font-variation-settings: "SOFT" 65;
+    text-shadow: var(--accent-glow);
 }
 
 .hero-title-cursor {
@@ -260,7 +289,8 @@
     height: 0.7em;
     margin-left: 0.08em;
     vertical-align: baseline;
-    background-color: var(--text-primary);
+    background-color: var(--accent-blue);
+    box-shadow: var(--accent-glow);
     animation: hero-title-cursor-blink 1s step-end infinite;
 }
 
@@ -326,6 +356,8 @@
             rgba(0, 0, 0, 0) 100%
         );
 }
+
+
 
 .hero-toast {
     position: absolute;
@@ -443,7 +475,7 @@
 
 .hero-toast.feed-pos-4 {
     transform: translateY(calc(var(--toast-slot) * 4));
-    background-color: #000;
+    background-color: var(--bg-primary);
     opacity: 0;
     z-index: 1;
 }
@@ -616,14 +648,17 @@
    ------------------------------------------------ */
 
 .hero-description {
-    grid-column: 1 / 5;
+    /* Wider column so the body text breaks across ~3 lines instead of
+       6 narrow ones — better rhythm against the centered headline above. */
+    grid-column: 1 / 8;
     grid-row: 3;
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
     color: var(--text-secondary);
     position: relative;
-    padding-right: var(--space-lg);
+    padding-right: var(--space-xl);
+    margin-top: var(--space-2xl);
 }
 
 /* Vertical divider line between the description column and the CTA group.
@@ -635,7 +670,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    right: calc((var(--grid-gap) * -0.5) - var(--space-lg));
+    right: calc((var(--grid-gap) * -0.5) - var(--space-xl));
     width: 1px;
     background-color: #252525; /* TODO: tokenize — column divider */
 }
@@ -683,13 +718,16 @@
 }
 
 .hero-cta-group {
-    grid-column: 5 / 13;
+    /* Pinned to the right side and bottom-aligned with the description
+       block — the buttons now sit on the same baseline as the last line
+       of the body copy on the left. */
+    grid-column: 8 / 13;
     grid-row: 3;
-    justify-self: start;
+    justify-self: end;
+    align-self: end;
     display: flex;
     align-items: center;
-    gap: var(--space-md);
-    align-self: end;
+    gap: var(--space-lg);
     position: relative;
     padding-inline: var(--space-lg);
 }
@@ -835,7 +873,7 @@
         grid-template-rows: auto auto auto auto;
     }
 
-    .hero-grid::after {
+    .hero-grid:has(.hero-toast-stack)::after {
         grid-column: 1 / -1;
         grid-row: 3;
         align-self: start;
@@ -858,6 +896,8 @@
         align-self: start;
     }
 
+    /* Title is centered above; description and CTAs return to the
+       original "left + right on one line" layout below. */
     .hero-description { grid-column: 1 / 4; grid-row: 4; }
     .hero-cta-group   { grid-column: 4 / 7; grid-row: 4; justify-self: end; align-self: center; }
     .hero-placard     { grid-column: 1 / -1; grid-row: 5; justify-self: start; max-width: 340px; }

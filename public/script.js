@@ -392,10 +392,20 @@ window.scrollTo(0, 0);
             let idx = words.indexOf(initial);
             if (idx === -1) idx = 0;
 
+            // Optional dwell override for the last phrase in the cycle —
+            // lets a marketing headline land on its closing line for a
+            // beat before the loop restarts. Falls back to the standard
+            // hold if the attribute is missing or unparseable.
+            const finalHoldRaw = parseInt(el.dataset.typewriterFinalHoldMs, 10);
+            const finalHoldMs = Number.isFinite(finalHoldRaw) && finalHoldRaw > 0
+                ? finalHoldRaw
+                : TYPER_HOLD_FULL_MS;
+
             const runLoop = async () => {
                 while (true) {
                     await waitForHeroVisible();
-                    await sleep(TYPER_HOLD_FULL_MS);
+                    const isLastWord = idx === words.length - 1;
+                    await sleep(isLastWord ? finalHoldMs : TYPER_HOLD_FULL_MS);
 
                     if (cursor) cursor.classList.add('is-typing');
                     // Kick off the stack rotation alongside the H1 backspace.

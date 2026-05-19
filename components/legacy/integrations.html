@@ -12,9 +12,75 @@
                         </div>
                     </div>
 
-                    <div class="integrations-hero-placeholder" aria-label="Product illustration placeholder">
-                        <span>Illustration / product moment</span>
-                    </div>
+                    <!--
+                        Hero "product moment" — XBERT.SYNC.
+                        Mirrors the toolbar + console pattern used on
+                        /how-xbert-works, /ai-employee, /agent-assist,
+                        /ai-receptionist so all product pages read as one
+                        product family. Anatomy:
+                          1) toolbar with the same XBERT.* badge pattern
+                          2) live "context loaded" caller pill
+                          3) four pipeline rows that stream in sequentially —
+                             reads from Salesforce, Google Calendar, QuickBooks
+                             and a write to Slack — each with a real logo,
+                             call signature, and Read/Sent latency pill
+                          4) footer chips that name the underlying promise
+                        Intentionally avoids reusing the integration-tile grid
+                        from the section directly below, so the hero shows the
+                        flow of one conversation across the stack while the
+                        section below shows the catalog of supported systems.
+                    -->
+                    <aside class="integrations-hero-stage" aria-label="Live example: one customer call reaching across your connected systems">
+                        <div class="integrations-hero-stage-toolbar">
+                            <span class="integrations-hero-stage-toolbar-left">XBERT.SYNC &middot; LIVE</span>
+                            <span class="integrations-hero-stage-toolbar-right" data-spinner="flow">⡀⠀⠀⠀ STREAMING</span>
+                        </div>
+
+                        <div class="integrations-hero-context">
+                            <span class="integrations-hero-context-avatar" aria-hidden="true">
+                                <svg viewBox="0 0 18.89 27.41"><use href="#xbert-icon"/></svg>
+                            </span>
+                            <div class="integrations-hero-context-body">
+                                <span class="integrations-hero-context-name">Caller &middot; Maria L.</span>
+                                <span class="integrations-hero-context-meta">Voice &middot; 0:42 &middot; existing customer</span>
+                            </div>
+                            <span class="integrations-hero-context-status">CONTEXT LOADED</span>
+                        </div>
+
+                        <div class="integrations-hero-stage-label">
+                            <span class="integrations-hero-stage-label-line"></span>
+                            <span class="integrations-hero-stage-label-text">Pulling current state across your stack</span>
+                            <span class="integrations-hero-stage-label-line"></span>
+                        </div>
+
+                        <ul class="integrations-hero-pipeline" aria-label="Live operations XBert is running on connected systems">
+                            <li class="integrations-hero-pipe-row" style="--pipe-delay: 0s;">
+                                <img class="integrations-hero-pipe-logo" src="/assets/logos/integrations/salesforce.png" alt="" aria-hidden="true">
+                                <span class="integrations-hero-pipe-call"><strong>salesforce</strong>.contact.lookup</span>
+                                <span class="integrations-hero-pipe-state integrations-hero-pipe-state--read"><i class="ri-arrow-down-line" aria-hidden="true"></i>Read · 0.3s</span>
+                            </li>
+                            <li class="integrations-hero-pipe-row" style="--pipe-delay: 0.4s;">
+                                <img class="integrations-hero-pipe-logo" src="/assets/logos/integrations/google-calendar.png" alt="" aria-hidden="true">
+                                <span class="integrations-hero-pipe-call"><strong>gcal</strong>.availability.check</span>
+                                <span class="integrations-hero-pipe-state integrations-hero-pipe-state--read"><i class="ri-arrow-down-line" aria-hidden="true"></i>Read · 0.5s</span>
+                            </li>
+                            <li class="integrations-hero-pipe-row" style="--pipe-delay: 0.8s;">
+                                <img class="integrations-hero-pipe-logo" src="/assets/logos/integrations/quickbooks.png" alt="" aria-hidden="true">
+                                <span class="integrations-hero-pipe-call"><strong>quickbooks</strong>.invoice.lookup</span>
+                                <span class="integrations-hero-pipe-state integrations-hero-pipe-state--read"><i class="ri-arrow-down-line" aria-hidden="true"></i>Read · 0.6s</span>
+                            </li>
+                            <li class="integrations-hero-pipe-row" style="--pipe-delay: 1.2s;">
+                                <img class="integrations-hero-pipe-logo" src="/assets/logos/integrations/slack.png" alt="" aria-hidden="true">
+                                <span class="integrations-hero-pipe-call"><strong>slack</strong>.notify(#sales)</span>
+                                <span class="integrations-hero-pipe-state integrations-hero-pipe-state--write"><i class="ri-arrow-up-line" aria-hidden="true"></i>Sent · 0.8s</span>
+                            </li>
+                        </ul>
+
+                        <div class="integrations-hero-stage-footer">
+                            <span class="integrations-hero-foot-chip"><i class="ri-shuffle-line" aria-hidden="true"></i>Cross-stack context</span>
+                            <span class="integrations-hero-foot-chip"><i class="ri-time-line" aria-hidden="true"></i>One conversation</span>
+                        </div>
+                    </aside>
                 </div>
             </div>
         </section>

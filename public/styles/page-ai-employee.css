@@ -368,8 +368,12 @@
 .page-ai-employee .aie-day-event {
     position: absolute;
     top: 50%;
+    /* Anchor each chip to the LEFT of its --day-x time marker (no x-translate
+       to center). This lets the timestamp sit right at the time it represents
+       and the chip text flows to the right rather than colliding with neighbors
+       on both sides. */
     left: calc(80px + var(--day-x));
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     background-color: var(--bg-surface-raised);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
@@ -378,17 +382,23 @@
     line-height: 1.35;
     color: var(--text-secondary);
     white-space: nowrap;
-    max-width: 240px;
+    /* Responsive max-width — narrower than the old fixed 240px so events
+       on the same row don't trample each other at typical desktop widths. */
+    max-width: clamp(140px, 14vw, 200px);
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+    transition: transform 0.25s ease, max-width 0.25s ease,
+                border-color 0.25s ease, background-color 0.25s ease;
 }
 
 .page-ai-employee .aie-day-event:hover {
-    transform: translate(-50%, calc(-50% - 3px));
+    transform: translateY(calc(-50% - 3px));
     background-color: var(--bg-muted);
     border-color: var(--accent-blue);
-    z-index: 2;
+    /* Expand the chip on hover so the full event description is readable
+       without forcing every chip wide enough to fit its longest sentence. */
+    max-width: 320px;
+    z-index: 3;
 }
 
 .page-ai-employee .aie-day-event strong {
@@ -444,9 +454,10 @@
     }
 }
 
-@media (max-width: 767px) {
-    /* On mobile the timeline is unreadable in track form — convert to a
-       vertical list grouped by channel. */
+/* The horizontal timeline only fits cleanly on truly wide viewports.
+   Below that, switch to a vertical list grouped by channel — every event
+   stays fully readable on its own row, no overlap, no truncation. */
+@media (max-width: 1199px) {
     .page-ai-employee .aie-day-axis {
         display: none;
     }
@@ -481,6 +492,7 @@
 
     .page-ai-employee .aie-day-event:hover {
         transform: none;
+        max-width: none;
     }
 }
 
@@ -498,6 +510,39 @@
 .page-ai-employee .aie-pillar {
     align-items: center;
     gap: clamp(32px, 5vw, 80px);
+    padding: clamp(32px, 4vw, 64px);
+}
+
+/* Distribute the pillar across the 12-col grid: copy on the left half,
+   visual on the right half. Without these rules the children fall back
+   to grid auto-placement (1 col each) and the entire pillar collapses
+   into the leftmost sliver of the article. */
+.page-ai-employee .aie-pillar-copy,
+.page-ai-employee .aie-pillar-visual {
+    grid-column: span 6;
+}
+
+/* Reverse variant — visual on the left, copy on the right. Both items
+   share row 1 so the article stays a single row at desktop. */
+.page-ai-employee .fabric-variation-feature--reverse .aie-pillar-visual {
+    grid-column: 1 / 7;
+    grid-row: 1;
+}
+
+.page-ai-employee .fabric-variation-feature--reverse .aie-pillar-copy {
+    grid-column: 7 / 13;
+    grid-row: 1;
+}
+
+/* Tablet and below — stack copy above visual, full bleed in either order. */
+@media (max-width: 1023px) {
+    .page-ai-employee .aie-pillar-copy,
+    .page-ai-employee .aie-pillar-visual,
+    .page-ai-employee .fabric-variation-feature--reverse .aie-pillar-copy,
+    .page-ai-employee .fabric-variation-feature--reverse .aie-pillar-visual {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
 }
 
 .page-ai-employee .aie-pillar-copy {

@@ -110,24 +110,222 @@
     margin-top: var(--space-xl);
 }
 
-.security-hero-placeholder {
+/* ------------------------------------------------
+   Hero "product moment" — XBERT.GUARD
+   A live "four gates" console that shows what runs
+   before any XBert answer leaves the building. Reuses
+   the toolbar + raised-card vocabulary from
+   /how-xbert-works and /integrations so the four
+   product pages read as one product family. The
+   payoff (green checks across all four gates) calls
+   forward to the cert chips at the bottom of the
+   card and the proof strip directly below.
+   ------------------------------------------------ */
+
+.security-hero-stage {
     grid-column: 8 / -1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     min-height: 440px;
-    padding: var(--space-xl);
+    padding: 18px;
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    background-color: #1E1E1D; /* TODO: tokenize */
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-surface);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.security-hero-stage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--text-tertiary);
+}
+
+.security-hero-stage-toolbar-right {
+    color: var(--accent-blue);
+    white-space: pre;
+}
+
+.security-hero-stage-lede {
+    margin: 0;
+    color: var(--text-primary);
     font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.14em;
-    text-align: center;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+}
+
+/* Gate stack — four rows that activate sequentially via --gate-delay. */
+.security-hero-gates {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.security-hero-gate {
+    --gate-active-color: var(--accent-blue);
+
+    position: relative;
+    display: grid;
+    grid-template-columns: 28px 1fr 56px 18px;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    background-color: rgba(11, 20, 40, 0.6);
+    opacity: 0.45;
+    transition: opacity 280ms ease;
+    animation: security-hero-gate-activate 700ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--gate-delay, 0s);
+}
+
+.security-hero-gate-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: rgba(125, 169, 214, 0.12);
+    color: var(--accent-blue);
+}
+
+.security-hero-gate-icon i {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.security-hero-gate-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.security-hero-gate-name {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.security-hero-gate-meta {
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Progress bar — fills as the gate runs, then sits at 100%. The fill
+   is driven by its own keyframe so it can begin slightly after the
+   row activates and finish just before the check appears. */
+.security-hero-gate-bar {
+    position: relative;
+    width: 56px;
+    height: 4px;
+    border-radius: var(--radius-sm);
+    background-color: rgba(125, 169, 214, 0.12);
+    overflow: hidden;
+}
+
+.security-hero-gate-bar-fill {
+    position: absolute;
+    inset: 0 100% 0 0;
+    background-color: var(--accent-blue);
+    animation: security-hero-gate-bar 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: calc(var(--gate-delay, 0s) + 80ms);
+}
+
+.security-hero-gate-check {
+    font-size: 18px;
+    line-height: 1;
+    color: var(--accent-blue);
+    opacity: 0;
+    transform: scale(0.6);
+    animation: security-hero-gate-check-pop 280ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--gate-delay, 0s) + 600ms);
+}
+
+@keyframes security-hero-gate-activate {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes security-hero-gate-bar {
+    to {
+        inset: 0 0 0 0;
+    }
+}
+
+@keyframes security-hero-gate-check-pop {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Cert chips — explicit callbacks to the proof strip below the hero. */
+.security-hero-stage-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-light);
+}
+
+.security-hero-cert-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.security-hero-cert-chip i {
+    font-size: 13px;
+    line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .security-hero-gate {
+        opacity: 1;
+        animation: none;
+    }
+    .security-hero-gate-bar-fill {
+        inset: 0 0 0 0;
+        animation: none;
+    }
+    .security-hero-gate-check {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
 }
 
 /* ------------------------------------------------
@@ -667,7 +865,7 @@
 
 @media (max-width: 1024px) {
     .security-hero-copy,
-    .security-hero-placeholder,
+    .security-hero-stage,
     .security-section-header-copy,
     .security-section-deck,
     .security-responsibility-card,
@@ -699,7 +897,7 @@
         grid-column: auto;
     }
 
-    .security-hero-placeholder {
+    .security-hero-stage {
         min-height: 460px;
         margin-top: var(--space-2xl);
     }
@@ -767,8 +965,16 @@
         font-size: var(--text-body-lg);
     }
 
-    .security-hero-placeholder {
+    .security-hero-stage {
         min-height: 360px;
+    }
+
+    .security-hero-gate {
+        grid-template-columns: 26px 1fr 44px 16px;
+    }
+
+    .security-hero-gate-meta {
+        font-size: 9px;
     }
 
     .security-proof-card,
