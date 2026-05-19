@@ -983,16 +983,11 @@ a.oc-portrait-card-link:hover {
     transition: opacity 0.35s ease;
 }
 
-/* Hover: drop the filters and overlays so the portrait blooms to
-   full color, same affordance as the swarm photos on the live page. */
+/* Hover: keep the cinematic B&W + blue tint + dot overlays in place; only
+   apply a subtle scale so the card still has interactive feedback without
+   switching to full color. */
 .page-our-customers-preview .section-oc-portraits .oc-portrait-card-link:hover .oc-portrait img {
-    filter: grayscale(0) brightness(1) contrast(1);
     transform: scale(1.03);
-}
-
-.page-our-customers-preview .section-oc-portraits .oc-portrait-card-link:hover .oc-portrait::before,
-.page-our-customers-preview .section-oc-portraits .oc-portrait-card-link:hover .oc-portrait::after {
-    opacity: 0;
 }
 
 
