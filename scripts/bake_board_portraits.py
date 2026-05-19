@@ -123,22 +123,34 @@ def head_focused_crop_box(
     bbox_w = max(1, right - left)
     bbox_cx = (left + right) // 2
 
-    # Sample mask width at ~28% from the top of the bbox — that's near the
-    # eye line for a typical portrait, well above the shoulder transition.
-    sample_y = min(h - 1, top + int(bbox_h * 0.28))
-    head_width = int(mask[sample_y].sum())
+    # Estimate the head width by sampling mask widths at several positions
+    # in the very top of the bbox (top 5-18%). For both head-shots (where
+    # the head fills the bbox tightly) and full-body shots (where the
+    # head sits at the very top of a much taller bbox), this range
+    # consistently lands on the head/face rather than on shoulders or
+    # torso below. Taking the max of the samples recovers the widest
+    # point of the head (cheekbone / forehead) for either layout.
+    sample_widths: list[int] = []
+    for frac in (0.05, 0.08, 0.11, 0.14, 0.18):
+        sy = min(h - 1, top + int(bbox_h * frac))
+        sw = int(mask[sy].sum())
+        if sw > 10:
+            sample_widths.append(sw)
+    if sample_widths:
+        head_width = max(sample_widths)
+    else:
+        head_width = bbox_w // 2
     if head_width < 30:
         head_width = bbox_w // 2  # fallback heuristic
 
     # Crop square ≈ 2.5x head width gives head ~40% of frame width with
     # full shoulders and clear headroom — matches the framing of
     # /leaders/tomas-gorny.png, /leaders/marco-burgarello.png, and
-    # /swarm/swarm-04.png.
+    # /swarm/swarm-04.png. We keep a modest floor of 50% of the source's
+    # smaller dimension so that small full-body sources still get a
+    # head-focused crop instead of being forced to include the torso.
     crop_size = int(head_width * 2.5)
-    # Don't go smaller than 70% of the source's smaller dimension — keeps the
-    # crop wide even when the source is already a tight head-shot, so the
-    # subject doesn't dominate the frame.
-    crop_size = max(crop_size, int(min(w, h) * 0.70))
+    crop_size = max(crop_size, int(min(w, h) * 0.50))
     crop_size = max(crop_size, 64)
     crop_size = min(crop_size, w, h)
 
@@ -527,17 +539,29 @@ def process_one(path: Path, out_path: Path) -> None:
     print(f"  -> wrote {out_path.relative_to(ROOT)} ({out_path.stat().st_size // 1024} KB)")
 
 
-def main() -> None:
-    if not SRC_DIR.exists():
-        raise SystemExit(f"missing source dir: {SRC_DIR}")
-    files = sorted(p for p in SRC_DIR.glob("*.png"))
+def bake_directory(src_dir: Path, out_dir: Path, label: str = "portraits") -> None:
+    """Bake every image in ``src_dir`` into the output directory using the
+    same swarm-style editorial treatment. Used by both this script (board
+    portraits) and ``bake_industry_portraits.py`` (customer industry
+    portraits)."""
+    if not src_dir.exists():
+        raise SystemExit(f"missing source dir: {src_dir}")
+    patterns = ("*.png", "*.jpg", "*.jpeg", "*.webp")
+    files: list[Path] = []
+    for pat in patterns:
+        files.extend(src_dir.glob(pat))
+    files = sorted(files)
     if not files:
-        raise SystemExit(f"no PNGs in {SRC_DIR}")
-    print(f"Re-baking {len(files)} board portraits from {SRC_DIR}")
+        raise SystemExit(f"no images in {src_dir}")
+    print(f"Re-baking {len(files)} {label} from {src_dir}")
     for p in files:
-        out = OUT_DIR / p.name
+        out = out_dir / (p.stem + ".png")
         process_one(p, out)
     print("Done.")
+
+
+def main() -> None:
+    bake_directory(SRC_DIR, OUT_DIR, label="board portraits")
 
 
 if __name__ == "__main__":
