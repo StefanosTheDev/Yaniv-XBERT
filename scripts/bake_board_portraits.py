@@ -192,9 +192,16 @@ def _get_rembg_session():
     return _REMBG_SESSION, _REMBG_REMOVE
 
 
-def rembg_alpha(img: Image.Image) -> Image.Image:
-    """Run rembg on the source portrait and return the resulting alpha channel
-    as a single-channel L image (255 = subject, 0 = background)."""
+def rembg_alpha(img: Image.Image, *, extra_erode: int = 0) -> Image.Image:
+    """Run rembg on the source portrait and return the resulting alpha
+    channel as a single-channel L image (255 = subject, 0 = background).
+
+    ``extra_erode`` applies additional MinFilter passes before the final
+    Gaussian blur. Useful for noisy sources (small selfies, head
+    silhouettes against bright walls) where rembg leaves a halo of bg
+    pixels just inside the subject mask — those pixels then read as a
+    glow / discoloured patch after the contrast curve runs.
+    """
     session, remove = _get_rembg_session()
     buf = io.BytesIO()
     img.save(buf, format="PNG")
@@ -203,6 +210,8 @@ def rembg_alpha(img: Image.Image) -> Image.Image:
     alpha = cutout.split()[3]
     # Soft erode + blur for clean fringe.
     alpha = alpha.filter(ImageFilter.MinFilter(3))
+    for _ in range(max(0, extra_erode)):
+        alpha = alpha.filter(ImageFilter.MinFilter(3))
     alpha = alpha.filter(ImageFilter.GaussianBlur(radius=1.2))
     return alpha
 
@@ -217,6 +226,7 @@ def to_swarm_bw(
     highlight_curve: float = 1.55,
     pre_lift: float = 0.0,
     highlight_lift: float = 0.0,
+    highlight_lift_threshold: float = 0.65,
 ) -> Image.Image:
     """B&W portrait matching the /swarm/* and /leaders/* studio look: jet-black
     clothing/shadows that blend into the background, deep skin midtones with
@@ -270,14 +280,20 @@ def to_swarm_bw(
     #    matches the editorial feel of the reference photos.
     arr = arr * brightness
 
-    # 5. Optional highlight lift — pushes the brightest tones (anything
-    #    above ~0.7 luminance) up toward pure white. Used for the
-    #    customer industry portraits where source white shirts appear
-    #    grey/dirty after the curve, which makes the subject look
-    #    discoloured against the deep-black studio bg.
+    # 5. Optional highlight lift — pushes tones above
+    #    ``highlight_lift_threshold`` up toward pure white via a
+    #    smoothstep ramp. Used by the customer industry baker so that
+    #    source white shirts (especially insurance, whose source has
+    #    visible fold/wrinkle shadows) stay clean against the deep-
+    #    black studio bg instead of reading as a discoloured grey
+    #    patch. Lower thresholds reach further into midtones to
+    #    flatten shirt wrinkles; higher thresholds touch only the
+    #    brightest highlights.
     if highlight_lift > 0.0:
-        t_h = np.clip((arr - 0.65) / 0.35, 0.0, 1.0)
-        t_h = t_h * t_h * (3.0 - 2.0 * t_h)  # smoothstep
+        thr = highlight_lift_threshold
+        span = max(1e-3, 1.0 - thr)
+        t_h = np.clip((arr - thr) / span, 0.0, 1.0)
+        t_h = t_h * t_h * (3.0 - 2.0 * t_h)
         arr = arr + highlight_lift * t_h * (1.0 - arr)
 
     arr = np.clip(arr, 0, 1)
@@ -518,7 +534,9 @@ def process_one(
     bw_highlight_curve: float = 1.55,
     bw_pre_lift: float = 0.0,
     bw_highlight_lift: float = 0.0,
+    bw_highlight_lift_threshold: float = 0.65,
     min_source_size: int = 0,
+    mask_extra_erode: int = 0,
     overlay_scale: float = 1.0,
     film_grain_amount: float = 3.0,
 ) -> None:
@@ -535,11 +553,11 @@ def process_one(
     # rembg mask on the full-resolution source for the cleanest cutout.
     src = Image.open(path).convert("RGB")
 
-    # If the source is small (some customer industry sources are only
-    # 158-225px on the smaller dimension), upscale it before any
-    # processing so the final 512x512 frame doesn't have to magnify
-    # 3-5x at the very end and produce a visibly pixelated face.
-    # LANCZOS gives the smoothest upscale for portrait detail.
+    # Pre-upscale very small sources (some customer industry sources
+    # are only ~180px on the smaller dimension) so the final 512x512
+    # frame doesn't have to magnify ~3x at the very end and produce a
+    # visibly pixelated face. LANCZOS is the smoothest upscale for
+    # portrait detail.
     if min_source_size > 0:
         sw, sh = src.size
         smin = min(sw, sh)
@@ -548,7 +566,7 @@ def process_one(
             new_size = (int(round(sw * scale)), int(round(sh * scale)))
             src = src.resize(new_size, Image.LANCZOS)
 
-    full_alpha = rembg_alpha(src)
+    full_alpha = rembg_alpha(src, extra_erode=mask_extra_erode)
 
     # The board source photos vary wildly: some arrive as tight head-shots
     # (~330x360, head fills the frame) while others are wide torso-and-up
@@ -621,6 +639,7 @@ def process_one(
         highlight_curve=bw_highlight_curve,
         pre_lift=bw_pre_lift,
         highlight_lift=bw_highlight_lift,
+        highlight_lift_threshold=bw_highlight_lift_threshold,
     )
 
     # Editorial canvas: black with very faint code + constellation.
