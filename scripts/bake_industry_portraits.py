@@ -93,40 +93,42 @@ PER_IMAGE: dict[str, dict] = {
         "_post_unsharp": True,
     },
     "industry-insurance.png": {
-        # Source is a small selfie with the head sitting in the
-        # upper-left of the frame, shoulders/torso filling the rest,
-        # AND heavily side-lit — left half of the white shirt is
-        # bright, right half is in deep shadow. Without
-        # compensation, the post-bake shirt reads as half-white /
-        # half-dark which looks unintentional.
+        # Source is a small selfie shot at an angle, with heavy
+        # directional lighting (left half of the white shirt bright,
+        # right half in deep shadow) and the head visibly tilted.
         #
-        # Tight-head-crop with extra_below_factor pulls the head
-        # into the upper-third. Stronger shadow lift + extra
-        # brightness evens out the shirt so it reads as one tone.
-        # `_post_unsharp` restores micro-detail in the face.
+        # Pre-rotate by 12° counter-clockwise to level the head, then
+        # tight-head-crop pulls it into the upper-third. Aggressive
+        # shadow lift + raised shadow floor pulls the dark right
+        # side of the shirt up to match the bright left side so
+        # both halves read as plain white. `_post_unsharp` restores
+        # micro-detail in the face.
+        "_pre_rotate_deg": 12.0,
         "_pre_crop_tight_head": True,
         "_extra_below_factor": 0.5,
         "_post_unsharp": True,
-        "bw_pre_lift": 0.30,
-        "bw_shadow_floor": 0.12,
-        "bw_brightness": 0.98,
+        "bw_pre_lift": 0.45,
+        "bw_shadow_floor": 0.22,
+        "bw_brightness": 1.00,
     },
     "industry-hospitality.png": {
         # Source is heavily side-lit — left half of face in deep
-        # shadow. Stronger triangular shadow-lift opens the dim half
-        # without blowing out the lit side. UnsharpMask restores
-        # micro-detail (eyes, mouth, hair).
+        # shadow. Stronger triangular shadow-lift opens the dim half;
+        # bw_brightness pushed to 1.04 (above board default) to
+        # lighten the still-faded face the user flagged.
         #
-        # Bottom dissolve restored to board-style strength (0.55) so
-        # the t-shirt fades smoothly into the black bg instead of
-        # ending at a visible hard edge — matches the dissolve
-        # quality on /leadership.
+        # Bottom dissolve at board strength (0.85) — the previous
+        # 0.55 was leaving the silhouette half-faded at the bottom
+        # which read as a visible black stripe. Board-strength
+        # dissolve makes the t-shirt completely dissolve into the
+        # bg before the frame edge, removing the stripe entirely.
+        # UnsharpMask restores eye/mouth/hair micro-detail.
         "_post_unsharp": True,
-        "bw_pre_lift": 0.32,
+        "bw_pre_lift": 0.34,
         "bw_shadow_floor": 0.10,
-        "bw_brightness": 0.98,
-        "bottom_dissolve_strength": 0.55,
-        "bottom_dissolve_start": 0.72,
+        "bw_brightness": 1.04,
+        "bottom_dissolve_strength": 0.85,
+        "bottom_dissolve_start": 0.62,
     },
 }
 
@@ -225,13 +227,21 @@ def tight_head_crop(img: Image.Image, *, extra_below_factor: float = 0.0) -> Ima
             sample_widths.append(sw)
     head_width = max(sample_widths) if sample_widths else bbox_w // 2
 
-    # Find face center horizontally — sample at the top of the head
-    # (around 12% down from top of bbox) and use that row's centroid.
-    face_y = min(rgb.height - 1, top + int(bbox_h * 0.10))
-    face_row = mask[face_y]
-    if face_row.any():
-        idx = np.where(face_row)[0]
-        face_cx = int((idx[0] + idx[-1]) // 2)
+    # Find face center horizontally by averaging mask centroid across
+    # several rows around eye-level (20-30% down from top of bbox).
+    # Sampling at the very top of the head can give a misleading
+    # center when the head is tilted (top of head sits to one side of
+    # the actual face). Eye-level sampling tracks where the face
+    # actually IS and lands the crop centered on the face.
+    face_centers: list[int] = []
+    for frac in (0.20, 0.25, 0.30):
+        sy = min(rgb.height - 1, top + int(bbox_h * frac))
+        face_row = mask[sy]
+        if face_row.any():
+            idx = np.where(face_row)[0]
+            face_centers.append(int((idx[0] + idx[-1]) // 2))
+    if face_centers:
+        face_cx = int(sum(face_centers) / len(face_centers))
     else:
         face_cx = (left + right) // 2
 
@@ -289,9 +299,23 @@ def main() -> None:
 
             # Per-image preprocessing (consumes underscore-prefixed keys).
             current_img: Image.Image | None = None
+
+            rotate_deg = override.get("_pre_rotate_deg", 0.0)
+            if rotate_deg:
+                # Counter-rotate the source to level a tilted head.
+                # `expand=True` enlarges the canvas so we don't crop
+                # corners; black fill blends with the rest of the
+                # bake's black bg.
+                base = Image.open(src_path).convert("RGB")
+                current_img = base.rotate(
+                    rotate_deg, resample=Image.BICUBIC, expand=True, fillcolor=(0, 0, 0)
+                )
+                print(f"  {name}: pre-rotate {rotate_deg:+.1f}° -> {current_img.size}")
+
             if override.get("_pre_crop_tight_head"):
+                base = current_img if current_img is not None else Image.open(src_path)
                 current_img = tight_head_crop(
-                    Image.open(src_path),
+                    base,
                     extra_below_factor=override.get("_extra_below_factor", 0.0),
                 )
                 print(f"  {name}: tight head pre-crop -> {current_img.size}")
