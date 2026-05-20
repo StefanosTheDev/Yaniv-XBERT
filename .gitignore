@@ -9,5 +9,6 @@ scripts/.venv/
 scripts/_compare/
 scripts/_swarm_raw/
 scripts/_board_originals/
+scripts/_industry_originals/
 .venv-img/
 .u2net-cache/
