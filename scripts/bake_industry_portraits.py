@@ -67,11 +67,11 @@ BASE_BAKE_KWARGS: dict = {
     "bw_brightness": 0.94,
     "bw_midtone_power": 1.10,
     "bw_shadow_floor": 0.06,
-    # Heavy fade on the constellation+code bg overlays so they sit as
-    # an almost-invisible texture rather than competing with the face
-    # at the smaller customer-card size. /leadership board photos are
+    # Code+constellation bg overlays disabled entirely on the industry
+    # set — at the smaller customer-card size (315px) they read as
+    # noise rather than editorial detail. /leadership board photos are
     # rendered separately at overlay_scale=3.0 — unaffected.
-    "overlay_scale": 0.5,
+    "overlay_scale": 0.0,
     "film_grain_amount": 2.5,
 }
 
@@ -95,24 +95,28 @@ PER_IMAGE: dict[str, dict] = {
         # upper-left of the frame and shoulders/torso filling the
         # rest. The bake's body-bbox-centered crop lands the face
         # too low. Same tight-head-crop preprocessing we use for
-        # construction pulls the head into the upper-third of the
-        # final frame.
+        # construction, plus an `extra_below_factor` that extends
+        # the crop with additional black/body below the head so
+        # the bake's symmetric padding is no longer needed
+        # vertically — that lets the bake's crop_top clamp at 0
+        # and lands the head in the upper-15% of the final frame.
         "_pre_crop_tight_head": True,
+        "_extra_below_factor": 0.5,
     },
     "industry-hospitality.png": {
         # Source is heavily side-lit — left half of face in deep
         # shadow. Stronger triangular shadow-lift opens the dim half
-        # without blowing out the lit side. Slightly higher overall
-        # brightness to match the board face level. Soften the bottom
-        # dissolve so the t-shirt isn't cut off at the bottom of the
-        # frame; the source already has a slight black-fade so the
-        # default dissolve is too aggressive on top of that.
-        "bw_pre_lift": 0.34,
+        # without blowing out the lit side; slightly higher overall
+        # brightness to match the board face level. Bottom dissolve
+        # softened so the t-shirt isn't cut off at the bottom of the
+        # frame. UnsharpMask on the source restores micro-detail
+        # (eyes, mouth, hair) the user lost in the previous version.
+        "_post_unsharp": True,
+        "bw_pre_lift": 0.32,
         "bw_shadow_floor": 0.10,
-        "bw_brightness": 1.00,
-        "bw_midtone_power": 1.05,
-        "bottom_dissolve_strength": 0.20,
-        "bottom_dissolve_start": 0.88,
+        "bw_brightness": 0.98,
+        "bottom_dissolve_strength": 0.25,
+        "bottom_dissolve_start": 0.85,
     },
 }
 
@@ -151,19 +155,26 @@ def sharpen_sources(src_dir: Path, dest_dir: Path) -> None:
         print(f"  {p.name}: {img.size} -> {upscaled.size} (sharpened x4)")
 
 
-def tight_head_crop(img: Image.Image) -> Image.Image:
+def tight_head_crop(img: Image.Image, *, extra_below_factor: float = 0.0) -> Image.Image:
     """Pre-crop a source so the head fills most of the frame.
 
     Used for sources where the subject sits small and low in the
-    original (currently only construction). Runs rembg, finds the head
-    bbox, centers a square around the head + shoulders so the bake's
-    own head_focused_crop has a tight frame to work with.
+    original. Runs rembg, finds the head bbox, centers a square around
+    the head + shoulders so the bake's own head_focused_crop has a
+    tight frame to work with.
 
     Result framing:
-      - Square 1:1
-      - Head occupies ~50% of frame height
-      - Top of head ~12% from top of frame
-      - Shoulders visible at the bottom
+      - Square 1:1 by default; if ``extra_below_factor`` > 0 the crop
+        extends downward by that fraction of crop_size so the output
+        is taller than wide.
+      - Head occupies ~50% of frame width
+      - Top of head ~9% from top of frame
+
+    A tall (non-square) output is useful when we want the bake's final
+    frame to land the head higher than its hardcoded 11% offset
+    normally allows: a tall input means the bake's symmetric vertical
+    padding is zero, the crop_top clamp at 0 fires, and the head sits
+    in the upper-5–10% of the final 512x512 instead of the default 11%.
 
     Padded with black on whatever side the head sits closest to so the
     head ends up centered.
@@ -226,7 +237,8 @@ def tight_head_crop(img: Image.Image) -> Image.Image:
     # toward the upper-third like the board photos and exposes more
     # shoulders below.
     crop_top = max(0, top - int(crop_size * 0.09))
-    crop_bottom = crop_top + crop_size
+    extra_below = int(crop_size * max(0.0, extra_below_factor))
+    crop_bottom = crop_top + crop_size + extra_below
     # Horizontal: centered on face center.
     crop_left = face_cx - crop_size // 2
     crop_right = crop_left + crop_size
@@ -268,7 +280,10 @@ def main() -> None:
             # Per-image preprocessing (consumes underscore-prefixed keys).
             current_img: Image.Image | None = None
             if override.get("_pre_crop_tight_head"):
-                current_img = tight_head_crop(Image.open(src_path))
+                current_img = tight_head_crop(
+                    Image.open(src_path),
+                    extra_below_factor=override.get("_extra_below_factor", 0.0),
+                )
                 print(f"  {name}: tight head pre-crop -> {current_img.size}")
 
             if override.get("_post_unsharp"):
