@@ -86,7 +86,13 @@ def main() -> None:
         # final 512x512 crop never has to magnify more than ~1.5x at
         # the end — eliminates the visible pixelation on construction.
         min_source_size=600,
-        overlay_scale=0.18,
+        # Match the leadership board overlay strength so the customer
+        # cards read as part of the same editorial set: a clearly
+        # visible pseudo-code block on the right and a constellation
+        # network graph on the lower-left, sitting in the deep-black
+        # void around the subject. Faces are unchanged — this only
+        # affects the empty bg space.
+        overlay_scale=3.0,
         film_grain_amount=2.5,
     )
 
