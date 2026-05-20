@@ -112,21 +112,29 @@ PER_IMAGE: dict[str, dict] = {
         "bw_brightness": 1.00,
     },
     "industry-hospitality.png": {
-        # Source is heavily side-lit — left half of face in deep
-        # shadow. Stronger triangular shadow-lift opens the dim half;
-        # bw_brightness pushed to 1.04 (above board default) to
-        # lighten the still-faded face the user flagged.
+        # User wants this to match the strength of swarm-31.png:
+        # tight head-fills-frame crop, halftone dot screen on the
+        # subject, high-contrast sculpted face, deep blacks.
         #
-        # Bottom dissolve at board strength (0.85) — the previous
-        # 0.55 was leaving the silhouette half-faded at the bottom
-        # which read as a visible black stripe. Board-strength
-        # dissolve makes the t-shirt completely dissolve into the
-        # bg before the frame edge, removing the stripe entirely.
-        # UnsharpMask restores eye/mouth/hair micro-detail.
+        # Tight pre-crop with head_multiplier=1.6 (swarm-31-tight)
+        # gives the head ~70% of the frame instead of the standard
+        # 40%. UnsharpMask + halftone_blend=0.35 give the
+        # sculpted, printed-newsprint look swarm-31 has. Stronger
+        # tonal curve (bw_shadow_curve 2.10, highlight_curve 1.65,
+        # midtone_power 1.20) lifts highlights and crushes blacks
+        # for the high-contrast moody look.
+        "_pre_crop_tight_head": True,
+        "_tight_multiplier": 1.6,
         "_post_unsharp": True,
-        "bw_pre_lift": 0.34,
+        "bw_pre_lift": 0.30,
         "bw_shadow_floor": 0.10,
-        "bw_brightness": 1.04,
+        "bw_brightness": 0.95,
+        "bw_shadow_curve": 2.10,
+        "bw_highlight_curve": 1.65,
+        "bw_midtone_power": 1.20,
+        "halftone_blend": 0.18,
+        "halftone_cell": 4,
+        "halftone_contrast": 1.0,
         "bottom_dissolve_strength": 0.85,
         "bottom_dissolve_start": 0.62,
     },
@@ -167,7 +175,12 @@ def sharpen_sources(src_dir: Path, dest_dir: Path) -> None:
         print(f"  {p.name}: {img.size} -> {upscaled.size} (sharpened x4)")
 
 
-def tight_head_crop(img: Image.Image, *, extra_below_factor: float = 0.0) -> Image.Image:
+def tight_head_crop(
+    img: Image.Image,
+    *,
+    extra_below_factor: float = 0.0,
+    head_multiplier: float = 2.2,
+) -> Image.Image:
     """Pre-crop a source so the head fills most of the frame.
 
     Used for sources where the subject sits small and low in the
@@ -245,12 +258,12 @@ def tight_head_crop(img: Image.Image, *, extra_below_factor: float = 0.0) -> Ima
     else:
         face_cx = (left + right) // 2
 
-    # Crop ≈ 2.2x head width: head + clear shoulders/upper chest. The
-    # bake's own head_focused_crop runs on this output and lands the
-    # final framing at ~2.5x head width like the boards. Slightly
-    # tighter than 2.5 so any padding the bake adds doesn't push the
-    # head too small in the final 512x512.
-    crop_size = int(head_width * 2.2)
+    # Crop ≈ head_multiplier × head_width. 2.2 gives standard
+    # head-and-shoulders framing (default). Smaller values (e.g. 1.6)
+    # give a tight swarm-31-style face-fills-frame crop. The bake's
+    # own head_focused_crop runs on this output and lands the final
+    # framing at ~2.5x head width like the boards.
+    crop_size = int(head_width * head_multiplier)
     crop_size = max(crop_size, 240)
 
     # Vertical: head_top sits at 9% from top of crop — pulls the head
@@ -317,6 +330,7 @@ def main() -> None:
                 current_img = tight_head_crop(
                     base,
                     extra_below_factor=override.get("_extra_below_factor", 0.0),
+                    head_multiplier=override.get("_tight_multiplier", 2.2),
                 )
                 print(f"  {name}: tight head pre-crop -> {current_img.size}")
 
