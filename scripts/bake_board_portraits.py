@@ -90,11 +90,7 @@ def square_crop_head(img: Image.Image) -> Image.Image:
 
 
 def head_focused_crop_box(
-    alpha: Image.Image,
-    img_size: tuple[int, int],
-    *,
-    head_multiplier: float = 2.5,
-    head_top_offset_frac: float = 0.11,
+    alpha: Image.Image, img_size: tuple[int, int]
 ) -> tuple[int, int, int, int]:
     """Compute a head-and-shoulders square crop box from the rembg alpha mask.
 
@@ -104,15 +100,6 @@ def head_focused_crop_box(
     Target framing matches /leaders/tomas-gorny.png and /swarm/swarm-04.png:
     head occupies ~40% of the frame width with ~14% headroom and full
     shoulders/upper chest visible at the bottom.
-
-    ``head_multiplier`` scales how loose the crop is relative to the
-    subject's head width. ``2.5`` matches the executive/board framing
-    (head ~40% of frame width); ``3.0-3.4`` matches the swarm look
-    (head ~28-33% of frame width, more bg space for code +
-    constellation overlays to read clearly).
-
-    ``head_top_offset_frac`` controls how much room sits above the top of
-    the head as a fraction of the crop size.
     """
     w, h = img_size
     a = np.asarray(alpha)
@@ -156,15 +143,13 @@ def head_focused_crop_box(
     if head_width < 30:
         head_width = bbox_w // 2  # fallback heuristic
 
-    # Crop square ≈ head_multiplier × head width. 2.5 gives head ~40%
-    # of frame width with full shoulders and clear headroom (boards/
-    # leaders look). 3.0-3.4 gives the looser swarm framing where the
-    # head is smaller in frame and there's more bg space for the code
-    # + constellation overlays to breathe. We keep a modest floor of
-    # 50% of the source's smaller dimension so that small full-body
-    # sources still get a head-focused crop instead of being forced
-    # to include the torso.
-    crop_size = int(head_width * head_multiplier)
+    # Crop square ≈ 2.5x head width gives head ~40% of frame width with
+    # full shoulders and clear headroom — matches the framing of
+    # /leaders/tomas-gorny.png, /leaders/marco-burgarello.png, and
+    # /swarm/swarm-04.png. We keep a modest floor of 50% of the source's
+    # smaller dimension so that small full-body sources still get a
+    # head-focused crop instead of being forced to include the torso.
+    crop_size = int(head_width * 2.5)
     crop_size = max(crop_size, int(min(w, h) * 0.50))
     crop_size = max(crop_size, 64)
     crop_size = min(crop_size, w, h)
@@ -176,11 +161,10 @@ def head_focused_crop_box(
         crop_left = w - crop_size
         crop_right = w
 
-    # Vertical: top of head sits at head_top_offset_frac of the crop
-    # below the top edge. 0.11 = tight headroom matching the
-    # board/leaders look; 0.16-0.20 leaves more sky above the head
-    # for the swarm look.
-    head_top_offset = int(crop_size * head_top_offset_frac)
+    # Vertical: top of head ~11% below the top of the crop. Slightly
+    # tighter headroom than the executive team so the lower portion of
+    # the frame has plenty of room for the clothing to fade into black.
+    head_top_offset = int(crop_size * 0.11)
     crop_top = max(0, top - head_top_offset)
     crop_bottom = crop_top + crop_size
     if crop_bottom > h:
@@ -299,6 +283,52 @@ def to_swarm_bw(
     arr = np.clip(arr, 0, 1)
     arr = (arr * 255.0).astype(np.uint8)
     return Image.fromarray(arr)
+
+
+def apply_halftone(
+    img: Image.Image,
+    *,
+    cell_size: int = 5,
+    blend: float = 0.45,
+    contrast: float = 1.0,
+) -> Image.Image:
+    """Apply a halftone dot-screen overlay to a B&W image, matching the
+    printed-newsprint look of leaders/tomas-gorny.png and the swarm/* set.
+
+    For each ``cell_size`` × ``cell_size`` cell of the input, a dot is drawn
+    whose radius scales with the cell's mean *darkness* (dark cells get
+    big dots, bright cells get small dots). The dot pattern is then blended
+    on top of the underlying continuous-tone image at ``blend`` strength so
+    the face still reads cleanly through the dots — exactly the editorial
+    look of the leader/swarm portraits.
+
+    ``contrast`` (>1) amplifies the size variation so highlights pop more.
+    """
+    arr = np.asarray(img.convert("L"), dtype=np.float32) / 255.0
+    h, w = arr.shape
+
+    # Local luminance via box-blur over each cell.
+    blurred = img.convert("L").filter(ImageFilter.BoxBlur(max(1, cell_size // 2)))
+    cell_lum = np.asarray(blurred, dtype=np.float32) / 255.0
+    if contrast != 1.0:
+        cell_lum = np.clip(0.5 + (cell_lum - 0.5) * contrast, 0.0, 1.0)
+
+    # Distance from each pixel to its cell-center.
+    yy, xx = np.mgrid[0:h, 0:w]
+    cy = (yy // cell_size) * cell_size + (cell_size - 1) / 2.0
+    cx = (xx // cell_size) * cell_size + (cell_size - 1) / 2.0
+    dist = np.sqrt((yy - cy) ** 2 + (xx - cx) ** 2)
+
+    # Dot radius scales with darkness; the sqrt(2)/2 cap lets adjacent
+    # dots just touch at their corners when the local area is fully black.
+    radius_max = cell_size / np.sqrt(2.0)
+    radius = radius_max * np.power(np.clip(1.0 - cell_lum, 0.0, 1.0), 0.7)
+    halftone = np.where(dist <= radius, 0.0, 1.0)  # 0 inside dot, 1 outside
+
+    # Blend the halftone overlay on top of the continuous-tone source so
+    # the face/eyes stay legible. blend=1.0 → pure halftone, 0.0 → no effect.
+    out = arr * (1.0 - blend) + halftone * blend
+    return Image.fromarray(np.clip(out * 255.0, 0, 255).astype(np.uint8))
 
 
 def add_side_lighting(
@@ -537,9 +567,9 @@ def process_one(
     min_source_size: int = 0,
     overlay_scale: float = 1.0,
     film_grain_amount: float = 3.0,
-    crop_head_multiplier: float = 2.5,
-    crop_head_top_offset_frac: float = 0.11,
-    alpha_feather_radius: float = 1.2,
+    halftone_blend: float = 0.0,
+    halftone_cell: int = 5,
+    halftone_contrast: float = 1.0,
 ) -> None:
     """Bake one portrait to match the /swarm/* editorial style: smooth
     continuous-tone B&W subject on a black studio background with very faint
@@ -592,7 +622,7 @@ def process_one(
         head_w_est = max(sampled, bbox_w // 2, 30)
     else:
         head_w_est = min(src.size) // 3
-    target = int(head_w_est * max(3.0, crop_head_multiplier + 0.5))
+    target = int(head_w_est * 3.0)
     src_w, src_h = src.size
     pad_w = max(0, (target - src_w) // 2)
     pad_h = max(0, (target - src_h) // 2)
@@ -607,20 +637,12 @@ def process_one(
     # Head-focused square crop driven by the subject mask so every portrait
     # gets the same head-and-shoulders framing regardless of how the source
     # photo was shot.
-    box = head_focused_crop_box(
-        full_alpha,
-        src.size,
-        head_multiplier=crop_head_multiplier,
-        head_top_offset_frac=crop_head_top_offset_frac,
-    )
+    box = head_focused_crop_box(full_alpha, src.size)
     src = src.crop(box).resize((SIZE, SIZE), Image.LANCZOS)
     alpha = full_alpha.crop(box).resize((SIZE, SIZE), Image.LANCZOS)
     # Light feather so the silhouette stays crisp like the swarm/* portraits
     # while still blending into the black background without a hard cutout.
-    # A heavier feather is useful for industry photos whose source images
-    # are tightly cropped — it softens any visible source-rectangle edge
-    # so the subject blends naturally into the constellation bg.
-    alpha = alpha.filter(ImageFilter.GaussianBlur(radius=alpha_feather_radius))
+    alpha = alpha.filter(ImageFilter.GaussianBlur(radius=1.2))
 
     # Vertical alpha gradient: dissolve the subject smoothly into the
     # studio background toward the bottom of the frame. Without this the
@@ -649,6 +671,19 @@ def process_one(
         pre_lift=bw_pre_lift,
         highlight_lift=bw_highlight_lift,
     )
+
+    # Optional halftone dot-screen overlay. Matches the
+    # printed-newsprint look of the AI-generated leaders/* and
+    # swarm/* portraits. ``halftone_blend`` of 0 = continuous tone
+    # (board look), ~0.4-0.5 = leaders look (dots clearly visible
+    # but face still fully readable through them).
+    if halftone_blend > 0.0:
+        bw = apply_halftone(
+            bw,
+            cell_size=halftone_cell,
+            blend=halftone_blend,
+            contrast=halftone_contrast,
+        )
 
     # Editorial canvas: black with very faint code + constellation.
     seed = sum(ord(c) for c in path.name)

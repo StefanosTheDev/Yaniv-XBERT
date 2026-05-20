@@ -50,19 +50,10 @@ def main() -> None:
         SRC_DIR,
         OUT_DIR,
         label="industry portraits",
-        # Soft alpha dissolve in the bottom third only. The swarm
-        # references the user pointed to (swarm-05/11/17/23/26) all
-        # have the subject's clothing reaching the bottom of the
-        # source frame, so they blend naturally with the bg. Our
-        # industry sources are tighter: the source photo *ends*
-        # around mid-chest, which leaves a visible horizontal
-        # cutoff below the subject. A late, gentle smoothstep
-        # dissolve hides that cutoff into the constellation bg
-        # without eating into the face or shoulders.
-        bottom_dissolve_strength=0.55,
-        bottom_dissolve_start=0.68,
-        bottom_dissolve_end=1.00,
-        bottom_fade_strength=0.0,
+        bottom_dissolve_strength=0.40,
+        bottom_dissolve_start=0.78,
+        bottom_dissolve_end=1.10,
+        bottom_fade_strength=0.10,
         vignette_strength=0.18,
         # The customer industry source photos already carry natural
         # directional studio lighting (the hospitality and insurance
@@ -99,26 +90,20 @@ def main() -> None:
         # cards read as part of the same editorial set: a clearly
         # visible pseudo-code block on the right and a constellation
         # network graph on the lower-left, sitting in the deep-black
-        # void around the subject. Faces are unchanged — this only
-        # affects the empty bg space.
+        # void around the subject.
         overlay_scale=3.0,
         film_grain_amount=2.5,
-        # Use the same head_multiplier as boards (2.5x) for
-        # consistent framing. We tried 3.2 and 2.8 to match the
-        # looser swarm-05 / leaders/marco-burgarello.png crop, but
-        # several of the customer source photos (insurance,
-        # real-estate, construction) are tight selfies with no bg
-        # margin — looser crops make the source's rectangular edge
-        # visible as a faint halo around the silhouette. The
-        # standard board framing avoids that artefact while still
-        # leaving plenty of bg space for the visible code +
-        # constellation overlays.
-        crop_head_multiplier=2.5,
-        crop_head_top_offset_frac=0.11,
-        # Heavier alpha-feather (vs 1.2 default) so any tightly-
-        # cropped source image's rectangular edge dissolves into
-        # the constellation bg instead of reading as a halo.
-        alpha_feather_radius=2.4,
+        # Halftone dot-screen overlay matching the printed-newsprint
+        # look of the AI-generated leaders/tomas-gorny.png and the
+        # swarm/* portraits the user references. Without halftone,
+        # our processed photos read as soft / vintage; the leaders
+        # set has a clear dot pattern on skin and clothing that
+        # makes them feel like a Wired-magazine photo essay. The
+        # blend value (0.45) keeps the face fully readable through
+        # the dots — this is a screen overlay, not a replacement.
+        halftone_blend=0.40,
+        halftone_cell=3,
+        halftone_contrast=1.05,
     )
 
 
