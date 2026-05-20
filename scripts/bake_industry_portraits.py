@@ -1,40 +1,38 @@
 """
 Bakes the customer industry portraits used on /our-customers-preview into
-the same editorial style as the board portraits on /leadership.
+the same editorial swarm-style aesthetic that the board portraits and
+public/assets/images/people/swarm/* photos use:
+
+    smooth continuous-tone B&W subject + black studio background +
+    head-and-shoulders crop + prominent code/constellation overlays +
+    alpha dissolve at the bottom so the silhouette blends into the void.
 
 Originals live in /scripts/_industry_originals/. Outputs overwrite the
 canonical paths under /public/assets/images/customers/industry-*.png.
 
-Why the staging step:
+Reuses the proven processing pipeline from bake_board_portraits.py via
+its `bake_directory` helper so the two image sets stay visually
+consistent.
 
-The board sources arrive as evenly-lit professional studio shots, so the
-canonical bake pipeline (in bake_board_portraits.py) — same call this
-script makes — produces clean editorial portraits. The industry sources
-are casual / press-style photos with heavy directional lighting (one
-side of the face in deep shadow, e.g. hospitality, insurance,
-healthcare). Feeding those straight into the same bake pipeline
-preserves the harsh shadow because the curve is tuned for already-
-balanced inputs.
+Tuning history note:
 
-To avoid touching the board pipeline at all (so /leadership stays
-exactly as-is) we instead pre-stage each industry original: autocontrast
-to normalize the histogram and a shadow-lift gamma to bring the dark
-side of faces up close to the bright side. The staged copies look like
-board sources — evenly lit, mid-bright skin — and the EXACT same
-`bake_directory(..., overlay_scale=3.0)` call we use for the boards
-then produces output that matches the board grid.
+The cleanest face we ever produced for the industry sources was the
+a92d464 commit — gentler shadow curves, mild triangular shadow-lift,
+slightly brighter midtones than the default board pipeline. That
+version's only weakness was very faint overlays (overlay_scale=0.18)
+which didn't read on /our-customers-preview at the same level as the
+board photos. This file reinstates those face params verbatim and
+swaps the overlay scale up to 3.0 to match /leadership.
 
-We never modify the originals on disk; staging goes to a temp dir.
+We deliberately do NOT pre-stage the sources through an even-lighting
+pass — when we tried that, it brightened the overall face but added a
+hazy/grainy feel that pushed us further away from the bright clean
+look the user remembered as "very close".
 """
 
 from __future__ import annotations
 
-import shutil
-import tempfile
 from pathlib import Path
-
-import numpy as np
-from PIL import Image, ImageOps
 
 import bake_board_portraits as bake
 
@@ -44,81 +42,59 @@ SRC_DIR = ROOT / "scripts/_industry_originals"
 OUT_DIR = ROOT / "public/assets/images/customers"
 
 
-def even_lighting(img: Image.Image) -> Image.Image:
-    """Normalize, shadow-lift, and brighten the source so it enters the
-    bake looking like a board studio shot.
-
-    Board sources sit at very high luminance (skin ~200/255) because
-    they're shot in even studio light. The bake's tonal curve assumes
-    that — `bw_brightness=0.92` then lands skin at ~184 in output, the
-    bright editorial look that matches /leadership.
-
-    Industry sources are casual / press-style: skin sits at 140-180,
-    one side often deep in shadow. Without compensation, that 0.92
-    multiplier lands skin at ~140 — visibly darker than the board grid.
-
-    Three-step normalization:
-      1. autocontrast (1% cutoff) — snap to full 0..255 range.
-      2. luminance-dependent shadow lift — raise the dark half of
-         directionally-lit faces (hospitality, healthcare, insurance)
-         toward the bright half. Highlights are left alone so white
-         shirts and hair specular survive intact.
-      3. global midtone gamma — bring overall skin brightness up to
-         the ~200 board target so the bake's `0.92` brightness
-         multiplier produces output that sits next to the boards
-         without looking dim.
-    """
-    rgb = img.convert("RGB")
-    rgb = ImageOps.autocontrast(rgb, cutoff=1)
-
-    arr = np.asarray(rgb, dtype=np.float32) / 255.0
-    lum = 0.299 * arr[..., 0] + 0.587 * arr[..., 1] + 0.114 * arr[..., 2]
-
-    # Step 2: shadow lift. Mask peaks at 1.0 for very dark pixels and
-    # falls to 0 by mid-grey. ^1.2 keeps the lift concentrated in true
-    # shadows so we don't muddy the midtones.
-    shadow_mask = np.clip(1.0 - lum / 0.6, 0.0, 1.0) ** 1.2
-    lift = 0.32 * shadow_mask  # max +82/255 lift in deepest shadows
-    arr = np.clip(arr + lift[..., None], 0.0, 1.0)
-
-    # Step 3: midtone gamma to brighten overall. gamma<1 lifts midtones
-    # while leaving 0 at 0 and 1 at 1 — won't blow highlights or muddy
-    # blacks.
-    arr = np.power(arr, 0.78)
-
-    return Image.fromarray((arr * 255.0).astype(np.uint8))
-
-
-def stage_sources(src_dir: Path, dest: Path) -> None:
-    """Copy and pre-condition every source from ``src_dir`` into ``dest``.
-    Resulting files have the same filenames so ``bake_directory`` writes
-    canonical output names (industry-healthcare.png, …)."""
-    dest.mkdir(parents=True, exist_ok=True)
-    patterns = ("*.png", "*.jpg", "*.jpeg", "*.webp")
-    files: list[Path] = []
-    for pat in patterns:
-        files.extend(src_dir.glob(pat))
-    files = sorted(files)
-    for p in files:
-        staged = even_lighting(Image.open(p))
-        staged.save(dest / (p.stem + ".png"), "PNG")
-
-
 def main() -> None:
-    with tempfile.TemporaryDirectory(prefix="industry-staging-") as td:
-        staging = Path(td)
-        stage_sources(SRC_DIR, staging)
-
-        # Same call signature as bake_board_portraits.py main() — we want
-        # industry portraits to come out of the same pipeline as the
-        # board portraits so the two image sets stay visually consistent
-        # on the leadership and our-customers-preview pages.
-        bake.bake_directory(
-            staging,
-            OUT_DIR,
-            label="industry portraits",
-            overlay_scale=3.0,
-        )
+    # Industry sources differ from the board headshots in two ways that
+    # required softer settings to land on a clean face:
+    #
+    #   * The subjects often wear bright clothing (white shirts, light
+    #     jackets) and full bodies are visible. The board's aggressive
+    #     bottom alpha-dissolve (0.85) eats into bright shirts and
+    #     leaves an empty bottom; we soften it dramatically and start
+    #     the dissolve later in the frame so clothing stays visible to
+    #     the edge.
+    #   * Some sources are already shot against dark walls or dim
+    #     environments, so the board's `brightness=0.92` global scale
+    #     crushes them into the background. We lift the brightness a
+    #     touch and ease the midtone curve to keep skin tones legible.
+    #
+    # Everything else (overlays, framing, dissolve mechanics) follows
+    # the board pipeline exactly — overlay_scale=3.0 is the same value
+    # bake_board_portraits.py main() uses, so /leadership and
+    # /our-customers-preview read at the same overlay intensity.
+    bake.bake_directory(
+        SRC_DIR,
+        OUT_DIR,
+        label="industry portraits",
+        # Softer dissolve so bright shirts (insurance, healthcare,
+        # real-estate) stay visible to the bottom edge instead of
+        # being eaten by alpha.
+        bottom_dissolve_strength=0.40,
+        bottom_dissolve_start=0.78,
+        bottom_dissolve_end=1.10,
+        bottom_fade_strength=0.10,
+        vignette_strength=0.18,
+        # Industry sources already carry natural directional studio
+        # lighting (hospitality and insurance in particular have one
+        # side of the face in shadow). Adding a synthetic side-light
+        # on top would crush the dim half to black.
+        side_lighting_strength=0.0,
+        # Gentler shadow curve and a triangular shadow-lift so the
+        # dim half of directionally-lit source faces (hospitality,
+        # insurance, healthcare) holds detail instead of crushing to
+        # black. Triangular lift only touches values below 0.5 so
+        # already-dark midtones in low-contrast sources (construction)
+        # are left alone and don't fog up.
+        bw_pre_lift=0.18,
+        bw_shadow_curve=1.75,
+        bw_highlight_curve=1.55,
+        bw_brightness=0.94,
+        bw_midtone_power=1.10,
+        bw_shadow_floor=0.06,
+        # Match the board's overlay intensity exactly so the two
+        # image sets read at the same level on the page.
+        overlay_scale=3.0,
+        film_grain_amount=2.5,
+    )
 
 
 if __name__ == "__main__":
