@@ -72,7 +72,9 @@ BASE_BAKE_KWARGS: dict = {
     # noise rather than editorial detail. /leadership board photos are
     # rendered separately at overlay_scale=3.0 — unaffected.
     "overlay_scale": 0.0,
-    "film_grain_amount": 2.5,
+    # Film grain disabled — the user reads the resulting noise as
+    # background pixelation. Solid-black bg is what we want.
+    "film_grain_amount": 0.0,
 }
 
 # Per-image tweaks. Keys with leading underscore are NOT passed to
@@ -92,31 +94,39 @@ PER_IMAGE: dict[str, dict] = {
     },
     "industry-insurance.png": {
         # Source is a small selfie with the head sitting in the
-        # upper-left of the frame and shoulders/torso filling the
-        # rest. The bake's body-bbox-centered crop lands the face
-        # too low. Same tight-head-crop preprocessing we use for
-        # construction, plus an `extra_below_factor` that extends
-        # the crop with additional black/body below the head so
-        # the bake's symmetric padding is no longer needed
-        # vertically — that lets the bake's crop_top clamp at 0
-        # and lands the head in the upper-15% of the final frame.
+        # upper-left of the frame, shoulders/torso filling the rest,
+        # AND heavily side-lit — left half of the white shirt is
+        # bright, right half is in deep shadow. Without
+        # compensation, the post-bake shirt reads as half-white /
+        # half-dark which looks unintentional.
+        #
+        # Tight-head-crop with extra_below_factor pulls the head
+        # into the upper-third. Stronger shadow lift + extra
+        # brightness evens out the shirt so it reads as one tone.
+        # `_post_unsharp` restores micro-detail in the face.
         "_pre_crop_tight_head": True,
         "_extra_below_factor": 0.5,
+        "_post_unsharp": True,
+        "bw_pre_lift": 0.30,
+        "bw_shadow_floor": 0.12,
+        "bw_brightness": 0.98,
     },
     "industry-hospitality.png": {
         # Source is heavily side-lit — left half of face in deep
         # shadow. Stronger triangular shadow-lift opens the dim half
-        # without blowing out the lit side; slightly higher overall
-        # brightness to match the board face level. Bottom dissolve
-        # softened so the t-shirt isn't cut off at the bottom of the
-        # frame. UnsharpMask on the source restores micro-detail
-        # (eyes, mouth, hair) the user lost in the previous version.
+        # without blowing out the lit side. UnsharpMask restores
+        # micro-detail (eyes, mouth, hair).
+        #
+        # Bottom dissolve restored to board-style strength (0.55) so
+        # the t-shirt fades smoothly into the black bg instead of
+        # ending at a visible hard edge — matches the dissolve
+        # quality on /leadership.
         "_post_unsharp": True,
         "bw_pre_lift": 0.32,
         "bw_shadow_floor": 0.10,
         "bw_brightness": 0.98,
-        "bottom_dissolve_strength": 0.25,
-        "bottom_dissolve_start": 0.85,
+        "bottom_dissolve_strength": 0.55,
+        "bottom_dissolve_start": 0.72,
     },
 }
 
