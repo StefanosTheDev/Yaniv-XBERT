@@ -90,7 +90,11 @@ def square_crop_head(img: Image.Image) -> Image.Image:
 
 
 def head_focused_crop_box(
-    alpha: Image.Image, img_size: tuple[int, int]
+    alpha: Image.Image,
+    img_size: tuple[int, int],
+    *,
+    head_multiplier: float = 2.5,
+    head_top_offset_frac: float = 0.11,
 ) -> tuple[int, int, int, int]:
     """Compute a head-and-shoulders square crop box from the rembg alpha mask.
 
@@ -100,6 +104,15 @@ def head_focused_crop_box(
     Target framing matches /leaders/tomas-gorny.png and /swarm/swarm-04.png:
     head occupies ~40% of the frame width with ~14% headroom and full
     shoulders/upper chest visible at the bottom.
+
+    ``head_multiplier`` scales how loose the crop is relative to the
+    subject's head width. ``2.5`` matches the executive/board framing
+    (head ~40% of frame width); ``3.0-3.4`` matches the swarm look
+    (head ~28-33% of frame width, more bg space for code +
+    constellation overlays to read clearly).
+
+    ``head_top_offset_frac`` controls how much room sits above the top of
+    the head as a fraction of the crop size.
     """
     w, h = img_size
     a = np.asarray(alpha)
@@ -143,13 +156,15 @@ def head_focused_crop_box(
     if head_width < 30:
         head_width = bbox_w // 2  # fallback heuristic
 
-    # Crop square ≈ 2.5x head width gives head ~40% of frame width with
-    # full shoulders and clear headroom — matches the framing of
-    # /leaders/tomas-gorny.png, /leaders/marco-burgarello.png, and
-    # /swarm/swarm-04.png. We keep a modest floor of 50% of the source's
-    # smaller dimension so that small full-body sources still get a
-    # head-focused crop instead of being forced to include the torso.
-    crop_size = int(head_width * 2.5)
+    # Crop square ≈ head_multiplier × head width. 2.5 gives head ~40%
+    # of frame width with full shoulders and clear headroom (boards/
+    # leaders look). 3.0-3.4 gives the looser swarm framing where the
+    # head is smaller in frame and there's more bg space for the code
+    # + constellation overlays to breathe. We keep a modest floor of
+    # 50% of the source's smaller dimension so that small full-body
+    # sources still get a head-focused crop instead of being forced
+    # to include the torso.
+    crop_size = int(head_width * head_multiplier)
     crop_size = max(crop_size, int(min(w, h) * 0.50))
     crop_size = max(crop_size, 64)
     crop_size = min(crop_size, w, h)
@@ -161,10 +176,11 @@ def head_focused_crop_box(
         crop_left = w - crop_size
         crop_right = w
 
-    # Vertical: top of head ~11% below the top of the crop. Slightly
-    # tighter headroom than the executive team so the lower portion of
-    # the frame has plenty of room for the clothing to fade into black.
-    head_top_offset = int(crop_size * 0.11)
+    # Vertical: top of head sits at head_top_offset_frac of the crop
+    # below the top edge. 0.11 = tight headroom matching the
+    # board/leaders look; 0.16-0.20 leaves more sky above the head
+    # for the swarm look.
+    head_top_offset = int(crop_size * head_top_offset_frac)
     crop_top = max(0, top - head_top_offset)
     crop_bottom = crop_top + crop_size
     if crop_bottom > h:
@@ -521,6 +537,9 @@ def process_one(
     min_source_size: int = 0,
     overlay_scale: float = 1.0,
     film_grain_amount: float = 3.0,
+    crop_head_multiplier: float = 2.5,
+    crop_head_top_offset_frac: float = 0.11,
+    alpha_feather_radius: float = 1.2,
 ) -> None:
     """Bake one portrait to match the /swarm/* editorial style: smooth
     continuous-tone B&W subject on a black studio background with very faint
@@ -573,7 +592,7 @@ def process_one(
         head_w_est = max(sampled, bbox_w // 2, 30)
     else:
         head_w_est = min(src.size) // 3
-    target = int(head_w_est * 3.0)
+    target = int(head_w_est * max(3.0, crop_head_multiplier + 0.5))
     src_w, src_h = src.size
     pad_w = max(0, (target - src_w) // 2)
     pad_h = max(0, (target - src_h) // 2)
@@ -588,12 +607,20 @@ def process_one(
     # Head-focused square crop driven by the subject mask so every portrait
     # gets the same head-and-shoulders framing regardless of how the source
     # photo was shot.
-    box = head_focused_crop_box(full_alpha, src.size)
+    box = head_focused_crop_box(
+        full_alpha,
+        src.size,
+        head_multiplier=crop_head_multiplier,
+        head_top_offset_frac=crop_head_top_offset_frac,
+    )
     src = src.crop(box).resize((SIZE, SIZE), Image.LANCZOS)
     alpha = full_alpha.crop(box).resize((SIZE, SIZE), Image.LANCZOS)
     # Light feather so the silhouette stays crisp like the swarm/* portraits
     # while still blending into the black background without a hard cutout.
-    alpha = alpha.filter(ImageFilter.GaussianBlur(radius=1.2))
+    # A heavier feather is useful for industry photos whose source images
+    # are tightly cropped — it softens any visible source-rectangle edge
+    # so the subject blends naturally into the constellation bg.
+    alpha = alpha.filter(ImageFilter.GaussianBlur(radius=alpha_feather_radius))
 
     # Vertical alpha gradient: dissolve the subject smoothly into the
     # studio background toward the bottom of the frame. Without this the
