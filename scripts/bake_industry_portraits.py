@@ -49,8 +49,11 @@ OUT_DIR = ROOT / "public/assets/images/customers"
 
 SHARPEN_THRESHOLD = 800
 
-# Shared bake kwargs — the a92d464 face curve plus board-level overlay
-# intensity. Per-image overrides below layer on top of this.
+# Shared bake kwargs — the a92d464 face curve. Overlay scale is
+# DELIBERATELY low (0.5) for industry: on the smaller customer-preview
+# cards (315px) the prominent leadership-style overlays read as visual
+# noise rather than editorial detail. Per-image overrides below layer
+# on top of this.
 BASE_BAKE_KWARGS: dict = {
     "bottom_dissolve_strength": 0.40,
     "bottom_dissolve_start": 0.78,
@@ -64,7 +67,11 @@ BASE_BAKE_KWARGS: dict = {
     "bw_brightness": 0.94,
     "bw_midtone_power": 1.10,
     "bw_shadow_floor": 0.06,
-    "overlay_scale": 3.0,
+    # Heavy fade on the constellation+code bg overlays so they sit as
+    # an almost-invisible texture rather than competing with the face
+    # at the smaller customer-card size. /leadership board photos are
+    # rendered separately at overlay_scale=3.0 — unaffected.
+    "overlay_scale": 0.5,
     "film_grain_amount": 2.5,
 }
 
@@ -72,23 +79,40 @@ BASE_BAKE_KWARGS: dict = {
 # process_one — they're consumed by this script's preprocessing.
 PER_IMAGE: dict[str, dict] = {
     "industry-construction.png": {
-        # The construction source has the subject sitting low and small
-        # in frame (a small face in the upper-left of an otherwise empty
-        # black field). The bake's head_focused_crop centers on the
-        # subject's full-body bbox, leaving lots of empty bottom space
-        # and a small face. Pre-cropping to a tight head-and-shoulders
-        # frame BEFORE the bake's crop logic runs gets the subject to
-        # land at board-equivalent head size in the final 512x512.
+        # Source has the subject sitting curled and small in an
+        # otherwise empty black frame. Tight-head-crop preprocessing
+        # gives the bake a frame where the head dominates so the
+        # final 512x512 lands the head at board-equivalent size with
+        # shoulders visible. `_post_unsharp` adds a gentle UnsharpMask
+        # pass to the tight-cropped source — recovers a bit of micro
+        # detail without the artifacts a second Real-ESRGAN pass
+        # introduces (warped eyes, smudged mouth).
+        "_pre_crop_tight_head": True,
+        "_post_unsharp": True,
+    },
+    "industry-insurance.png": {
+        # Source is a small selfie with the head sitting in the
+        # upper-left of the frame and shoulders/torso filling the
+        # rest. The bake's body-bbox-centered crop lands the face
+        # too low. Same tight-head-crop preprocessing we use for
+        # construction pulls the head into the upper-third of the
+        # final frame.
         "_pre_crop_tight_head": True,
     },
     "industry-hospitality.png": {
         # Source is heavily side-lit — left half of face in deep
         # shadow. Stronger triangular shadow-lift opens the dim half
         # without blowing out the lit side. Slightly higher overall
-        # brightness to match the board face level.
-        "bw_pre_lift": 0.32,
+        # brightness to match the board face level. Soften the bottom
+        # dissolve so the t-shirt isn't cut off at the bottom of the
+        # frame; the source already has a slight black-fade so the
+        # default dissolve is too aggressive on top of that.
+        "bw_pre_lift": 0.34,
         "bw_shadow_floor": 0.10,
-        "bw_brightness": 0.98,
+        "bw_brightness": 1.00,
+        "bw_midtone_power": 1.05,
+        "bottom_dissolve_strength": 0.20,
+        "bottom_dissolve_start": 0.88,
     },
 }
 
@@ -242,12 +266,25 @@ def main() -> None:
             override = PER_IMAGE.get(name, {})
 
             # Per-image preprocessing (consumes underscore-prefixed keys).
+            current_img: Image.Image | None = None
             if override.get("_pre_crop_tight_head"):
-                tightened = tight_head_crop(Image.open(src_path))
-                tight_path = staging / f"_tight_{name}"
-                tightened.save(tight_path, "PNG")
-                src_path = tight_path
-                print(f"  {name}: tight head pre-crop -> {tightened.size}")
+                current_img = tight_head_crop(Image.open(src_path))
+                print(f"  {name}: tight head pre-crop -> {current_img.size}")
+
+            if override.get("_post_unsharp"):
+                # Gentle UnsharpMask on the tight-cropped face. Adds
+                # micro detail to eyes/mouth/hair without the warping
+                # artifacts a second Real-ESRGAN pass produces.
+                base = current_img if current_img is not None else Image.open(src_path).convert("RGB")
+                current_img = base.filter(
+                    ImageFilter.UnsharpMask(radius=1.4, percent=130, threshold=2)
+                )
+                print(f"  {name}: post-unsharp")
+
+            if current_img is not None:
+                staged_path = staging / f"_pre_{name}"
+                current_img.save(staged_path, "PNG")
+                src_path = staged_path
 
             kwargs = dict(BASE_BAKE_KWARGS)
             for k, v in override.items():
