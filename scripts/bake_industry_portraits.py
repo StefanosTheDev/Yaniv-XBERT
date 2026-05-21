@@ -93,23 +93,24 @@ PER_IMAGE: dict[str, dict] = {
         "_post_unsharp": True,
     },
     "industry-insurance.png": {
-        # Source is a small selfie shot at an angle, with heavy
-        # directional lighting (left half of the white shirt bright,
-        # right half in deep shadow) and the head visibly tilted.
+        # Source is a 225px selfie. Real-ESRGAN x4 introduces
+        # visible AI-upscale artifacts (forehead smears, fuzzy hair
+        # halos) on this particular source — the texture confuses
+        # the model. `_skip_sharpen` falls back to plain PIL bicubic,
+        # which produces a slightly softer face but no smudges.
         #
-        # Pre-rotate by 12° counter-clockwise to level the head, then
-        # tight-head-crop pulls it into the upper-third. Aggressive
-        # shadow lift + raised shadow floor pulls the dark right
-        # side of the shirt up to match the bright left side so
-        # both halves read as plain white. `_post_unsharp` restores
-        # micro-detail in the face.
-        "_pre_rotate_deg": 12.0,
+        # Tight-head-crop with extra_below_factor=0.5 pulls the head
+        # into the upper-third of the final frame. Board-strength
+        # bottom dissolve (0.85 / 0.62) hides the source frame's
+        # bottom edge.
+        "_skip_sharpen": True,
         "_pre_crop_tight_head": True,
         "_extra_below_factor": 0.5,
-        "_post_unsharp": True,
-        "bw_pre_lift": 0.45,
-        "bw_shadow_floor": 0.22,
-        "bw_brightness": 1.00,
+        "bw_pre_lift": 0.30,
+        "bw_shadow_floor": 0.12,
+        "bw_brightness": 0.98,
+        "bottom_dissolve_strength": 0.85,
+        "bottom_dissolve_start": 0.62,
     },
     "industry-hospitality.png": {
         # User wants this to match the strength of swarm-31.png:
@@ -143,7 +144,11 @@ PER_IMAGE: dict[str, dict] = {
 
 def sharpen_sources(src_dir: Path, dest_dir: Path) -> None:
     """Copy every source from ``src_dir`` into ``dest_dir``, running each
-    through Real-ESRGAN x4 if its long edge is below SHARPEN_THRESHOLD."""
+    through Real-ESRGAN x4 if its long edge is below SHARPEN_THRESHOLD,
+    UNLESS the per-image override sets ``_skip_sharpen``: True (in which
+    case the source is copied through unchanged so the bake's own
+    PIL bicubic resize handles the upscale).
+    """
     dest_dir.mkdir(parents=True, exist_ok=True)
     patterns = ("*.png", "*.jpg", "*.jpeg", "*.webp")
     files: list[Path] = []
@@ -153,6 +158,12 @@ def sharpen_sources(src_dir: Path, dest_dir: Path) -> None:
 
     sr = None
     for p in files:
+        if PER_IMAGE.get(p.name, {}).get("_skip_sharpen"):
+            img = Image.open(p).convert("RGB")
+            img.save(dest_dir / (p.stem + ".png"), "PNG")
+            print(f"  {p.name}: {img.size} (skip sharpen — bicubic only)")
+            continue
+
         img = Image.open(p).convert("RGB")
         long_edge = max(img.size)
         if long_edge >= SHARPEN_THRESHOLD:
