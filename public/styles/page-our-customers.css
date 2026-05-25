@@ -904,9 +904,11 @@ a.oc-portrait-card-link:hover {
 .page-our-customers .oc-mix-card-foot {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
     gap: 6px;
     margin-top: auto;
     padding-top: var(--space-md);
+    min-height: 96px;
     border-top: 1px dashed var(--border-light);
 }
 
