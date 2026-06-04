@@ -156,13 +156,13 @@ export default function Nav() {
             <span className="nav-phone-label">Sales</span>
             <span className="nav-phone-number">800-799-0600</span>
           </a>
-          <a href="#" className="btn btn-primary nav-cta">
+          <a href="/login" className="btn btn-primary nav-cta">
             Log In
           </a>
-          <a href="#" className="btn btn-primary nav-cta nav-cta-demo">
+          <a href="/demo" className="btn btn-primary nav-cta nav-cta-demo">
             Get A Demo
           </a>
-          <a href="#" className="btn btn-primary nav-cta-primary">
+          <a href="/free-trial" className="btn btn-primary nav-cta-primary">
             Start Free Trial
           </a>
           <button
