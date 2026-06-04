@@ -1479,12 +1479,15 @@ window.scrollTo(0, 0);
 
                 if (res.ok && body && body.ok) {
                     form.reset();
+                    /* Brief confirmation pill before redirect, in case the
+                       navigation is slow or interrupted. */
                     setStatus(
                         'ok',
                         body.dev_mode
-                            ? 'Thanks — we got your request. (Dev mode: SMTP not configured, submission was logged to the server console.)'
-                            : 'Thanks — we got your request. Someone from the XBert team will reach out within one business day.'
+                            ? 'Thanks — submission received. (Dev mode: SMTP not configured, logged to server console.) Redirecting...'
+                            : 'Thanks — taking you to confirmation...'
                     );
+                    window.location.assign('/demo/thanks');
                 } else {
                     const message = (body && body.error) || 'We couldn\u2019t send your request. Please try again or email gorny@nextiva.com.';
                     setStatus('error', message);
