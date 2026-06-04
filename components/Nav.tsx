@@ -162,7 +162,12 @@ export default function Nav() {
           <a href="/demo" className="btn btn-primary nav-cta nav-cta-demo">
             Get A Demo
           </a>
-          <a href="/free-trial" className="btn btn-primary nav-cta-primary">
+          <a
+            href="https://www.nextiva.com/join"
+            className="btn btn-primary nav-cta-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Start Free Trial
           </a>
           <button
