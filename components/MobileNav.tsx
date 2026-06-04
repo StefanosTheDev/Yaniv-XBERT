@@ -55,13 +55,13 @@ export default function MobileNav() {
           <a href="tel:18007990600">Sales: 800-799-0600</a>
         </div>
         <div className="mobile-nav-actions">
-          <a href="#" className="btn btn-primary">
+          <a href="/free-trial" className="btn btn-primary">
             Start Free Trial
           </a>
-          <a href="#" className="btn btn-secondary">
+          <a href="/demo" className="btn btn-secondary">
             Get A Demo
           </a>
-          <a href="#" className="nav-signin">
+          <a href="/login" className="nav-signin">
             Log In
           </a>
         </div>
