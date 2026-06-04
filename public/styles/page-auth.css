@@ -333,14 +333,18 @@
 }
 
 .page-auth .auth-sso {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: var(--space-sm);
+}
+
+.page-auth .auth-sso .auth-sso-btn {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 @media (max-width: 480px) {
     .page-auth .auth-sso {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
 }
 
