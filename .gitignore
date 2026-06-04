@@ -6,6 +6,9 @@ out
 .env*
 !.env.example
 
+# Demo / contact form submissions persisted by /api/contact/demo
+submissions.jsonl
+
 scripts/.venv/
 scripts/_compare/
 scripts/_swarm_raw/

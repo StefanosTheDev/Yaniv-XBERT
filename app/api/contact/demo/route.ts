@@ -1,22 +1,27 @@
+import { promises as fs } from "node:fs";
+import { join } from "node:path";
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 /**
  * POST /api/contact/demo
  *
- * Accepts a JSON payload from the /demo lead-capture form and emails it
- * to the configured recipient (defaults to gorny@nextiva.com). When SMTP
- * env vars aren't configured, the route logs the submission to the server
- * console and still returns 200 with `dev_mode: true` so local dev works
- * without credentials.
+ * Accepts a JSON payload from the /demo lead-capture form, persists it
+ * to a JSON Lines file (one submission per line) for permanent record,
+ * and emails it to the configured recipient (defaults to
+ * gorny@nextiva.com). When SMTP env vars aren't configured, the route
+ * logs the submission to the server console and still returns 200 with
+ * `dev_mode: true` so local dev works without credentials. Persistence
+ * to disk runs regardless of SMTP state — best-effort, never blocks.
  *
- * Required production env vars (e.g. .env.production / Vercel secrets):
- *   SMTP_HOST       — e.g. smtp.sendgrid.net, smtp.gmail.com, smtp.nextiva.com
- *   SMTP_PORT       — usually 465 (SSL) or 587 (STARTTLS)
- *   SMTP_USER       — SMTP username
- *   SMTP_PASSWORD   — SMTP password / API key
- *   SMTP_FROM       — verified "From" address ("XBert Demo <demo@xbert.ai>")
- *   DEMO_TO_EMAIL   — optional, defaults to gorny@nextiva.com
+ * Required production env vars (e.g. .env.local / Vercel secrets):
+ *   SMTP_HOST            — e.g. smtp.resend.com, smtp.sendgrid.net
+ *   SMTP_PORT            — usually 465 (SSL) or 587 (STARTTLS)
+ *   SMTP_USER            — SMTP username
+ *   SMTP_PASSWORD        — SMTP password / API key
+ *   SMTP_FROM            — verified "From" ("XBert Demo <demo@xbert.ai>")
+ *   DEMO_TO_EMAIL        — optional, defaults to gorny@nextiva.com
+ *   SUBMISSION_LOG_PATH  — optional, defaults to <project>/submissions.jsonl
  */
 
 export const runtime = "nodejs";
@@ -97,6 +102,34 @@ export async function POST(req: Request) {
   const fullName = `${firstname} ${lastname}`.trim();
   const to = process.env.DEMO_TO_EMAIL ?? DEFAULT_TO;
   const submittedAt = new Date().toISOString();
+
+  // Best-effort persistence — append the submission as a single JSON
+  // line so we never lose a real submission while SMTP is unconfigured.
+  // Failures here never break the API call.
+  const logPath =
+    process.env.SUBMISSION_LOG_PATH ??
+    join(process.cwd(), "submissions.jsonl");
+  const logRecord = {
+    submitted_at: submittedAt,
+    name: fullName,
+    email,
+    phone: phone || null,
+    company,
+    role: role || null,
+    industry: industry || null,
+    size: size || null,
+    notes: notes || null,
+    user_agent: req.headers.get("user-agent") || null,
+    referer: req.headers.get("referer") || null,
+  };
+  try {
+    await fs.appendFile(logPath, JSON.stringify(logRecord) + "\n", "utf8");
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "unknown";
+    console.warn(
+      `[/api/contact/demo] could not append to ${logPath}: ${message}`,
+    );
+  }
 
   const summaryRows: Array<[string, string]> = [
     ["Name", fullName],
