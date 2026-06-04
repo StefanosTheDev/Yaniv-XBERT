@@ -1422,4 +1422,79 @@ window.scrollTo(0, 0);
         revealElements.forEach(el => revealObserver.observe(el));
     }
 
+
+    /* ------------------------------------------------
+       Demo lead-capture form
+       Hooks any <form data-form="demo">, posts to
+       /api/contact/demo, and shows an inline status.
+       ------------------------------------------------ */
+    const demoForms = document.querySelectorAll('form[data-form="demo"]');
+
+    demoForms.forEach((form) => {
+        const submit = form.querySelector('.auth-submit');
+        const status = form.querySelector('.auth-form-status');
+
+        const setStatus = (state, message) => {
+            if (!status) return;
+            if (!state) {
+                status.hidden = true;
+                status.removeAttribute('data-state');
+                status.textContent = '';
+                return;
+            }
+            status.hidden = false;
+            status.dataset.state = state;
+            status.textContent = message;
+        };
+
+        const setBusy = (busy) => {
+            if (submit) {
+                submit.disabled = busy;
+                submit.setAttribute('aria-busy', busy ? 'true' : 'false');
+                if (busy) {
+                    submit.dataset.label = submit.dataset.label || submit.textContent;
+                    submit.textContent = 'Sending...';
+                } else if (submit.dataset.label) {
+                    submit.textContent = submit.dataset.label;
+                }
+            }
+        };
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            setStatus(null);
+
+            const data = Object.fromEntries(new FormData(form).entries());
+            setBusy(true);
+
+            try {
+                const res = await fetch(form.getAttribute('action') || '/api/contact/demo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+
+                let body = null;
+                try { body = await res.json(); } catch (_) { /* non-JSON */ }
+
+                if (res.ok && body && body.ok) {
+                    form.reset();
+                    setStatus(
+                        'ok',
+                        body.dev_mode
+                            ? 'Thanks — we got your request. (Dev mode: SMTP not configured, submission was logged to the server console.)'
+                            : 'Thanks — we got your request. Someone from the XBert team will reach out within one business day.'
+                    );
+                } else {
+                    const message = (body && body.error) || 'We couldn\u2019t send your request. Please try again or email gorny@nextiva.com.';
+                    setStatus('error', message);
+                }
+            } catch (err) {
+                setStatus('error', 'Network error. Please try again or email gorny@nextiva.com.');
+            } finally {
+                setBusy(false);
+            }
+        });
+    });
+
 })();
