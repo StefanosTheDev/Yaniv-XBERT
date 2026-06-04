@@ -55,7 +55,12 @@ export default function MobileNav() {
           <a href="tel:18007990600">Sales: 800-799-0600</a>
         </div>
         <div className="mobile-nav-actions">
-          <a href="/free-trial" className="btn btn-primary">
+          <a
+            href="https://www.nextiva.com/join"
+            className="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Start Free Trial
           </a>
           <a href="/demo" className="btn btn-secondary">
