@@ -149,12 +149,12 @@ export default function Nav() {
         </div>
         <div className="nav-right">
           <a
-            href="tel:18007990600"
+            href="tel:18883071013"
             className="btn btn-primary nav-cta nav-phone"
           >
             <i className="ri-headphone-line" aria-hidden="true" />
             <span className="nav-phone-label">Sales</span>
-            <span className="nav-phone-number">800-799-0600</span>
+            <span className="nav-phone-number">888-307-1013</span>
           </a>
           <a href="/login" className="btn btn-primary nav-cta">
             Log In

@@ -52,7 +52,7 @@ export default function MobileNav() {
             </div>
           </div>
           <a href="/pricing">Pricing</a>
-          <a href="tel:18007990600">Sales: 800-799-0600</a>
+          <a href="tel:18883071013">Sales: 888-307-1013</a>
         </div>
         <div className="mobile-nav-actions">
           <a
