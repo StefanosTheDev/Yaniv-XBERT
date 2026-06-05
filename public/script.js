@@ -1500,4 +1500,46 @@ window.scrollTo(0, 0);
         });
     });
 
+    /* ------------------------------------------------
+       Leadership bio overlay
+       Native <dialog> based, opened by clicking any
+       button[data-bio-open="<id>"] which targets a
+       sibling-or-page <dialog id="ld-bio-<id>">.
+       Close via the X button, the Esc key (free with
+       <dialog>), or by clicking the backdrop.
+       ------------------------------------------------ */
+    const bioOpeners = document.querySelectorAll('[data-bio-open]');
+    bioOpeners.forEach((trigger) => {
+        trigger.addEventListener('click', (event) => {
+            const key = trigger.getAttribute('data-bio-open');
+            if (!key) return;
+            const dialog = document.getElementById(`ld-bio-${key}`);
+            if (!dialog || typeof dialog.showModal !== 'function') return;
+            event.preventDefault();
+            dialog.showModal();
+        });
+    });
+
+    const bioDialogs = document.querySelectorAll('dialog.ld-bio-modal');
+    bioDialogs.forEach((dialog) => {
+        const closeBtn = dialog.querySelector('[data-bio-close]');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => dialog.close());
+        }
+        /* Click outside the modal content (i.e. on the backdrop area)
+           closes it. We compare against the dialog's own bounding box
+           because <dialog>'s ::backdrop pseudo-element doesn't receive
+           click events directly. */
+        dialog.addEventListener('click', (event) => {
+            if (event.target !== dialog) return;
+            const rect = dialog.getBoundingClientRect();
+            const inside =
+                event.clientX >= rect.left &&
+                event.clientX <= rect.right &&
+                event.clientY >= rect.top &&
+                event.clientY <= rect.bottom;
+            if (!inside) dialog.close();
+        });
+    });
+
 })();
