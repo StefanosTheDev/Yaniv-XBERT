@@ -363,10 +363,211 @@
     color: var(--accent-blue);
     letter-spacing: 0.04em;
     margin-top: auto;
+    /* Reset default <button> styling so the same selector works for
+       both anchors and the new modal-trigger buttons. */
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
 }
 
-.page-leadership .ld-card-link:hover {
+.page-leadership .ld-card-link:hover,
+.page-leadership .ld-card-link:focus-visible {
     color: var(--accent-blue-hover);
+    outline: none;
+}
+
+/* ------------------------------------------------------------------
+   Bio overlay
+   ----------------------------------------------------------------
+   Native <dialog>-based modal opened when a leader card's "Meet the
+   team" button is clicked. Centred, capped width, with a darkened
+   blurred backdrop and a quiet close-X. Content is laid out as a
+   two-column grid (large portrait + extended bio) on desktop and a
+   single column on mobile.
+*/
+.page-leadership .ld-bio-modal {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    padding: 0;
+    width: min(720px, calc(100vw - 32px));
+    max-height: calc(100vh - 64px);
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
+}
+
+.page-leadership .ld-bio-modal::backdrop {
+    background-color: rgba(8, 9, 12, 0.72);
+    backdrop-filter: blur(6px);
+}
+
+.page-leadership .ld-bio-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background-color: var(--bg-muted);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    font-size: 16px;
+}
+
+.page-leadership .ld-bio-close:hover,
+.page-leadership .ld-bio-close:focus-visible {
+    background-color: var(--bg-elev);
+    color: var(--text-primary);
+    transform: scale(1.05);
+    outline: none;
+}
+
+.page-leadership .ld-bio-grid {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 0;
+    max-height: calc(100vh - 64px);
+}
+
+.page-leadership .ld-bio-photo {
+    background-color: var(--bg-muted);
+    border-right: 1px solid var(--border-light);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+.page-leadership .ld-bio-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.page-leadership .ld-bio-body {
+    padding: var(--space-xl) var(--space-xl) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+.page-leadership .ld-bio-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+}
+
+.page-leadership .ld-bio-name {
+    font-size: var(--text-heading-md);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.page-leadership .ld-bio-role {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.page-leadership .ld-bio-deck {
+    font-size: var(--text-body-md);
+    line-height: 1.55;
+    color: var(--text-secondary);
+    margin: 8px 0 4px;
+}
+
+.page-leadership .ld-bio-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.page-leadership .ld-bio-text p {
+    font-size: var(--text-body-sm);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.page-leadership .ld-bio-meta {
+    list-style: none;
+    padding: var(--space-md) 0 0;
+    margin: var(--space-sm) 0 0;
+    border-top: 1px dashed var(--border-light);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-sm);
+}
+
+.page-leadership .ld-bio-meta li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    line-height: 1.45;
+}
+
+.page-leadership .ld-bio-meta li span {
+    display: block;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.page-leadership .ld-bio-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.page-leadership .ld-bio-link:hover,
+.page-leadership .ld-bio-link:focus-visible {
+    color: var(--accent-blue-hover);
+    outline: none;
+}
+
+.page-leadership .ld-bio-link i {
+    font-size: 12px;
+}
+
+@media (max-width: 720px) {
+    .page-leadership .ld-bio-grid {
+        grid-template-columns: 1fr;
+    }
+    .page-leadership .ld-bio-photo {
+        aspect-ratio: 16 / 10;
+        border-right: 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+    .page-leadership .ld-bio-body {
+        padding: var(--space-lg);
+    }
+    .page-leadership .ld-bio-meta {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 /* Board cards are denser — same pattern, smaller padding */
