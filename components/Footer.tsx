@@ -26,9 +26,9 @@ export default function Footer() {
               Nextiva infrastructure for businesses that need every call,
               text, and chat handled well.
             </p>
-            <a href="tel:18007990600" className="footer-phone">
+            <a href="tel:18883071013" className="footer-phone">
               <i className="ri-phone-line" aria-hidden="true" />
-              1-800-799-0600
+              1-888-307-1013
             </a>
             <div className="footer-badges" aria-label="Trust signals">
               <span>SOC 2 Certified</span>
