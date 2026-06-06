@@ -7,7 +7,6 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "XBert — AI Employee by Nextiva",
-  robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
@@ -23,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="robots" content="noindex" />
         <meta name="color-scheme" content="dark" />
 
         {/* Fonts */}
